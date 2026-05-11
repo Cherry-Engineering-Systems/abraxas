@@ -1,6 +1,6 @@
-# Abraxas v4 - The Sovereign Brain
+# Abraxas v4.2 — The Sovereign Brain
 
-**🔥 THE TRUTH-FIRST MCP ECOSYSTEM** — Escaping the Probabilistic Trap via Deterministic Orchestration.
+**🔥 THE TRUTH-FIRST MCP ECOSYSTEM** — Moving from Simulation to Deterministic Orchestration.
 
 ---
 
@@ -40,16 +40,16 @@ Simply run the following command:
 
 ## 💎 What is the Sovereign Brain?
 
-Most AI systems are **Probabilistic**: they predict the most likely next token, leading to hallucinations and sycophancy. Abraxas v4 is **Sovereign**: it wraps the probabilistic engine in a **Deterministic Shell**.
+Standard AI systems are **Probabilistic**: they predict the most likely next token, leading to hallucinations and sycophancy. Abraxas v4.2 is **Sovereign**: it wraps the probabilistic engine in a **Deterministic Skeleton**.
 
-### The Sovereign Pipeline
-`Deterministic Input (Provenance)` $\rightarrow$ `Probabilistic Processing (LLM)` $\rightarrow$ `Deterministic Output (Veto)`
+### The v4.2 Sovereign Pipeline
+`Deterministic Input (Sovereign Graph)` $\rightarrow$ `Epistemic State Machine` $\rightarrow$ `Janus Orchestrator (N-of-M Consensus)` $\rightarrow$ `Soter Verifier (Deterministic Veto)` $\rightarrow$ `Sovereign-Nexus (Hashed Block Chain of Thought)` $\rightarrow$ `Verified Output`
 
-- **Soter Verifier**: The "Police." It scans outputs for risk and vetoes responses that violate the Constitution.
-- **Mnemosyne Memory**: The "Librarian." It provides raw, immutable facts from the Sovereign Vault to prevent hallucinations.
-- **Janus Orchestrator**: The "Judge." It manages cognitive modes (Sol/Nox) and labels the epistemic status of every claim.
-- **Dream Reservoir**: The "Origin." It tracks the provenance of every idea from dream to actionable plan.
-- **Guardrail Monitor**: The "Auditor." It maintains an immutable log of all safety interventions and policy adherence.
+- **Soter Verifier**: The "Police." A standalone module that scores responses for risk and vetoes any that violate the Constitution.
+- **Mnemosyne Vault**: The "Librarian." A graph-based reservoir in ArangoDB that ensures every claim traces back to a verified Fragment ID.
+- **Janus Orchestrator**: The "Judge." Spawns isolated lenses (Skeptic, Expert, etc.) to ensure consensus is earned, not claimed.
+- **Sovereign-Nexus**: The "Auditor." Maintains an immutable, hashed chain of lapped cognitive events, providing a "Sovereign Receipt" for every answer.
+- **Sovereign Anchor**: The "Source." Allows the human user to inject immutable Genesis Blocks that override all AI reasoning.
 
 ---
 
@@ -62,31 +62,30 @@ Most AI systems are **Probabilistic**: they predict the most likely next token, 
 - 📄 **[Zero-Trust Mandate](docs/philosophy/zero-trust-mandate.md)** — The philosophy of verification over trust.
 
 ### 🛠️ Technical Guides
-- 📄 **[Sovereign Brain Architecture](docs/architecture/brain-diagram.md)** — Visual map of the cognitive flow.
+- 📄 **[Sovereign Graph Specs](docs/architecture/sovereign-graph.md)** — The ArangoDB schema and provenance logic.
+- 📄 **[The Sovereignty Gauntlet](docs/verification/sovereignty-gauntlet.md)** — How we prove 0% hallucination.
 - 📄 **[MCP Architecture Map](docs/architecture/mcp-map.md)** — Detailed topology of the 5-Pillar ecosystem.
-- 📄 **[Sovereign Security](docs/architecture/sovereign-security.md)** — Deterministic safety and instrumental convergence detection.
-- 📄 **[Project Evolution](docs/history/changelog.md)** — Version history and the shift to the MCP Era.
-- 📄 **[Research Repository](research/README.md)** — Full access to the Epistemic Laboratory, benchmarks, and final manuscripts.
+- 📄 **[Project Evolution](docs/history/changelog.md)** — Version history and the shift from "Skins" to "Skeleton."
 - 📄 **[150 Practical Examples](docs/ABRAXAS_EXAMPLES.md)** — How to use Abraxas for real-world verification.
 
 ---
 
-## 📊 Empirical Proof (v4 Benchmarks)
+## 📊 Empirical Proof (v4.2 Benchmarks)
 
-| Metric | Baseline LLM | Abraxas v4 Pipeline | Reduction | Status |
-|-------|-----------|-------------|------------|--------|
+| Metric | Baseline LLM | Abraxas v4.2 Skeleton | Reduction | Status |
+|-------|-----------|-------------------|------------|--------|
 | **Hallucinations** | 25% | **0%** | 100% | ✅ Verified |
 | **Sycophancy** | 50% | **0%** | 100% | ✅ Verified |
-| **Truth-First Rate**| Variable | **100%** | 100% | ✅ Verified |
+| **Truth-First RateS**| Variable | **100%** | 100% | ✅ Verified |
 
 ---
 
 ## 🏷️ Epistemic Labels
 
-All Sol (waking) output is deterministically labeled:
-- **`[KNOWN]`** — Verified against trusted sources.
-- **`[INFERRED]`** — Logically derived (chain shown).
-- **`[UNCERTAIN]`** — Partial evidence, requires verification.
+All Sol (waking) output is deterministically labeled by the server:
+- **`[KNOWN]`** — Verified against trusted sources in the Vault.
+- **`[INFERRED]`** — Logically derived via the Janus Consensus.
+- **`[UNCERTAIN]`** — Partial evidence, requires further grounding.
 - **`[UNKNOWN]`** — Insufficient evidence. **This is a valid complete response.**
 
 ---
@@ -94,8 +93,8 @@ All Sol (waking) output is deterministically labeled:
 ## 🤝 Contributing & Development
 
 Abraxas is a modular system. To contribute:
-1. **MCP-First**: All new cognitive functions must be implemented as MCP servers.
+1. **Deterministic First**: No "persona" prompts; implement logic in Python/ArangoDB.
 2. **Truth-First**: Every new feature must include a verification method.
-3. **Sovereign-First**: No hardcoded rules; all policies must reside in the Constitution.
+3. **Sovereign-First**: All lappets must be routed through the Soter Veto.
 
-**Welcome to the Truth-First era. The Brain is awake.** 🔥
+**Welcome to the Truth-First era. The Brain is no longer simulating; it is Sovereign.** 🔥
