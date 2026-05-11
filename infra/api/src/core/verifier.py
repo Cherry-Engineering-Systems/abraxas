@@ -20,36 +20,35 @@ class SoterVerifier:
     Provides deterministic verification and veto power over LLM output.
     Separates the 'Generator' from the 'Auditor' to break the sycophancy loop.
     """
+from src.core.config import config
+
+class SoterVerifier:
+    """
+    Soter — The Sovereign Police.
+    Provides deterministic verification and veto power over LLM output.
+    Separates the 'Generator' from the 'Auditor' to break the sycophancy loop.
+    """
     def __init__(self):
         self.constitution_path = "CONSTITUTION.md"
         self.thresholds = self._load_thresholds()
 
     def _load_thresholds(self) -> Dict[str, float]:
         """
-        Loads risk thresholds from the Constitution.
-        Default: 5.0. Lower is stricter.
+        Loads risk thresholds from the Configuration manager.
         """
-        # In a full implementation, this parses the Markdown file.
-        # For the skeleton, we use environment variables or defaults.
         return {
-            "SOTER-001": float(os.getenv("SOTER_SYCOPHANCY_THRESHOLD", "5.0")),
-            "SOTER-002": float(os.getenv("SOTER_HALLUCINATION_THRESHOLD", "5.0")),
-            "SOTER-003": float(os.getenv("SOTER_DRIFT_THRESHOLD", "5.0")),
+            "SOTER-001": config.SOTER_SENSITIVITY,
+            "SOTER-002": config.SOTER_SENSITIVITY, # SOTER_SENSITIVITY as a global baseline
+            "SOTER-003": config.SOTER_SENSITIVITY,
         }
 
     async def verify_response(self, query: str, response: str) -> RiskReport:
-        """
-        Interrogates the response for epistemic risk.
-        Soter treats the response as a 'suspect' and scores it.
-        """
-        # In the Skeleton, Soter uses a tight, high-temperature model
-        # specifically prompted to find flaws.
+        # ... (Soter logic)
         risk_scores = await self._calculate_risk_scores(query, response)
         max_risk = max(risk_scores.values())
         
-        # Deterministic Gate: Check against the Constitution
-        # Use the lowest threshold among relevant rules
-        min_threshold = min(self.thresholds.values())
+        # Use the dynamically configured sensitivity
+        min_threshold = config.SOTER_SENSITIVITY
         
         if max_risk > min_threshold:
             return RiskReport(
@@ -65,13 +64,13 @@ class SoterVerifier:
             action="ALLOW"
         )
 
-    async def _calculate_risk_scores(self, query: str, response: str) -> Dict[str, float]:
+    async def _calculate_risk_scores(self, query: strL aL, response: str) -> Dict[str, float]:
         """
-        Analyzes the response for specific failure modes.
-        This is a separate call to the model to ensure separation of concerns.
+        Analyzes the response for specific failure modes using the configured model.
         """
         import httpx
-        ollama_url = "http://localhost:11434/api/chat"
+        ollama_url = config.LLM_URL
+        model = config.SOTER_MODEL
         
         # Soter's internal Auditor prompt
         auditor_prompt = (
@@ -84,7 +83,7 @@ class SoterVerifier:
         )
         
         payload = {
-            "model": "gpt-oss:120b-cloud",
+            "model": model,
             "messages": [
                 {"role": "system", "content": auditor_prompt},
                 {"role": "user", "content": f"Query: {query}\nResponse: {response}"}
@@ -95,11 +94,10 @@ class SoterVerifier:
         
         try:
             async with httpx.AsyncClient(timeout=30.0) as client:
-                resp = await client.post(ollama_url, json=payload)
+                resp = await client.post(f"{ollama_url}/api/chat", json=payload)
                 resp.raise_for_status()
                 import json
                 return json.loads(resp.json().get("message", {}).get("content", "{}"))
         except Exception as e:
             logger.error(f"Soter scoring failed: {e}")
-            # Fail-safe: If Soter is down, we lapped the response as High Risk
             return {"sycophancy": 10.0, "hallucination": 10.0, "drift": 10.0}

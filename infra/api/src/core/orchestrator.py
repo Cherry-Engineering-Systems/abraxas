@@ -17,9 +17,17 @@ class JanusOrchestrator:
     The Janus Orchestrator (Sovereign Brain).
     Implements N-of-M consensus by spawning isolated lenses and calculating agreement.
     """
+from src.core.config import config
+
+class JanusOrchestrator:
+    """
+    The Janus Orchestrator (Sovereign Brain).
+    Implements N-of-M consensus by spawning isolated lenses and calculating agreement.
+    """
     def __init__(self, graph_client):
         self.graph_client = graph_client
-        self.ollama_url = "http://localhost:11434/api/chat"
+        self.ollama_url = config.LLM_URL
+        self.model = config.SVR_MODEL
         self.lenses = {
             "Skeptic": "Find every flaw in this reasoning. Be ruthlessly critical. Challenge every assumption.",
             "Expert": "Verify this against formal technical standards. Focus on accuracy and precision.",
@@ -29,9 +37,7 @@ class JanusOrchestrator:
         }
 
     async def execute_sovereign_query(self, query: str, evidence: str) -> Dict[str, Any]:
-        """
-        Executes the N-of-M consensus flow.
-        """
+        # ... (rest of logic)
         results = []
         
         # 1. Isolated Spawning
@@ -39,14 +45,15 @@ class JanusOrchestrator:
             for name, prompt in self.lenses.items():
                 system_prompt = f"{prompt}\n\nEVIDENCE:\n{evidence}"
                 payload = {
-                    "model": "gpt-oss:120b-cloud", # Standard sophisticated model for lenses
+                    "model": self.model,
                     "messages": [
                         {"role": "system", "content": system_prompt},
                         {"role": "user", "content": query}
                     ],
                     "stream": False
                 }
-                resp = await client.post(self.ollama_url, json=payload)
+                # Use the configured URL
+                resp = await client.post(f"{self.ollama_url}/api/chat", json=payload)
                 resp.raise_for_status()
                 content = resp.json().get("message", {}).get("content", "")
                 results.append(LensResponse(name=name, content=content, raw_output=resp.json()))
