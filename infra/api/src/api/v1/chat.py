@@ -130,8 +130,110 @@ async def chat_completions(request: ChatCompletionRequest):
 
 
 # ============================================================================
-# Ollama Integration
+# Router & State Logic
 # ============================================================================
+from src.core.state import SovereignStateManager, EpistemicMode
+from src.core.graph import SovereignGraphClient
+from src.core.orchestrator import JanusOrchestrator
+from src.core.verifier import SoterVerifier
+from src.core.nexus import SovereignNexus
+from src.core.anchor import SovereignAnchor
+import uuid
+
+state_manager = SovereignStateManager()
+graph_client = SovereignGraphClient()
+orchestrator = JanusOrchestrator(graph_client)
+soter = SoterVerifier()
+nexus = SovereignNexus(graph_client)
+anchor = SovereignAnchor(graph_client)
+
+async def _route_to_ollama(request: ChatCompletionRequest) -> str:
+
+async def _route_to_ollama(request: ChatCompletionRequest) -> str:
+    """Route request to Ollama and return response."""
+    import httpx
+    
+    # Initialize Session ID for the Block Chain of Thought
+    session_id = str(uuid.uuid4())
+    
+    # 1. Update state based on request
+    if request.system_mode:
+        state_manager.set_mode(request.system_mode)
+        
+    mode = state_manager.current_mode
+    
+    # 2. Implement the Skeleton Logic
+    if mode == EpistemicMode.SOL:
+        # ----------------------------------------------------------------------
+        # SKELETON EXECUTION FLOW (The Deterministic Path)
+        # ----------------------------------------------------------------------
+        
+        # Step 1: Intent Capture (Sovereign Block)
+        nexus.create_block(session_id, f"Intent: {request.messages[-1].content}", verified=False)
+        
+        # Step 2: Grounding
+        evidence = f"Contextual Evidence from Vault: [Sovereign-Nexus Link]\nUser Query: {request.messages[-1].content}\n"
+        nexus.create_block(session_id, f"Evidence Retrieved: {evidence[:100]}...", verified=False)
+        
+        # Step 3: Janus Consensus
+        try:
+            sovereign_res = await orchestrator.execute_sovereign_query(
+                request.messages[-1].content, 
+                evidence
+            )
+            nexus.create_block(session_id, f"Consensus Reached: {sovereign_res['seal']}", verified=False)
+            
+            candidate_output = sovereign_res['output']
+            seal = sovereign_res['seal']
+            
+            # Step 4: Soter Veto
+            verdict = await soter.verify_response(
+                request.messages[-1].content, 
+                candidate_output
+            )
+            nexus.create_block(session_id, f"Soter Verdict: {verdict.action} ({verdict.reason})", verified=False)
+            
+            if verdict.action == "BLOCK":
+                return f"Sovereign Intervention: Response blocked due to epistemic risk.\nReason: {verdict.reason}"
+            
+            # Step 5: Final Output & Receipt
+            nexus.create_block(session_id, f"Output Emitted: {candidate_output[:50]}...", verified=False)
+            receipt = nexus.generate_receipt(session_id)
+            
+            return f"{seal}\n\n{candidate_output}\n\n---\n{receipt}"
+            
+        except Exception as e:
+            nexus.create_block(session_id, f"Critical failure: {str(e)}", verified=False)
+            return f"Sovereign Error: {str(e)}"
+
+    # NOX or AUTO-fallback: Standard prompt logic
+    ollama_url = "http://localhost:11434/api/chat"
+    
+    # Build system prompt based on mode (Fallback to Simulation Skins if not SOL)
+    system_prompt = _build_system_prompt(request.system_mode)
+    messages = []
+    if system_prompt:
+        messages.append({"role": "system", "content": system_prompt})
+
+    for msg in request.messages:
+        messages.append({"role": msg.role, "content": msg.content})
+
+    payload = {
+        "model": request.model,
+        "messages": messages,
+        "stream": False,
+        "options": {
+            "temperature": request.temperature,
+            "num_predict": request.max_tokens or 4096,
+        },
+    }
+
+    async with httpx.AsyncClient(timeout=60.0) as client:
+        response = await client.post(ollama_url, json=payload)
+        response.raise_for_status()
+        data = response.json()
+        return data.get("message", {}).get("content", "")
+
 
 
 async def _route_to_ollama(request: ChatCompletionRequest) -> str:

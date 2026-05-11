@@ -73,6 +73,16 @@ class DBManager:
                 {"name": "provenance_chain", "edge": True},
                 {"name": "knowledge_fragments", "edge": False},
                 {"name": "epistemic_ledger", "edge": False}, # Added Ledger
+                {"name": "fragments", "edge": False},
+                {"name": "claims", "edge": False},
+                {"name": "events", "edge": False},
+            ]
+            
+            # Sovereign Edges
+            sovereign_edges = [
+                {"name": "DERIVED_FROM", "edge": True},
+                {"name": "NEXT_STEP", "edge": True},
+                {"name": "SUPERSEDES", "edge": True},
             ]
             
             # Dream Reservoir Graph Schema: Session -> Hypothesis -> Concept -> Plan
@@ -84,7 +94,7 @@ class DBManager:
                 {"name": "dream_edges", "edge": True}, # General purpose edge for the reservoir
             ]
             
-            all_defaults = core_collections + dream_collections
+            all_defaults = core_collections + sovereign_edges + dream_collections
             
             for col in all_defaults:
                 if not self.db.has_collection(col["name"]):

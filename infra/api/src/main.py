@@ -24,6 +24,16 @@ REDIS_URL = os.getenv("REDIS_URL", None)
 async def lifespan(app: FastAPI):
     """Application lifespan handler."""
     # Startup
+    from src.core.graph import SovereignGraphClient
+    try:
+        graph_client = SovereignGraphClient()
+        graph_client.ensure_skeleton_collections()
+        print("✅ Sovereign Graph Skeleton verified and initialized.")
+    except Exception as e:
+        print(f"❌ Critical Error: Sovereign Graph initialization failed: {e}")
+        # In a true skeletal system, we fail fast.
+        # raise e 
+
     setup_metrics()
     yield
     # Shutdown
