@@ -25,7 +25,7 @@ class SovereignGraphClient:
         This is the deterministic check required before server start.
         """
         doc_colls = ['fragments', 'claims', 'events']
-        edge_colls = ['DERIVED_FROM', 'NEXT_STEP', 'SUPERSEDES']
+        edge_colls = ['DERIVED_FROM', 'NEXT_STEP', 'SUPERSEDES', 'DEPENDS_ON', 'REINFORCES', 'TENSIONS_WITH', 'IMPLIES']
         
         # Verify document collections
         for coll in doc_colls:

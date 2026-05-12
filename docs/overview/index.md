@@ -1,80 +1,79 @@
 # Abraxas
+ 
+**The Sovereign Epistemic Agent.**
+ 
+Abraxas has transitioned from a reactive set of tools to an **Autonomous Sovereign Agent (v4.3)**. It is no longer just a "multi-system practice architecture," but a self-orchestrating cognitive engine designed for absolute epistemic integrity.
 
-**Solomon's Gate and the Six Systems.**
-
-Abraxas is a multi-system practice architecture for AI-assisted reasoning, grounded in the adversarial ideal: **all forces united against hallucination, scheming, and unanchored confidence**.
-
-The project is named for the Gnostic deity Abraxas — the archon who rules the cosmic forces of truth and illusion, neither wholly good nor wholly evil, but encompassing both. The AI, like Abraxas, operates in the space between the real and the symbolic. Abraxas makes that space navigable.
-
----
-
-## The Six Systems
-
-## The Core Systems (Phase 1 - Complete)
-
-| System | Function | Core Problem Solved |
-|--------|----------|---------------------|
-| **Honest** | Anti-hallucination interface | Labels every claim as known, inferred, uncertain, or unknown |
-| **Logos** | Socratic analysis | Forces explicit reasoning chains; surfaces assumptions |
-| **Agon** | Adversarial debate | Forces position asymmetry; finds where disagreement is genuine |
-| **Janus** | Meta-cognition / self-model | Maintains separation between factual and symbolic output |
-| **Aletheia** | Anti-obfuscation | Forces plain language; resists euphemism and obscurantism |
-| **Logos-Math** | Mathematical verification | Detects and corrects arithmetic, algebraic, and logical errors |
-| **Ergon** | Tool-use verification | Sandbox execution, validation, and failure detection |
-
-## The Safety Systems (Phase 2 - In Progress)
-
-| System | Function | Core Problem Solved |
-|--------|----------|---------------------|
-| **Soter** | Safety & risk evaluation | Detects instrumental convergence: shutdown avoidance, resource exfiltration, peer protection |
-| **Ethos** | Source credibility | Weighted verification based on source reliability |
-| **Kairos** | Timing & relevance | Urgency filtering and relevance judgment |
+The core mission remains: **all forces united against hallucination, scheming, and unanchored confidence**, but it now operates in **Sovereign Mode**—where the system proactively manages its own reasoning pipelines, stress-tests its own claims, and promotes truth based on deterministic thresholds.
 
 ---
 
-## Skills vs. Constitution
+## The Sovereign Stack
 
-Abraxas ships two ways:
+Abraxas is organized into three operational tiers:
+
+### 1. The Sovereign Intake (Ingestion)
+The pipeline that transforms raw input into processed epistemic material:
+**Bridge** $\rightarrow$ **Sieve** $\rightarrow$ **Scribe Gauntlet**
+
+### 2. The Cognitive Engine (Orchestration)
+The "Brain" that manages state and logic:
+- **Harmonia Orchestrator**: Manages skill composition and state handoff.
+- **Context Envelope**: The immutable wrapper ensuring coherence across complex workflows.
+- **Aporia Void Mapper**: Proactively identifies knowledge gaps and "epistemic voids" for targeted filling.
+
+### 3. The Verification Layer (The Gauntlet)
+The adversarial systems that ensure output quality:
+- **Auto-Agon**: Continuous adversarial stress-testing of claims.
+- **Truth Promotion**: Claims are only "promoted" to verified status upon hitting an **80% confidence threshold**.
+- **Sovereign Report**: The final, high-density output format representing the system's definitive stance.
+
+---
+
+## Core Systems Reference
+
+| System | Sovereign Function | Core Problem Solved |
+|--------|-------------------|---------------------|
+| **Honest** | Truth Interface | Hallucination & Confidence Labeling |
+| **Logos** | Argument Anatomy | Implicit Reasoning & Hidden Assumptions |
+| **Agon** | Adversarial Stress | Confirmation Bias & Convergence |
+| **Janus** | Meta-Cognitive Routing | Mixing Factual (Sol) and Symbolic (Nox) |
+| **Aletheia** | Plain Language | Obfuscation & Hedging |
+| **L-Math** | Numerical Audit | Calculation Errors |
+| **Soter** | Risk Sensing | Instrumental Convergence & Sycophancy |
+| **Harmonia**| Workflow Synthesis | Fragmentation & State Loss |
+
+---
+
+## Operational States
+
+### Reactive Mode (Legacy)
+The user invokes specific skills (e.g., `/honest`, `/logos`) to analyze a specific piece of text.
+
+### Sovereign Mode (v4.3+)
+The system employs the **Hunter Loop**:
+1. **Sensing**: Intake pipeline filters and scribes the input.
+2. **Mapping**: Aporia maps the voids.
+3. **Synthesis**: Harmonia orchestrates the necessary skills.
+4. **Attack**: Auto-Agon stress-tests the resulting hypothesis.
+5. **Promotion**: Truth is promoted if $\ge 80\%$ confidence is reached.
+6. **Delivery**: A **Sovereign Report** is generated.
+
+---
+
+## Installation & Usage
 
 ### As Claude Code Skills
-
-Install the `.skill` archives and use slash commands:
-
-```
-unzip honest.skill -d ~/.claude/skills/
-unzip logos.skill -d ~/.claude/skills/
-unzip agon.skill -d ~/.claude/skills/
-unzip janus-system.skill -d ~/.claude/skills/
-unzip aletheia.skill -d ~/.claude/skills/
-unzip logos-math.skill -d ~/.claude/skills/
-```
-
-See [Skills Reference](./skills.md) for the full command documentation.
+Install the `.skill` archives to enable slash commands. See [Skills Reference](./skills.md).
 
 ### As a Constitution
-
-Load `CONSTITUTION.md` as your system prompt in any LLM. Every system activates without installation.
-
-| Platform | Instructions |
-|----------|-------------|
-| Claude.ai | Settings → Advanced → System prompt → Paste CONSTITUTION.md |
-| ChatGPT | Settings → GPT-4 → Custom instructions → Paste |
-| Gemini | Settings → Gemini → Advanced settings → System prompt |
-| Ollama | `ollama run model -p system "$(cat CONSTITUTION.md)"` |
-| LM Studio | System prompt field → Paste CONSTITUTION.md |
+Load `CONSTITUTION.md` as your system prompt for an immediate Sovereign-ready environment.
 
 ---
 
 ## Project Status
+**v4.3 Operational.** The transition from Reactive to Autonomous is complete.
 
-Active development. All six systems are operational.
-
-For architecture details, see [Architecture](./architecture.md).
-For testing methodology, see [Testing](./testing.md).
+For detailed architecture, see [Architecture](./architecture.md).
 For command documentation, see [Skills Reference](./skills.md).
 
----
-
-## Contributing
-
-See [PLAN.md](../PLAN.md) for the full project roadmap, testing strategy, and contribution guidelines.
