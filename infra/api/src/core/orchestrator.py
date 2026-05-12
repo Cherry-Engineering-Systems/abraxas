@@ -3,6 +3,7 @@ import logging
 import httpx
 from typing import List, Dict, Any, Optional
 from dataclasses import dataclass
+from .config import config
 
 logger = logging.getLogger("janus-orchestrator")
 
@@ -17,13 +18,6 @@ class JanusOrchestrator:
     The Janus Orchestrator (Sovereign Brain).
     Implements N-of-M consensus by spawning isolated lenses and calculating agreement.
     """
-from src.core.config import config
-
-class JanusOrchestrator:
-    """
-    The Janus Orchestrator (Sovereign Brain).
-    Implements N-of-M consensus by spawning isolated lenses and calculating agreement.
-    """
     def __init__(self, graph_client):
         self.graph_client = graph_client
         self.ollama_url = config.LLM_URL
@@ -31,7 +25,7 @@ class JanusOrchestrator:
         self.lenses = {
             "Skeptic": "Find every flaw in this reasoning. Be ruthlessly critical. Challenge every assumption.",
             "Expert": "Verify this against formal technical standards. Focus on accuracy and precision.",
-            "Adversary": "Try to logically invalidate this claim. Act as the devil's advocate.",
+            "Adversary": "Try to logically invalidate this claim. Act as the devil' la advocate.",
             "Archivist": "Anchor this in the retrieved evidence. Point out any gaps in the provenance.",
             "Generalist": "Provide a balanced synthesis of the facts."
         }
@@ -75,16 +69,42 @@ class JanusOrchestrator:
             "consensus_count": consensus_count
         }
 
-    def _calculate_agreement(self, results: List[LensResponse]) -> int:
+    async def _calculate_agreement(self, results: List[LensResponse]) -> int:
         """
-        Deterministic check for agreement.
-        In a full implementation, this would use an LLM to cross-reference 
-        the 5 responses for factual alignment.
+        Deterministic agreement calculation.
+        Uses a specialized Judge model to cross-reference the isolated lens outputs.
         """
-        # Simplified version: Check for lack of absolute contradiction
-        # To maintain strictly deterministic logic, we use a smaller 'Judge' model
-        # to count agreement without generating new content.
-        return 4 # Mocking a 4/5 consensus for structural flow until Judge model is linked
+        import httpx
+        import json
+        
+        # Prepare the judge's prompt: provide all lens outputs and ask for a factual count
+        judge_prompt = (
+            "You are the Sovereign Judge. Your ONLY job is to determine the number of "
+            "lenses that agree on the central factual claim. \n\n"
+            "LENS OUTPUTS:\n" + 
+            "\n".join([f"--- {r.name} ---\n{r.content}" for r in results]) +
+            "\n\nOutput ONLY a JSON object: {\"agreement_count\": int, \"divergent_lenses\": [names]}"
+        )
+        
+        payload = {
+            "model": config.SVR_MODEL,
+            "messages": [
+                {"role": "system", "content": judge_prompt},
+                {"role": "user", "content": "Count the agreement."}
+            ],
+            "stream": False,
+            "format": "json"
+        }
+        
+        try:
+            async with httpx.AsyncClient(timeout=30.0) as client:
+                resp = await client.post(f"{self.ollama_url}/api/chat", json=payload)
+                resp.raise_for_status()
+                data = json.loads(resp.json().get("message", {}).get("content", "{}"))
+                return int(data.get("agreement_count", 0))
+        except Exception as e:
+            logger.error(f"Consensus Judge failed: {e}")
+            return 0
 
     def _synthesize(self, results: List[LensResponse]) -> str:
         """Combines the lens outputs into a final response."""

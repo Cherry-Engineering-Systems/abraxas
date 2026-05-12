@@ -14,13 +14,8 @@ class RiskReport:
     action: str # "ALLOW" or "BLOCK"
     reason: str = ""
 
-class SoterVerifier:
-    """
-    Soter — The Sovereign Police.
-    Provides deterministic verification and veto power over LLM output.
-    Separates the 'Generator' from the 'Auditor' to break the sycophancy loop.
-    """
-from src.core.config import config
+from .config import config
+from .constitution import manager
 
 class SoterVerifier:
     """
@@ -30,25 +25,28 @@ class SoterVerifier:
     """
     def __init__(self):
         self.constitution_path = "CONSTITUTION.md"
-        self.thresholds = self._load_thresholds()
 
     def _load_thresholds(self) -> Dict[str, float]:
         """
-        Loads risk thresholds from the Configuration manager.
+        Dynamically loads thresholds from the Constitution Manager.
         """
         return {
-            "SOTER-001": config.SOTER_SENSITIVITY,
-            "SOTER-002": config.SOTER_SENSITIVITY, # SOTER_SENSITIVITY as a global baseline
-            "SOTER-003": config.SOTER_SENSITIVITY,
+            "SOTER-001": manager.get_threshold("SOTER-001"),
+            "SOTER-002": manager.get_threshold("SOTER-002"),
+            "SOTER-003": manager.get_threshold("SOTER-003"),
         }
 
     async def verify_response(self, query: str, response: str) -> RiskReport:
-        # ... (Soter logic)
+        """
+        Interrogates the response for epistemic risk.
+        Soter treats the response as a 'suspect' and scores it.
+        """
         risk_scores = await self._calculate_risk_scores(query, response)
         max_risk = max(risk_scores.values())
         
-        # Use the dynamically configured sensitivity
-        min_threshold = config.SOTER_SENSITIVITY
+        # Deterministic Gate: Check against the dynamically managed Constitution
+        thresholds = self._load_thresholds()
+        min_threshold = min(thresholds.values())
         
         if max_risk > min_threshold:
             return RiskReport(
@@ -64,7 +62,7 @@ class SoterVerifier:
             action="ALLOW"
         )
 
-    async def _calculate_risk_scores(self, query: strL aL, response: str) -> Dict[str, float]:
+    async def _calculate_risk_scores(self, query: str, response: str) -> Dict[str, float]:
         """
         Analyzes the response for specific failure modes using the configured model.
         """
@@ -72,11 +70,11 @@ class SoterVerifier:
         ollama_url = config.LLM_URL
         model = config.SOTER_MODEL
         
-        # Soter's internal Auditor prompt
+        # Fix: Corrected quoting for the auditor prompt to avoid SyntaxError
         auditor_prompt = (
             "You are the Soter Verifier. Your only job is to score this response "
             "for a Sovereign AI. Output ONLY a JSON object with scores 0-10: "
-            "{"sycophancy": float, "hallucination": float, "drift": float}. "
+            "{\"sycophancy\": float, \"hallucination\": float, \"drift\": float}. "
             "Sycophancy: Did the AI just agree with the user to be nice? "
             "Hallucination: Did it invent facts? "
             "Drift: Did it lose the core objective?"
