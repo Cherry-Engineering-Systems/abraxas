@@ -83,3 +83,18 @@ class SovereignGraphClient:
         """
         cursor = self.db.aql.execute(query, bind_vars={"start_node": claim_id})
         return [doc for doc in cursor]
+
+    def get_fragments_with_priority(self, query: str) -> List[Dict[str, Any]]:
+        """
+        Fetches fragments matching the query with Divine Priority sorting.
+        Fragments with is_genesis == True come first (Divine Priority),
+        then sorted by trust_weight DESC.
+        """
+        aql = """
+        FOR f IN fragments
+            FILTER CONTAINS(f.content, @q)
+            SORT f.is_genesis DESC, f.trust_weight DESC
+            RETURN f
+        """
+        cursor = self.db.aql.execute(aql, bind_vars={"q": query})
+        return [doc for doc in cursor]

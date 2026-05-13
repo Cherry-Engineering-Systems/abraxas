@@ -171,8 +171,14 @@ async def _route_to_ollama(request: ChatCompletionRequest) -> str:
         # Step 1: Intent Capture (Sovereign Block)
         nexus.create_block(session_id, f"Intent: {request.messages[-1].content}", verified=False)
         
-        # Step 2: Grounding
-        evidence = f"Contextual Evidence from Vault: [Sovereign-Nexus Link]\nUser Query: {request.messages[-1].content}\n"
+        # Step 2: Grounding - Fetch fragments with Divine Priority
+        user_query = request.messages[-1].content
+        fragments = graph_client.get_fragments_with_priority(user_query)
+        if fragments:
+            evidence_content = "\n".join([f.get('content', '') for f in fragments[:5]])  # Top 5 fragments
+            evidence = f"Contextual Evidence from Vault (Divine Priority):\n{evidence_content}\nUser Query: {user_query}\n"
+        else:
+            evidence = f"Contextual Evidence from Vault: [No matching fragments]\nUser Query: {user_query}\n"
         nexus.create_block(session_id, f"Evidence Retrieved: {evidence[:100]}...", verified=False)
         
         # Step 3: Janus Consensus

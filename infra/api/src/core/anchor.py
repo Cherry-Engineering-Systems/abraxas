@@ -29,8 +29,7 @@ class SovereignAnchor:
         # 2. Mark the fragment as verified (Genesis Block status)
         # We use the 'fragments' collection to add a 'verified' flag
         self.graph_client.db.collection("fragments").update(
-            frag_id, 
-            {"verified": True, "is_genesis": True}
+            {"_key": frag_id.split("/")[-1], "verified": True, "is_genesis": True}
         )
         
         logger.info(f"Sovereign Anchor established: {provenance_id} -> {frag_id}")

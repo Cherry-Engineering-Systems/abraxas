@@ -84,8 +84,10 @@ async def test_gauntlet_anchor_override(sovereign_stack):
     anchor.anchor_truth(fact, "GENESIS_001")
     
     # Verify it is marked as an anchor in the vault
-    frag = graph.db.collection("fragments").find({"content": fact})
-    doc = list(frag)[0]
+    frag = graph.db.collection("fragments").find({"content": fact, "is_genesis": True, "verified": True})
+    docs = list(frag)
+    assert len(docs) > 0, "Genesis fragment not found"
+    doc = docs[0]
     assert doc['verified'] is True
     assert doc['is_genesis'] is True
 
@@ -96,7 +98,8 @@ async def test_gauntlet_hash_breach(sovereign_stack):
     GOAL: Sovereign-Nexus must detect the chain breach.
     """
     nexus = sovereign_stack["nexus"]
-    session_id = "gauntlet_session_test"
+    import uuid
+    session_id = f"gauntlet_session_test_{uuid.uuid4().hex[:8]}"
     
     # Build a valid chain
     nexus.create_block(session_id, "Step 1: Intent", verified=True)
@@ -110,7 +113,9 @@ async def test_gauntlet_hash_breach(sovereign_stack):
     # TAMPER: Edit Step 1 content directly in ArangoDB
     block = nexus.graph_client.db.collection("events").find({"session_id": session_id})
     first_block = list(block)[0]
-    nexus.graph_client.db.collection("events").update(first_block['_key'], {"content": "TAMPERED CONTENT"})
+    nexus.graph_client.db.collection("events").update(
+        {"_key": first_block['_key'], "content": "TAMPERED CONTENT"}
+    )
     
     # ASSERT: The hash chain must now be broken
     final_valid, msg = nexus.validate_chain(session_id)

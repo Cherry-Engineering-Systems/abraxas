@@ -1,7 +1,7 @@
 import hashlib
 import time
 import os
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple, Union
 from dataclasses import dataclass, asdict
 
 @dataclass
@@ -72,10 +72,14 @@ class SovereignNexus:
         """
         Verifies the integrity of the entire reasoning chain.
         """
-        blocks = self.graph_client.db.collection("events").find(
-            {"session_id": session_id}, 
-            sort=["index"]
-        )
+        query = """
+        FOR e IN events
+            FILTER e.session_id == @sid
+            SORT e.index ASC
+            RETURN e
+        """
+        cursor = self.graph_client.db.aql.execute(query, bind_vars={"sid": session_id})
+        blocks = list(cursor)
         
         prev_hash = "0" * 64
         block_list = list(blocks)
@@ -112,7 +116,14 @@ class SovereignNexus:
         Transforms the internal hash-chain into a human-readable Sovereign Receipt.
         """
         valid, msg = self.validate_chain(session_id)
-        blocks = self.graph_client.db.collection("events").find({"session_id": session_id}, sort=["index"])
+        query = """
+        FOR e IN events
+            FILTER e.session_id == @sid
+            SORT e.index ASC
+            RETURN e
+        """
+        cursor = self.graph_client.db.aql.execute(query, bind_vars={"sid": session_id})
+        blocks = list(cursor)
         
         receipt = [f"Sovereign Receipt: {msg}"]
         receipt.append("-" * 40)
