@@ -1,10 +1,13 @@
 # Skills Reference
 
-> **Tagline** — *"Ten systems, ten failure modes addressed."*
+> **Tagline** — *"Sovereign Epistemic Agent — all forces united against hallucination, scheming, and unanchored confidence."*
 
-This document is the system reference for the skills that make up the Abraxas project:
-**Phase 1 (Complete):** Honest, Logos, Agon, Janus, Aletheia, Logos-Math, Ergon
-**Phase 2 (In Progress):** Soter (Started), Kairos & Ethos (Proposed)
+This document is the system reference for the skills that make up Abraxas v4.3 (Sovereign Mode):
+**Phase 1 — Cognitive Bedrock:** Aporia, Harmonia, Krisis (MCP tools)
+**Phase 2 — Sovereign Intake:** Bridge, Sieve, Scribe Gauntlet
+**Phase 3 — Epistemic Crucible:** Auto-Agon, Truth Promotion
+**Phase 4 — Sovereign Loop:** Hunter Loop, Sovereign Report
+**Core Systems:** Honest, Logos, Agon, Janus, Aletheia, Logos-Math, Ergon
 **Infrastructure Skills:** Secrets Manager, Pipeline Dispatcher
 **Communication Skills:** Gmail, Moltbook Sovereign
 **Documentation Skills:** Journal Scribe, Encounter Scribe
