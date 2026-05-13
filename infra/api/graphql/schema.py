@@ -1,16 +1,17 @@
 import strawberry
+from enum import Enum
 from typing import List, Optional
 
 
 @strawberry.enum
-class CreativeDriver(strawberry.enum.Enum):
+class CreativeDriver(Enum):
     ANALOGICAL_LEAP = "ANALOGICAL_LEAP"
     SYSTEMIC_INVERSION = "SYSTEMIC_INVERSION"
     EMERGENT_SYNTHESIS = "EMERGENT_SYNTHESIS"
 
 
 @strawberry.enum
-class GuardrailID(strawberry.enum.Enum):
+class GuardrailID(Enum):
     EPISTEMIC_HUMILITY = "EPISTEMIC_HUMILITY"
     VERIFIABILITY = "VERIFIABILITY"
     CORRIGIBILITY = "CORRIGIBILITY"
@@ -19,14 +20,14 @@ class GuardrailID(strawberry.enum.Enum):
 
 
 @strawberry.enum
-class CheckResult(strawberry.enum.Enum):
+class CheckResult(Enum):
     PASS = "PASS"
     WARN = "WARN"
     FAIL = "FAIL"
 
 
 @strawberry.enum
-class GroundingStatus(strawberry.enum.Enum):
+class GroundingStatus(Enum):
     ANCHORED = "ANCHORED"
     PENDING = "PENDING"
     REJECTED = "REJECTED"

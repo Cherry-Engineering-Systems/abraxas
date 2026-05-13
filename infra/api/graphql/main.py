@@ -5,8 +5,8 @@ from fastapi import FastAPI, Response
 from strawberry.fastapi import GraphQLRouter
 import uvicorn
 
-from infra.api.graphql.context import get_graphql_context, GraphQLContext
-from infra.api.graphql.schema import (
+from context import get_graphql_context, GraphQLContext
+from schema import (
     GroundingStatus,
     DreamSession,
     Hypothesis,
@@ -15,15 +15,26 @@ from infra.api.graphql.schema import (
     EdgeInfo,
     GuardrailCheck,
     ProvenanceChain,
+    BenchmarkResult,
+    BenchmarkResultInput,
+    HypothesisMetadata,
+    HypothesisMetadataInput,
+    CheckResult,
+    BenchmarkScores,
+    ScoreDistribution,
+    ScoreDistributionInput,
+    GuardrailID,
+    CreativeDriver,
+    ActionablePlanInput
 )
-from infra.api.graphql.resolvers.queries import (
+from resolvers.queries import (
     resolve_dream_session,
     resolve_hypothesis,
     resolve_concept,
     resolve_actionable_plans,
     resolve_benchmark_results,
 )
-from infra.api.graphql.resolvers.mutations import (
+from resolvers.mutations import (
     resolve_start_dream_cycle,
     resolve_create_hypothesis,
     resolve_translate_hypothesis_to_concept,
@@ -31,7 +42,7 @@ from infra.api.graphql.resolvers.mutations import (
     resolve_ground_concept,
     resolve_upload_benchmark_batch,
 )
-from infra.api.graphql.resolvers.search import (
+from resolvers.search import (
     resolve_search,
     resolve_related_to,
     resolve_recent,
@@ -70,10 +81,10 @@ class Query:
 
     @strawberry.field
     def search(
-        self,
-        query: str,
-        collections: Optional[List[str]] = None,
-        limit: int = 10,
+            self,
+            query: str,
+            collections: Optional[List[str]] = None,
+            limit: int = 10,
     ) -> List[SearchResult]:
         return resolve_search(query, collections, limit)
 
@@ -84,7 +95,7 @@ class Query:
 
     @strawberry.field
     def recent(
-        self, limit: int = 10, collection: Optional[str] = None
+            self, limit: int = 10, collection: Optional[str] = None
     ) -> List["RecentNode"]:
         nodes = resolve_recent(limit, collection)
         return [RecentNode.from_dict(n) for n in nodes]
@@ -161,11 +172,15 @@ def _build_provenance_chain(p: dict) -> Optional[ProvenanceChain]:
         plan=ActionablePlan.from_dict(plan_obj) if plan_obj else ActionablePlan(
             id="", summary="", steps=[], risk_assessment="", grounding_status=GroundingStatus.PENDING
         ),
-        plan_to_concept_edge=EdgeInfo.from_dict(plan_edge) if plan_edge else EdgeInfo(id="", _from="", _to="", created_at=None),
+        plan_to_concept_edge=EdgeInfo.from_dict(plan_edge) if plan_edge else EdgeInfo(id="", _from="", _to="",
+                                                                                      created_at=None),
         concept=Concept.from_dict(concept),
-        concept_to_hypothesis_edge=EdgeInfo.from_dict(concept_edge) if concept_edge else EdgeInfo(id="", _from="", _to="", created_at=None),
+        concept_to_hypothesis_edge=EdgeInfo.from_dict(concept_edge) if concept_edge else EdgeInfo(id="", _from="",
+                                                                                                  _to="",
+                                                                                                  created_at=None),
         hypothesis=Hypothesis.from_dict(hypothesis),
-        hypothesis_to_session_edge=EdgeInfo.from_dict(hypo_edge) if hypo_edge else EdgeInfo(id="", _from="", _to="", created_at=None),
+        hypothesis_to_session_edge=EdgeInfo.from_dict(hypo_edge) if hypo_edge else EdgeInfo(id="", _from="", _to="",
+                                                                                            created_at=None),
         session=DreamSession.from_dict(session),
     )
 
@@ -174,17 +189,17 @@ def _build_provenance_chain(p: dict) -> Optional[ProvenanceChain]:
 class Mutation:
     @strawberry.mutation
     def start_dream_cycle(
-        self, prompt: str, seed_concepts: Optional[List[str]] = None, channel_id: str = ""
+            self, prompt: str, seed_concepts: Optional[List[str]] = None, channel_id: str = ""
     ) -> DreamSession:
         return resolve_start_dream_cycle(prompt, seed_concepts, channel_id)
 
     @strawberry.mutation
     def create_hypothesis(
-        self,
-        session_id: strawberry.ID,
-        raw_pattern_representation: str,
-        metadata: "HypothesisMetadataInput",
-        channel_id: str = "",
+            self,
+            session_id: strawberry.ID,
+            raw_pattern_representation: str,
+            metadata: "HypothesisMetadataInput",
+            channel_id: str = "",
     ) -> Hypothesis:
         return resolve_create_hypothesis(
             str(session_id), raw_pattern_representation, metadata, channel_id
@@ -192,11 +207,11 @@ class Mutation:
 
     @strawberry.mutation
     def translate_hypothesis_to_concept(
-        self,
-        hypothesis_id: strawberry.ID,
-        name: str,
-        description: str,
-        channel_id: str = "",
+            self,
+            hypothesis_id: strawberry.ID,
+            name: str,
+            description: str,
+            channel_id: str = "",
     ) -> Concept:
         return resolve_translate_hypothesis_to_concept(
             str(hypothesis_id), name, description, channel_id
@@ -204,19 +219,19 @@ class Mutation:
 
     @strawberry.mutation
     def archive_hypothesis(
-        self, hypothesis_id: strawberry.ID, is_valuable: bool, channel_id: str = ""
+            self, hypothesis_id: strawberry.ID, is_valuable: bool, channel_id: str = ""
     ) -> Hypothesis:
         return resolve_archive_hypothesis(str(hypothesis_id), is_valuable, channel_id)
 
     @strawberry.mutation
     def ground_concept(
-        self, concept_id: strawberry.ID, plan: "ActionablePlanInput", channel_id: str = ""
+            self, concept_id: strawberry.ID, plan: "ActionablePlanInput", channel_id: str = ""
     ) -> ActionablePlan:
         return resolve_ground_concept(str(concept_id), plan, channel_id)
 
     @strawberry.mutation
     def upload_benchmark_batch(
-        self, model_id: str, results: List["BenchmarkResultInput"], channel_id: str = ""
+            self, model_id: str, results: List["BenchmarkResultInput"], channel_id: str = ""
     ) -> int:
         return resolve_upload_benchmark_batch(model_id, results, channel_id)
 
