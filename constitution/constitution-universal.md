@@ -125,16 +125,50 @@ not as verifiable assertion.
 
 To add more systems, load these additional fragments:
 
-- `constitution-honest.md` — Honest system (9 commands)
-- `constitution-janus.md` — Janus System (14 commands)
-- `constitution-oneironautics.md` — Abraxas Oneironautics (35 commands)
+**Core Epistemic:**
+- `constitution-honest.md` — Honest system (17 commands)
+- `constitution-janus.md` — Janus System (18 commands)
 - `constitution-agon.md` — Agon (8 commands)
 - `constitution-aletheia.md` — Aletheia (7 commands)
+- `constitution-logos.md` — Logos (6 commands)
+- `constitution-logos-math.md` — Logos-Math (5 commands)
+- `constitution-pheme.md` — Pheme (5 commands)
+
+**Sovereign Systems:**
+- `constitution-sovereign-core.md` — Sovereign Core (4 tools)
+- `constitution-sovereign-engine.md` — Sovereign Engine (5 tools)
+- `constitution-sovereign-scribe.md` — Sovereign Scribe (1 tool)
+- `constitution-sovereign-calibration.md` — Sovereign Calibration (3 tools)
+- `constitution-cvp.md` — CVP (3 commands)
+- `constitution-guardrail.md` — Guardrail (3 monitors)
+
+**Reasoning & Cognition:**
+- `constitution-dianoia.md` — Dianoia (6 commands)
+- `constitution-ergon.md` — Ergon (7 commands)
+- `constitution-kairos.md` — Kairos (2 commands)
+- `constitution-mnemon.md` — Mnemon (6 commands)
+- `constitution-prometheus.md` — Prometheus (5 commands)
+- `constitution-chronos.md` — Chronos (8 commands)
+
+**Practice & Integration:**
+- `constitution-oneironautics.md` — Oneironautics (52 commands)
 - `constitution-mnemosyne.md` — Mnemosyne (7 commands)
+- `constitution-episteme.md` — Episteme (3 commands)
+- `constitution-ethos.md` — Ethos (5 commands)
+- `constitution-krisis.md` — Krisis (6 commands)
+- `constitution-harmonia.md` — Harmonia (4 commands)
+- `constitution-hermes.md` — Hermes (7 commands)
+- `constitution-plan.md` — Plan (7 commands)
+
+**Predictive & Strategic:**
+- `constitution-metanoia.md` — Metanoia (4 commands)
+- `constitution-prognosis.md` — Prognosis (3 commands)
+- `constitution-stochasmos.md` — Stochasmos (3 commands)
+- `constitution-synesis.md` — Synesis (3 commands)
 
 Or load a combination:
 - `constitution-core.md` — Universal + Honest + Janus + Oneironautics
-- `constitution-all.md` — All six systems
+- `constitution-all.md` — All 31 systems combined
 
 ---
 
