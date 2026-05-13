@@ -77,8 +77,8 @@ def main():
     print("Health monitor running on port 9901.")
 
     print("Launching MCP SSE transport on port 9900...")
-    # mcp.run(transport="sse", host="0.0.0.0", port=9900)
-    mcp.run(transport="sse") # Need to figure out how to fun on port 9900
+    sse_app = mcp.sse_app()
+    uvicorn.run(sse_app, host="0.0.0.0", port=9900, log_level="info")
 
 
 if __name__ == "__main__":
