@@ -612,3 +612,4 @@ skills/logos-math/storage/
 *.db
 .beads-credential-key
 .env.sovereign
+.env.sovereign
