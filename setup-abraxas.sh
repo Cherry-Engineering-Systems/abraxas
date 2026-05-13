@@ -53,19 +53,23 @@ fi
 
 # Verify Unified MCP Health
 sleep 10 # Give container time to start
-HEALTH_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:9900/health || echo "FAIL")
+HEALTH_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:9901/health || echo "FAIL")
+
+# Verify GraphQL Health
+GRAPHQL_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:4000/health || echo "FAIL")
 
 # Verify ArangoDB Connectivity (using actual password from env)
 # Default to 'password' if not set in .env.sovereign
 DB_PASS=${ARANGO_ROOT_PASSWORD:-password}
 DB_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -u "root:$DB_PASS" http://localhost:8529/_api/version || echo "FAIL")
 
-if [ "$HEALTH_STATUS" == "200" ] && [ "$DB_STATUS" == "200" ]; then
+if [ "$HEALTH_STATUS" == "200" ] && [ "$GRAPHQL_STATUS" == "200" ] && [ "$DB_STATUS" == "200" ]; then
     echo "✅ Unified Sovereign Brain is ONLINE and verified."
+    echo "✅ GraphQL API is ONLINE."
     echo "✅ ArangoDB Connectivity confirmed."
 else
     echo "⚠️ Sovereign Core verification failed."
-    echo "MCP Status: $HEALTH_STATUS | DB Status: $DB_STATUS"
+    echo "MCP Status: $HEALTH_STATUS | GraphQL Status: $GRAPHQL_STATUS | DB Status: $DB_STATUS"
     echo "Check 'docker logs' for details."
 fi
 

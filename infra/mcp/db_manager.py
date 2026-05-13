@@ -88,13 +88,22 @@ class DBManager:
             # Dream Reservoir Graph Schema: Session -> Hypothesis -> Concept -> Plan
             dream_collections = [
                 {"name": "dream_sessions", "edge": False},
-                {"name": "dream_hypotheses", "edge": False},
-                {"name": "dream_concepts", "edge": False},
-                {"name": "dream_plans", "edge": False},
-                {"name": "dream_edges", "edge": True}, # General purpose edge for the reservoir
+                {"name": "hypotheses", "edge": False},
+                {"name": "concepts", "edge": False},
+                {"name": "actionable_plans", "edge": False},
+            ]
+
+            dream_edges = [
+                {"name": "SESS_TO_HYPO", "edge": True},
+                {"name": "HYPO_TO_CONCEPT", "edge": True},
+                {"name": "CONCEPT_TO_PLAN", "edge": True},
+            ]
+
+            benchmark_collections = [
+                {"name": "benchmark_results", "edge": False},
             ]
             
-            all_defaults = core_collections + sovereign_edges + dream_collections
+            all_defaults = core_collections + sovereign_edges + dream_collections + dream_edges + benchmark_collections
             
             for col in all_defaults:
                 if not self.db.has_collection(col["name"]):

@@ -10,13 +10,12 @@ WORKDIR /workspace
 
 RUN pip install --upgrade pip
 
-COPY infra/mcp/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY infra/api/graphql/pyproject.toml .
+RUN pip install --no-cache-dir strawberry-graphql[fastapi] python-arango uvicorn python-dotenv
 
 ENV PYTHONPATH=/workspace
-ENV ABRAXAS_ROOT=/workspace
 ENV PYTHONUNBUFFERED=1
 
-EXPOSE 9900 9901
+EXPOSE 4000
 
-CMD ["python", "infra/mcp/main.py"]
+CMD ["python", "infra/api/graphql/main.py"]
