@@ -1,0 +1,78 @@
+{
+  "project": "Sovereign Codex",
+  "version": "2.0",
+  "status": "In Progress",
+  "tasks": [
+    {
+      "id": "TASK-CODEX-01",
+      "title": "Vol I: Epistemic Crisis",
+      "description": "Comprehensive synthesis of the Probabilistic Trap and Skins era.",
+      "subtasks": [
+        {"id": "1.1", "desc": "Synthesize Probabilistic Trap & Lapping the Tracks", "status": "IN_PROGRESS"},
+        {"id": "1.2", "desc": "Formalize Skins Era failure modes", "status": "PENDING"},
+        {"id": "1.3", "desc": "Define Sovereign Gap mathematical delta", "status": "PENDING"},
+        {"id": "1.4", "desc": "Final Audit & Push", "status": "PENDING"}
+      ],
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "TASK-CODEX-02",
+      "title": "Vol II: Sovereign Skeleton",
+      "description": "Deep-dive into Soter, Nexus, and Anchor.",
+      "subtasks": [
+        {"id": "2.1", "desc": "Document Soter tau calibration", "status": "PENDING"},
+        {"id": "2.2", "desc": "Detail Sovereign-Nexus hash-chain", "status": "PENDING"},
+        {"id": "2.3", "desc": "Formalize Divine Priority", "status": "PENDING"},
+        {"id": "2.4", "desc": "Final Audit & Push", "status": "PENDING"}
+      ],
+      "status": "PENDING"
+    },
+    {
+      "id": "TASK-CODEX-03",
+      "title": "Vol III: Orchestration",
+      "description": "Detailed Janus and N-of-M consensus proof.",
+      "subtasks": [
+        {"id": "3.1", "desc": "Document Janus Sol/Nox modes", "status": "PENDING"},
+        {"id": "3.2", "desc": "Formalize N-of-M consensus logic", "status": "PENDING"},
+        {"id": "3.3", "desc": "Detail Sovereign Seal generation", "status": "PENDING"},
+        {"id": "3.4", "desc": "Final Audit & Push", "status": "PENDING"}
+      ],
+      "status": "PENDING"
+    },
+    {
+      "id": "TASK-CODEX-04",
+      "title": "Vol IV: Empirical Evidence",
+      "description": "Full data tables from Gauntlet and Chaos Suite.",
+      "subtasks": [
+        {"id": "4.1", "desc": "Tabulate Gauntlet results", "status": "PENDING"},
+        {"id": "4.2", "desc": "Analyze Chaos Suite cross-model variance", "status": "PENDING"},
+        {"id": "4.3", "desc": "Document Zero-Sovereign Gap conclusion", "status": "PENDING"},
+        {"id": "4.4", "desc": "Final Audit & Push", "status": "PENDING"}
+      ],
+      "status": "PENDING"
+    },
+    {
+      "id": "TASK-CODEX-05",
+      "title": "Vol V: Operational Specs",
+      "description": "Deployment and Health monitoring standards.",
+      "subtasks": [
+        {"id": "5.1", "desc": "Define 3-Tier Architecture", "status": "PENDING"},
+        {"id": "5.2", "desc": "Document system_mode_health_check", "status": "PENDING"},
+        {"id": "5.3", "desc": "Create Deployment Guide", "status": "PENDING"},
+        {"id": "5.4", "desc": "Final Audit & Push", "status": "PENDING"}
+      ],
+      "status": "PENDING"
+    },
+    {
+      "id": "TASK-CODEX-06",
+      "title": "The Final Seal",
+      "description": "Full document audit and master index generation.",
+      "subtasks": [
+        {"id": "6.1", "desc": "Full narrative consistency audit", "status": "PENDING"},
+        {"id": "6.2", "desc": "Generate Master Index & Exec Summary", "status": "PENDING"},
+        {"id": "6.3", "desc": "Final Push of Unified Codex", "status": "PENDING"}
+      ],
+      "status": "PENDING"
+    }
+  ]
+}
