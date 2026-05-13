@@ -97,7 +97,8 @@ fabric.properties
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -610,3 +611,4 @@ skills/logos-math/storage/
 .dolt/
 *.db
 .beads-credential-key
+.env.sovereign
