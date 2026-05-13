@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "abraxas": {
+      "type": "url",
+      "url": "http://localhost:9900/mcp"
+    }
+  }
+}

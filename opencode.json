@@ -3,7 +3,8 @@
   "mcp": {
     "abraxas": {
       "type": "remote",
-      "url": "http://localhost:9900/mcp"
+      "url": "http://localhost:9900/mcp",
+      "enabled": true
     }
   }
 }

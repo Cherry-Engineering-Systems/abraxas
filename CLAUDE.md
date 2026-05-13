@@ -45,9 +45,12 @@ abraxas/
 │   ├── agents/                      ← 8 subagent definitions (.md files)
 │   └── agent-memory/                ← persistent memory per agent (subdirs)
 ├── CLAUDE.md                        ← this file — project context for Claude Code
-├── CONSTITUTION.md                  ← universal LLM behavioral specification (all six systems)
+├── constitution/                    ← behavioral specifications (constitution/constitution.md is the main entry)
+│   └── constitution.md              ← universal LLM behavioral specification (all systems)
 ├── PLAN.md                          ← active roadmap
 ├── README.md                        ← project overview (GitHub-facing)
+├── opencode.json                    ← OpenCode MCP server config
+├── .mcp.json                        ← Claude Code MCP server config
 └── index.html                       ← public landing page
 ```
 

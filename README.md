@@ -6,35 +6,55 @@
 
 ## 🚀 Quick Start: Activate the Brain
 
-If you are new to Abraxas, follow these steps to move from a standard LLM to a **Sovereign Agent**.
-
 ### 1. Boot the Infrastructure
-The Sovereign Brain requires a deterministic core (the Unified MCP Server) to function. Run the setup script to provision the environment:
 
 ```bash
-# Clone and enter the repository
 git clone https://github.com/TylerGarlick/abraxas.git
 cd abraxas
-
-# Boot the Sovereign Core
-chmod +x setup-abraxas.sh
-./setup-abraxas.sh
+docker compose up -d
 ```
-*This script installs Bun, boots the `abraxas_mcp` unified server via Docker, and verifies system health.*
 
-### 2. Wake the Mind (Sovereign Activation)
-Once the infrastructure is online, you must initialize the LLM's identity.
+This starts the Unified MCP Server (port 9900), ArangoDB, and the health monitor (port 9901).
 
-**For Integrated Agents (OpenClaw / OpenCode):**
-Simply run the following command:
-`node skills/sovereign-boot/scripts/sovereign-boot.js`
-*The agent will autonomously detect the MCP core, load the Constitution, and enter **Sovereign Mode**.*
+### 2. Verify It's Running
 
-**For Web-Based LLMs (Claude, GPT, Gemini):**
-1. Open `constitution/genesis.md`.
-2. Copy the **Universal Initialization Block**.
-3. Paste it as your first message in the chat.
-*The agent will perform a system diagnostic using the `system_mode_health_check` tool. If the unified MCP server is online and critical systems (DB, Skills) are healthy, the agent enters **Sovereign Mode**. Otherwise, it enters **Simulation Mode**.*
+```bash
+./scripts/health-check.sh
+```
+
+Expected output:
+```
+Status:     Sovereign Mode
+Database:   connected
+Skills:     21 loaded
+Filesystem: verified
+✓ System is healthy and running in Sovereign Mode.
+```
+
+### 3. Connect Your Environment
+
+The MCP server is pre-configured for all major environments. Just start your tool and go:
+
+| Environment | Config File | Auto-detected? |
+|---|---|---|
+| **OpenCode** | `opencode.json` | Yes — in project root |
+| **Claude Code** | `.mcp.json` | Yes — in project root |
+| **VSCode (Copilot)** | `.vscode/settings.json` | Yes — workspace settings |
+
+### 4. Load the Constitution
+
+The MCP server provides **tools** (DB operations, verification, reasoning). The
+**constitution** (`constitution/constitution.md`) provides **behavioral rules** —
+anti-confabulation, anti-sycophancy, Sol/Nox labels, epistemic posture. Both are needed.
+
+MCP-aware agents (OpenCode, Claude Code, Copilot) will auto-load constitutional
+guidance from `CLAUDE.md` and `AGENTS.md`. For web-based LLMs or manual sessions:
+
+```bash
+# Copy the Universal Initialization Block from:
+cat constitution/genesis.md
+# Paste it as your first message in any LLM chat.
+```
 
 ---
 
