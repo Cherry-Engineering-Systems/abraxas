@@ -1,7 +1,10 @@
 import os
 import datetime
+import logging
 from typing import List, Dict, Any, Optional
 from arango import ArangoClient
+
+logger = logging.getLogger(__name__)
 
 class LedgerLogic:
     _instance = None
@@ -52,7 +55,7 @@ class LedgerLogic:
             "createdAt": now,
             "updatedAt": now,
         }
-        res = self.db.collection("tasks").save(task)
+        res = self.db.collection("tasks").insert(task)
         task["_key"] = res["_key"]
         return task
 
@@ -94,7 +97,7 @@ class LedgerLogic:
             "_to": f"tasks/{parent_id}",
             "type": dep_type,
         }
-        self.db.collection("task_edges").save(edge)
+        self.db.collection("task_edges").insert(edge)
         return True
 
     def get_task(self, id: str) -> Optional[Dict[str, Any]]:
