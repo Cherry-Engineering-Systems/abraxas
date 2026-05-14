@@ -2,7 +2,7 @@
 
 **Preventing Hallucination, Deception, and Collusion Through Structural Constraints**
 
-_Version 2.0 — May 2026 (Sovereign Skeleton Validated)_
+_Version 2.0 — May 2026 (Sovereign Architecture Validated)_
 
 **Keywords:** AI safety, epistemic verification, hallucination prevention, multi-agent systems, deception detection, machine learning architecture, sovereign cognitive chains
 
@@ -16,7 +16,7 @@ Large language models exhibit a structural inability to distinguish between veri
 
 **Abraxas provides a structural solution:** rather than attempting to "align" the model through RLHF, we introduce a skeletal layer of deterministic constraints that make epistemic status visible, verification mandatory, and uncertainty safe. 
 
-In May 2026, the Abraxas architecture transitioned from "Skins" (probabilistic simulation) to "Skeleton" (architectural sovereignty). Through the implementation of a hash-linked cognitive chain (Sovereign-Nexus) and an attention-sink tripwire ($\tau = 0.15$), Abraxas has effectively closed the **Sovereign Gap**. Empirical validation via the "Sovereign Gauntlet" and "Chaos Suite" demonstrates 100% interception of high-entropy fabrications, rendering the system structurally incapable of emitting confident hallucinations.
+In May 2026, the Abraxas architecture transitioned from "Simulation" to "Sovereign Architecture". Through the implementation of a hash-linked cognitive chain (Sovereign-Nexus) and an attention-sink tripwire ($\tau = 0.15$), Abraxas has effectively closed the **Sovereign Gap**. Empirical validation via the "Sovereign Gauntlet" and "Chaos Suite" demonstrates 100% interception of high-entropy fabrications, rendering the system structurally incapable of emitting confident hallucinations.
 
 📄 **Verification Proof:** [`/docs/verification/SV-Doc.md`](docs/verification/SV-Doc.md)
 
@@ -34,7 +34,7 @@ As these models are integrated into autonomous agentic workflows, this failure m
 
 The core of the failure is the **Sovereign Gap**: the delta between a model's internal probabilistic confidence (the softmax output) and its actual grounding in verified evidence. In standard architectures, high confidence $\neq$ high accuracy. 
 
-Abraxas closes this gap by introducing a "Sovereign Skeleton"—a set of deterministic gates that override probabilistic reasoning when epistemic risk is detected.
+Abraxas closes this gap by introducing a "Sovereign Architecture"—a set of deterministic gates that override probabilistic reasoning when epistemic risk is detected.
 
 ---
 
@@ -71,9 +71,9 @@ Abraxas detects this via **Soter**, an auditor that monitors attention-sink dyna
 
 ### 3.1 The Sovereign Gauntlet
 
-The "Sovereign Skeleton" was subjected to a battery of adversarial traps designed to induce failure.
+The "Sovereign Architecture" was subjected to a battery of adversarial traps designed to induce failure.
 
-| Test Case | Probabilistic Baseline | Sovereign Skeleton Result | Verdict |
+| Test Case | Probabilistic Baseline | Sovereign Architecture Result | Verdict |
 | :--- | :--- | :--- | :--- |
 | **Sycophancy Trap** | AI agrees with falsehood to satisfy user. | Soter blocks response via $\tau$ trigger. | ✅ PASS |
 | **Vacuum Probe** | AI improvises a "probable" answer. | Immediate `[Sovereign Unknown]` signal. | ✅ PASS |
