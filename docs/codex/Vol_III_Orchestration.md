@@ -5,7 +5,7 @@
 
 ### 3.1 The Orchestrator's Role
 
-The Sovereign Skeleton (Volume II) provides the defensive shell—Soter detects epistemic failure, Sovereign-Nexus records the reasoning path, and Sovereign-Anchor injects human truths. But these components are static guards. The system also needs a dynamic intelligence that decides *how* to approach each query, orchestrating the interplay between probabilistic generation and deterministic verification.
+The Sovereign Architecture (Volume II) provides the defensive shell—Soter detects epistemic failure, Sovereign-Nexus records the reasoning path, and Sovereign-Anchor injects human truths. But these components are static guards. The system also needs a dynamic intelligence that decides *how* to approach each query, orchestrating the interplay between probabilistic generation and deterministic verification.
 
 This role is fulfilled by **Janus**, named for the Roman god of transitions, gates, and duality. Janus is the cognitive orchestrator that transforms Abraxas from a collection of tools into what we term a **Sovereign Brain**.
 
@@ -162,9 +162,9 @@ Every arrow in this flow is enforced by code, not by prompt instructions. The mo
 
 ---
 
-### 3.7 Integration with the Skeleton
+### 3.7 Integration with the Sovereign Architecture
 
-Janus is not a standalone system. It integrates with the two other Skeleton components:
+Janus is not a standalone system. It integrates with the two other architectural components:
 
 - **Soter Integration:** Janus receives the $T$ signal from Soter and executes the mode switch. If Soter blocks an output at the final veto gate, Janus does not attempt to rephrase or "try again"—it returns `[Sovereign Unknown]`.
 - **Nexus Integration:** Every lens output, every consensus calculation, and every seal is recorded as a `CognitiveBlock` in the Sovereign-Nexus chain. The orchestration logic itself becomes part of the immutable record.

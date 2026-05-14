@@ -5,7 +5,7 @@
 
 ### 5.1 Introduction
 
-Volumes I through IV established the theoretical foundation, the architectural design, and the empirical validation of the Sovereign Skeleton. This final volume addresses the practical question: **How is the system deployed, maintained, and verified in production?**
+Volumes I through IV established the theoretical foundation, the architectural design, and the empirical validation of the Sovereign Architecture. This final volume addresses the practical question: **How is the system deployed, maintained, and verified in production?**
 
 The operational layer translates architectural principles into executable procedures. It defines the three-tier infrastructure, the boot sequence, the health check protocol, and the maintenance lifecycle.
 
@@ -64,7 +64,7 @@ The Bedrock layer provides the immutable foundation:
 
 #### 5.2.2 Tier 2: Brain
 
-The Brain layer hosts the 21 MCP (Model Context Protocol) skills that implement the Sovereign Skeleton and its supporting systems:
+The Brain layer hosts the 21 MCP (Model Context Protocol) skills that implement the Sovereign Architecture and its supporting systems:
 
 | Skill | Function | Sovereign Role |
 | :--- | :--- | :--- |

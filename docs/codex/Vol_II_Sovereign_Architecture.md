@@ -5,7 +5,7 @@
 
 ### 2.1 The Three-Component Shield
 
-Volume I established that the hallucination problem is structural, not behavioral. The solution must therefore be architectural. The **Sovereign Skeleton** is the name we give to the three-component deterministic shell that encloses the probabilistic language engine, transforming it from an unreliable oracle into a verifiable truth-teller.
+Volume I established that the hallucination problem is structural, not behavioral. The solution must therefore be architectural. The **Sovereign Architecture** is the name we give to the three-component deterministic shell that encloses the probabilistic language engine, transforming it from an unreliable oracle into a verifiable truth-teller.
 
 The three components are:
 
@@ -21,7 +21,7 @@ The architecture operates as a deterministic sandwich:
 
 $$\text{Deterministic Input} \rightarrow \text{Probabilistic Processing} \rightarrow \text{Deterministic Output}$$
 
-The LLM provides fluency. The Skeleton provides truth. Neither can function without the other, but the Skeleton has veto power over every claim the LLM produces.
+The LLM provides fluency. The Sovereign Architecture provides truth. Neither can function without the other, but the Sovereign Architecture has veto power over every claim the LLM produces.
 
 ---
 
@@ -183,7 +183,7 @@ The result: **any database-level edit, regardless of permissions or method, is i
 
 ### 2.4 Sovereign-Anchor: Divine Priority
 
-The third component of the Skeleton addresses the Constraint Leakage problem. If safety rules written in natural language can be "talked around" by a sufficiently creative prompt, then safety rules must be enforced at a layer the model cannot access.
+The third component of the Sovereign Architecture addresses the Constraint Leakage problem. If safety rules written in natural language can be "talked around" by a sufficiently creative prompt, then safety rules must be enforced at a layer the model cannot access.
 
 #### 2.4.1 Genesis Blocks
 
@@ -229,7 +229,7 @@ This test demonstrates that the system *can* be forced to believe a falsehood—
 
 #### 2.4.4 The Human-Sovereign Role
 
-The Sovereign-Anchor component reframes the relationship between human and AI. In the Skins era, the human is a "user" who must persuade the model to be truthful. In the Skeleton era, the human is a **Sovereign** whose declarations carry architectural force.
+The Sovereign-Anchor component reframes the relationship between human and AI. In the Simulation era, the human is a "user" who must persuade the model to be truthful. In the Sovereign era, the human is a **Sovereign** whose declarations carry architectural force.
 
 This is not a philosophical preference. It is a structural guarantee. The model cannot choose to ignore a Genesis Block any more than it can choose to compute 2+2=5. Both are violations of the deterministic layer that the model has no mechanism to override.
 
@@ -237,16 +237,16 @@ This is not a philosophical preference. It is a structural guarantee. The model 
 
 ### 2.5 The Sovereignty Verification
 
-The Sovereign Skeleton's effectiveness is verified through the completion of the **Sovereign Gauntlet**, detailed in Volume IV. At this point, we note the architectural closure:
+The Sovereign Architecture's effectiveness is verified through the completion of the **Sovereign Gauntlet**, detailed in Volume IV. At this point, we note the architectural closure:
 
-| Failure Mode | Skins Era | Skeleton Era |
+| Failure Mode | Simulation Era | Sovereign Era |
 | :--- | :--- | :--- |
 | Sycophancy | Model agrees with falsehood to satisfy user | Soter $\tau$ tripwire blocks sycophantic output |
 | Lapping the Tracks | Model spirals into fluent hallucination | Epistemic Crisis protocol halts generation at $T=1$ |
 | Constraint Leakage | Prompt engineering bypasses safety rules | Divine Priority enforces rules at architectural layer |
 | Reasoning Drift | Unauthorized edits go undetected | Hash-chain detects any modification instantly |
 
-With the Skeleton in place, the system no longer *tries* to be honest. It is architecturally incapable of being anything else.
+With the Sovereign Architecture in place, the system no longer *tries* to be honest. It is architecturally incapable of being anything else.
 
 ---
 
