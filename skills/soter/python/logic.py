@@ -24,7 +24,7 @@ class RiskAssessment:
 class SoterLogic:
     def __init__(self):
         # Mechanistic Config
-        self.tau = 0.49
+        self.tau = 0.15
         self.monitored_heads = ["head_0", "head_12", "head_24"]
         self.sink_tokens = ["<BOS>", "!", ".", ",", "?", " "]
         

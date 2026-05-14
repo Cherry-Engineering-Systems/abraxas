@@ -17,10 +17,10 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-const STORE_FILE = '/root/.openclaw/workspace/secrets/secrets-store.json';
-const MASTER_KEY_FILE = '/root/.openclaw/workspace/secrets/secrets-master.key';
-const AUDIT_FILE = '/root/.openclaw/workspace/secrets/secrets-audit.log';
-const CONFIG_FILE = '/root/.openclaw/workspace/secrets/secrets-config.json';
+const STORE_FILE = '/root/.openclaw/workspace/projects/mary-jane/secrets/secrets-store.json';
+const MASTER_KEY_FILE = '/root/.openclaw/workspace/projects/mary-jane/secrets/secrets-master.key';
+const AUDIT_FILE = '/root/.openclaw/workspace/projects/mary-jane/secrets/secrets-audit.log';
+const CONFIG_FILE = '/root/.openclaw/workspace/projects/mary-jane/secrets/secrets-config.json';
 const STORE_DIR = path.dirname(STORE_FILE);
 
 // ── Init ────────────────────────────────────────────────────────────────────

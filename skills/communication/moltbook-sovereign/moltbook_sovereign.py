@@ -12,8 +12,21 @@ class MoltbookSovereign:
 
     def _get_secret(self):
         try:
-            cmd = f'MJ_MASTER_KEY="{self.master_key}" node /root/.openclaw/workspace/skills/secrets-manager/scripts/secrets-manager.js get moltbook api_key'
-            return subprocess.check_output(cmd, shell=True).decode('utf-8').strip()
+            cmd = f'MJ_MASTER_KEY="{self.master_key}" node /root/.openclaw/workspace/projects/abraxas/skills/infrastructure/secrets-manager/scripts/secrets-manager.cjs get moltbook moltbook_api_key'
+            process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            stdout, stderr = process.communicate()
+            
+            # The secrets manager prints the value to stderr wrapped in tags
+            match = re.search(r'__SECRET_VALUE__(.*?)__SECRET_VALUE__', stderr)
+            if match:
+                return match.group(1).strip()
+            
+            # Fallback to stdout just in case
+            match_stdout = re.search(r'__SECRET_VALUE__(.*?)__SECRET_VALUE__', stdout)
+            if match_stdout:
+                return match_stdout.group(1).strip()
+                
+            return None
         except Exception as e:
             print(f"Error retrieving secret: {e}")
             return None
