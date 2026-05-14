@@ -14,15 +14,23 @@ This document describes the formal visual specifications of the Abraxas v4 cogni
 
 The deterministic path a query takes from input to verified output:
 
-```
-User Query → abraxas_mcp Unified Server → Soter Verifier (Risk Scan)
-  → Mnemosyne Memory (Grounding: raw fragments from Vault)
-  → Kairos Relevance Filter (Saliency pruning)
-  → Janus Orchestrator (Sovereign Consensus: 5 Epistemic Lenses)
-  → Episteme Provenance (Origin mapping)
-  → Ethos Credibility (Weighted truth by source)
-  → Guardrail Monitor (Final Sovereign Seal)
-  → Verified Output
+```mermaid
+graph TD
+    User([User Query]) --> UnifiedMCP[abraxas_mcp Unified Server]
+    
+    subgraph Deterministic_Shell [The Sovereign Shell]
+        UnifiedMCP --> Soter[Soter Verifier]
+        Soter -->|Risk Score / Veto| Mnemosyne[Mnemosyne Memory]
+        Mnemosyne -->|Raw Fragments| Kairos[Kairos Relevance Filter]
+        Kairos -->|Saliency Pruned Context| Janus[Janus Orchestrator]
+        Janus -->|Sovereign Consensus| Episteme[Episteme Provenance]
+        Episteme -->|Origin Mapping| Ethos[Ethos Credibility]
+        Ethos -->|Weighted Truth| Guardrail[Guardrail Monitor]
+        Guardrail -->|Final Sovereign Seal| Output([Verified Output])
+    end
+    
+    Soter -.->|Veto/Packet Drop| User
+    Guardrail -.->|Policy Violation| User
 ```
 
 At any point, Soter can veto (packet drop) and Guardrail can block on policy violation.
@@ -31,11 +39,23 @@ At any point, Soter can veto (packet drop) and Guardrail can block on policy vio
 
 The a-priori separation between analytical and symbolic registers:
 
-```
-Input Query → Janus Threshold
-  ├─ Analytical/Factual → SOL Face → [KNOWN] / [INFERRED] / [UNCERTAIN] / [UNKNOWN]
-  └─ Symbolic/Creative → NOX Face → [DREAM]
-  Both → Final Response
+```mermaid
+graph LR
+    Input([Input Query]) --> Threshold{Janus Threshold}
+    
+    Threshold -->|Analytical/Factual| Sol[SOL Face]
+    Threshold -->|Symbolic/Creative| Nox[NOX Face]
+    
+    subgraph Sol_Register [Waking Mind]
+        Sol --> Sol_Labels[Confidence Labels: KNOWN, INFERRED, UNCERTAIN, UNKNOWN]
+    end
+    
+    subgraph Nox_Register [Dreaming Mind]
+        Nox --> Nox_Labels[Symbolic Label: DREAM]
+    end
+    
+    Sol_Labels --> Output([Final Response])
+    Nox_Labels --> Output
 ```
 
 The SOL register (Waking Mind) handles factual claims with confidence labels. The NOX register (Dreaming Mind) handles creative content with the symbolic label. Labels never cross-contaminate between registers.
@@ -44,12 +64,17 @@ The SOL register (Waking Mind) handles factual claims with confidence labels. Th
 
 The "Sovereign Gap" thesis visualized:
 
-```
-Sovereign Vault → Deterministic Input (Provenance Anchors)
-  → Probabilistic Processing (LLM Proposal Engine)
-  → Probabilistic Draft
-  → Deterministic Output (Veto / Seal)
-  → Sovereign User
+```mermaid
+graph TD
+    SovereignVault[(Sovereign Vault)] -->|Deterministic Input| Shell_In[Provenance Anchors]
+    
+    subgraph Probabilistic_Engine [Probabilistic Processing]
+        Shell_In --> LLM[LLM Proposal Engine]
+        LLM --> Draft[Probabilistic Draft]
+    end
+    
+    Draft -->|Deterministic Output| Shell_Out[Deterministic Veto/Seal]
+    Shell_Out --> User([Sovereign User])
 ```
 
 The probabilistic engine (LLM) is sandwiched between deterministic gates. It receives grounded input and its output is filtered before delivery. Sovereignty resides in the system layers, not the processing layer.

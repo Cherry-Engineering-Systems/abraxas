@@ -44,16 +44,32 @@ When the system returns a `[Sovereign Consensus: X/M]` seal, it provides a point
 
 ## Cognitive Flow
 
-```
-User Query → Soter Risk Scan
-  ├─ Low Risk → NOX Mode (Generative)
-  └─ High Risk → SOL Mode (Sovereign)
-       → Mnemosyne Grounding (fetch fragments from Vault)
-       → Janus Orchestrator (5 Epistemic Lenses)
-       → Consensus Math (N-of-M Rule)
-       → Soter Veto Gate
-         ├─ Pass → Verified Output + Sovereign Receipt
-         └─ Block → Sovereign Intervention
+The complete cognitive flow from user query through verification to sovereign output:
+
+```mermaid
+graph TD
+    U[User Query] --> S[Soter Risk Scan]
+    S -->|Low Risk| NOX[NOX Mode: Generative]
+    S -->|High Risk| SOL[SOL Mode: Sovereign]
+    
+    SOL --> G[Mnemosyne Grounding]
+    G -->|Fetch| V[Sovereign Vault / fragments]
+    V -->|Bind| J[Janus Orchestrator]
+    
+    J --> L1[Skeptic Lens]
+    J --> L2[Expert Lens]
+    J --> L3[Adversary Lens]
+    J --> L4[Archivist Lens]
+    J --> L5[Generalist Lens]
+    
+    L1 & L2 & L3 & L4 & L5 --> C[Consensus Math]
+    C --> Veto[Soter Veto Gate]
+    
+    Veto -->|Pass| N[Sovereign-Nexus]
+    Veto -->|Block| Fail[Sovereign Intervention]
+    
+    N --> Chain[Hash Chain / Block Chain of Thought]
+    Chain --> Out[Verified Output + Sovereign Receipt]
 ```
 
 ## Provenance Graph Schema

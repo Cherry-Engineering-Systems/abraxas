@@ -14,15 +14,22 @@ Abraxas v4 consolidates the formerly distributed "5-Pillar" swarm into a **Modul
 
 The modular monolith follows this core topology:
 
-```
-User Query → abraxas_mcp (Unified Server)
-              ↓
-       Skill Registry (Dynamic Loading)
-       ↓        ↓         ↓         ↓         ↓
-    Soter  Mnemosyne   Janus    Dream    Guardrail
-   (Risk)   (Memory)  (Labels)  (Graph)  (Audit)
-              ↓
-       Sovereign Database (ArangoDB)
+```mermaid
+flowchart TD
+    User([User Query]) --> UnifiedMCP[abraxas_mcp Unified Server]
+    
+    subgraph Modular_Monolith [Modular Monolith Architecture]
+        UnifiedMCP --> Registry[Skill Registry]
+        Registry -->|Dynamic Load| Soter[Soter Verifier]
+        Registry -->|Dynamic Load| Mnemosyne[Mnemosyne Memory]
+        Registry -->|Dynamic Load| Janus[Janus Orchestrator]
+        Registry -->|Dynamic Load| Dream[Dream Reservoir]
+        Registry -->|Dynamic Load| Guardrail[Guardrail Monitor]
+        
+        UnifiedMCP --> DB[(Sovereign Database)]
+    end
+    
+    UnifiedMCP --> Output([Verified Output])
 ```
 
 ## The Unified Core Pillars

@@ -126,13 +126,45 @@ An agent that cannot pass the health check is, by definition, not sovereign — 
 
 Every interaction flows through a three-layer architecture:
 
-```
-Deterministic Input → Probabilistic Processing → Deterministic Output
+```mermaid
+graph TD
+    SovereignVault[(Sovereign Vault)] -->|Deterministic Input| Shell_In[Provenance Anchors]
+    
+    subgraph Probabilistic_Engine [Probabilistic Processing]
+        Shell_In --> LLM[LLM Proposal Engine]
+        LLM --> Draft[Probabilistic Draft]
+    end
+    
+    Draft -->|Deterministic Output| Shell_Out[Deterministic Veto/Seal]
+    Shell_Out --> User([Sovereign User])
 ```
 
 The LLM is the middle layer only. It never touches input directly (grounding happens first) and its output never reaches the user directly (veto happens last).
 
 ### 4.2 Full Pipeline — 9 Stages
+
+**The complete pipeline visual specification:**
+
+```mermaid
+graph TD
+    User([User Query]) --> UnifiedMCP[abraxas_mcp Unified Server]
+    
+    subgraph Deterministic_Shell [The Sovereign Shell]
+        UnifiedMCP --> Soter[Soter Verifier]
+        Soter -->|Risk Score / Veto| Mnemosyne[Mnemosyne Memory]
+        Mnemosyne -->|Raw Fragments| Kairos[Kairos Relevance Filter]
+        Kairos -->|Saliency Pruned Context| Janus[Janus Orchestrator]
+        Janus -->|Sovereign Consensus| Episteme[Episteme Provenance]
+        Episteme -->|Origin Mapping| Ethos[Ethos Credibility]
+        Ethos -->|Weighted Truth| Guardrail[Guardrail Monitor]
+        Guardrail -->|Final Sovereign Seal| Output([Verified Output])
+    end
+    
+    Soter -.->|Veto/Packet Drop| User
+    Guardrail -.->|Policy Violation| User
+```
+
+**Stage-by-stage walkthrough:**
 
 **Stage 1: User Query Reception**
 The user's input enters through the Sovereign Interface, which validates the channel against the whitelist. Unauthorized channels are rejected immediately.
@@ -234,6 +266,26 @@ Claim: "Abraxas v4 achieves 0% hallucination"
 #### Janus — The Cognitive Orchestrator
 **Role:** Two-faced cognitive engine. Conscious mind analog.
 **Function:** Routes queries between Sol (analytical) and Nox (creative) registers, manages the consensus engine, and stamps output with epistemic labels.
+
+```mermaid
+graph LR
+    Input([Input Query]) --> Threshold{Janus Threshold}
+    
+    Threshold -->|Analytical/Factual| Sol[SOL Face]
+    Threshold -->|Symbolic/Creative| Nox[NOX Face]
+    
+    subgraph Sol_Register [Waking Mind]
+        Sol --> Sol_Labels[Confidence Labels: KNOWN, INFERRED, UNCERTAIN, UNKNOWN]
+    end
+    
+    subgraph Nox_Register [Dreaming Mind]
+        Nox --> Nox_Labels[Symbolic Label: DREAM]
+    end
+    
+    Sol_Labels --> Output([Final Response])
+    Nox_Labels --> Output
+```
+
 **The Four Pillars:**
 1. **Sovereign Switch** — Transitions between NOX (probabilistic) and SOL (deterministic) modes
 2. **Sovereign Spawning** — Creates M independent reasoning paths with unique lenses

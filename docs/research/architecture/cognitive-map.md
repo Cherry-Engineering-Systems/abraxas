@@ -12,15 +12,44 @@ The Abraxas v4 cognitive architecture can be understood through a biological ana
 
 ## High-Level Cognitive Architecture
 
-The system maps to five functional layers:
+## 🗺️ High-Level Cognitive Architecture
 
-```
-User/Human ↔ Sovereign Interface
-  ↔ Conscious Mind (Janus Orchestrator: SOL + NOX)
-  ↔ Pre-Frontal Cortex (Soter + Guardrail: Safety Filter)
-  ↔ Working Memory (Mnemosyne: Active Context)
-  ↔ Subconscious (Dream Reservoir: Hypothesis Generator, Concepts)
-  ↔ Genome (ArangoDB Knowledge Graph: Provenance Chains)
+```mermaid
+graph TD
+    User((User / Human)) <--> Interface[Sovereign Interface]
+
+    subgraph Conscious_Layer [The Conscious Mind / The Ego]
+        Interface <--> Janus[Janus Orchestrator]
+        Janus <--> SOL[SOL: Analytical/Waking Face]
+        Janus <--> NOX[NOX: Intuitive/Dreaming Face]
+    end
+
+    subgraph Executive_Layer [The Pre-Frontal Cortex / The Gate]
+        Janus <--> Soter[Soter Verifier]
+        Janus <--> Guardrail[Guardrail Monitor]
+        Soter --> SafetyLedger[(Safety Ledger)]
+    end
+
+    subgraph Working_Memory [Working Memory / The Hippocampus]
+        Soter <--> Mnemosyne[Mnemosyne Memory MCP]
+        Guardrail <--> Mnemosyne
+        Janus <--> Mnemosyne
+    end
+
+    subgraph Subconscious_Layer [The Subconscious / The Reservoir]
+        Mnemosyne <--> DreamRes[Dream Reservoir]
+        DreamRes <--> Hypotheses[Hypothesis Generator]
+        Hypotheses <--> Concepts[Conceptual Framework]
+    end
+
+    subgraph Genome_Layer [The Deep Genome / The Truth]
+        Concepts <--> GraphDB[(ArangoDB Knowledge Graph)]
+        GraphDB <--> Provenance[Provenance Chain]
+    end
+
+    Provenance -->|Grounding| Soter
+    Provenance -->|Verification| Janus
+    DreamRes -->|Seed| NOX
 ```
 
 ## Component Mapping
