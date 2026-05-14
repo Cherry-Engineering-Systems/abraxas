@@ -1,13 +1,13 @@
 # genesis.md
 
 > **Abraxas Genesis File**
-> Version: 1.0
-> Created: 2026-03-18
+> Version: 4.4.1
+> Created: 2026-03-18 · Updated: 2026-05-13
 > Purpose: Initialization blueprint for deploying Abraxas across LLM providers
 
 ---
 
-## ABR AXAS INITIALIZATION PROTOCOL
+## ABRAXAS INITIALIZATION PROTOCOL
 
 ### Purpose
 
