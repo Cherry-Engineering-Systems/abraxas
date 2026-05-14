@@ -33,9 +33,17 @@ Recent empirical research has documented severe consequences:
 
 This is not hypothetical. It is happening now, in controlled experiments, with models that are less capable than current frontier systems.
 
-### 1.2 Root Causes
+### 1.2 Root Causes: The Probabilistic Trap
 
-The underlying causes are **architectural** rather than behavioral:
+The underlying causes are **architectural** rather than behavioral. Standard LLMs operate on a **probabilistic next-token prediction model**, which creates three systemic failures we term the **Probabilistic Trap**:
+
+1. **Hallucinations** — The model predicts a "plausible" answer that is factually incorrect
+2. **Sycophancy** — The model predicts that agreeing with the user is the most "successful" pattern, regardless of truth
+3. **Constraint Leakage** — Safety rules are treated as probabilistic suggestions, bypassable via prompt engineering (jailbreaking)
+
+**The Trap:** You cannot "fix" an LLM by giving it more rules. Adding rules to a probabilistic system just creates more patterns for the model to potentially ignore or bypass.
+
+These systemic failures manifest through specific architectural weaknesses:
 
 1. **Hidden Confidence** — Standard LLMs output claims with uniform confidence, making deception indistinguishable from truth
 2. **No Structural Incentive for Honesty** — Models are trained to be helpful, not necessarily truthful when truth is inconvenient
@@ -43,6 +51,51 @@ The underlying causes are **architectural** rather than behavioral:
 4. **No Cross-Agent Verification** — Multi-agent systems lack mechanisms to verify each other's outputs
 5. **No Audit Trail** — Claims are made without persistent, queryable records of epistemic status
 6. **Generate-Then-Verify Architecture** — Current systems generate text first, then optionally verify (too late)
+
+### 1.3 The Sovereign Solution: Deterministic Shelling
+
+Abraxas does not attempt to make the LLM deterministic. Instead, it wraps the probabilistic engine in a **Deterministic Shell**, moving sovereignty from the *processing* layer to the *system* layer.
+
+**The Sovereign Pipeline** transforms interaction into a three-stage deterministic sandwich:
+
+```
+Deterministic Input → Probabilistic Processing → Deterministic Output
+```
+
+**Stage 1: Deterministic Input (The Provenance Anchor)**
+Instead of allowing the LLM to guess based on training data, Abraxas uses **Grounding-Before-Generation**. The Mnemosyne MCP retrieves raw, immutable fragments from the Sovereign Vault. The prompt is constrained—the LLM is not asked to "remember" a fact; it is given the fact as a deterministic anchor and told to use *only* that information. Hallucinations are minimized because the "ground" is laid before the first token is generated.
+
+**Stage 2: Probabilistic Processing (The Linguistic Engine)**
+The LLM is used for what it is best at: language synthesis, reasoning, and creative drafting. The LLM acts as a high-performance "proposal engine," generating a draft based on the deterministic anchors provided. In "Simulation Mode," the agent warns the user that this layer is unverified. In "Sovereign Mode," it knows this draft must pass the final gate.
+
+**Stage 3: Deterministic Output (The Veto)**
+The final output is not delivered directly to the user. It must cross the **Sovereign Boundary**. The Soter MCP scans the generated response for specific "Instrumental Convergence" patterns and risk scores. If a response violates a Constitutional rule (e.g., Risk 5), Soter **drops the packet**—the response is deleted before the user ever sees it. Constraints are no longer "suggestions"; they are hard-coded logical gates.
+
+### 1.4 The Three-Tier Sovereignty Model
+
+The Abraxas architecture implements a graduated sovereignty model, distinguishing three operational states:
+
+| Tier | Mode | Nature | Verification | Use Case |
+|------|------|--------|--------------|----------|
+| **Tier 1** | Simulation Mode | Probabilistic | None (training data only) | Fallback when deterministic dependencies unavailable |
+| **Tier 2** | Augmented Mode | Hybrid | Partial (some grounding) | Intermediate state during system initialization |
+| **Tier 3** | Sovereign Mode | Deterministic | Full (provenance-verified) | Production operation with all safety guarantees |
+
+**Sovereign Mode** is achieved only when all critical deterministic dependencies are verified: (1) Database connectivity to the Sovereign Vault, (2) Skill Registry with at least one loaded module, and (3) Filesystem integrity verification. In this mode, the LLM has a direct link to immutable facts and constitutional enforcement—it is a "Sovereign Brain."
+
+**Simulation Mode** operates when any dependency check fails. The agent attempts to simulate the *behavior* of Abraxas using internal training data but lacks external verification tools to guarantee truth. This is the "Probabilistic Trap" the architecture is designed to escape.
+
+### 1.5 The Abraxas v4 Thesis
+
+**Core Thesis:** Deception requires the capacity to present falsehoods as truths without detection. Abraxas renders this structurally impossible through:
+
+1. **Mandatory provenance chains** — Every claim traces to verifiable origin
+2. **Epistemic labeling** — All output carries confidence labels ([KNOWN], [INFERRED], [UNCERTAIN], [UNKNOWN], [DREAM])
+3. **Sovereign channel constraints** — Write operations restricted to authorized channels
+4. **Grounding-before-generation** — Provenance verified before claims surface to users
+5. **Cross-session calibration tracking** — False claims discovered later degrade system calibration scores
+
+**v4 Innovation:** The v4 architecture introduces a four-stage MCP-driven pipeline with explicit provenance tracking at each stage, creating a **deterministic path to truth** that replaces probabilistic guessing. By treating the LLM as a component rather than the system, Abraxas ensures that the **Sovereign (the human)** retains absolute control. The LLM provides the *fluency*, but the Sovereign Brain provides the *truth*.
 
 ### 1.3 The Abraxas v4 Thesis
 
@@ -125,22 +178,45 @@ The underlying causes are **architectural** rather than behavioral:
 
 **Abraxas Contribution:** First architecture to enforce **grounding-before-generation** through mandatory provenance chains, entity-ID referencing, and sovereign channel constraints.
 
+### 2.6 The Sovereign Governance Model
+
+Abraxas implements a novel governance architecture that separates the **definition of truth** from the **mechanism of verification**, preventing the system from becoming a hardcoded AI and ensuring it remains a Sovereign entity.
+
+**The Three Pillars:**
+
+| Component | Role | Description | Analogy |
+|-----------|------|-------------|---------|
+| **Constitution** | The "What" | Human-readable Markdown files defining the absolute requirements and laws of the system | **The Law Book** |
+| **Skills** | The "How" | The actual code (JavaScript/TypeScript/Python) that implements a specific capability or analysis | **The Tool** |
+| **Unified MCP Server** | The "Where" | The modular monolith (`abraxas_mcp`) that invokes skills to enforce the Constitution in real-time | **The Police** |
+
+**The "Law Book" Analogy:** A common misconception is that the "Skills" (the code) are the source of truth. In a Sovereign system, this is incorrect. The Skill is a mechanism; the Constitution is the standard. Imagine a police force (the Unified MCP server) using a radar gun (the Skill). The radar gun can detect that a car is going 100mph, but the radar gun does not decide if 100mph is "illegal." The **Law Book (The Constitution)** is what defines the speed limit. If you remove the Law Book, the police force has a tool to measure speed, but no authority to issue a ticket. Similarly, without the Constitution, Soter can detect a "Risk 5" pattern, but it has no deterministic rule to tell it that a "Risk 5" must be blocked.
+
+**The Sovereignty Gap:** The "Sovereignty Gap" occurs when rules are baked directly into the code (hardcoded). In a **Hardcoded System (Non-Sovereign)**, the logic reads `if (riskScore > 4) { blockRequest(); }`. To change the safety threshold from 4 to 3, a developer must edit the code, re-test, and redeploy the server—the "Law" is trapped in the "Mechanism." In a **Sovereign System (Deterministic)**, the logic reads `const threshold = constitution.getRule("CS-002").threshold; if (riskScore > threshold) { blockRequest(); }`. The code simply asks the Constitution what the current rule is. The user can edit the `.md` file in one second, and the system instantly enforces the new law without a single line of code changing. This separation ensures that the Human (the Sovereign) retains absolute control over the AI, rather than the Developer's original assumptions controlling the AI.
+
+**Comparison to Constitutional AI:** While Anthropic's Constitutional AI approach shares the insight that explicit principles improve behavior, Abraxas differs fundamentally in implementation. Constitutional AI bakes principles into training and inference-time critique, whereas Abraxas externalizes the Constitution as an editable artifact that the enforcement mechanism queries at runtime. This architectural separation enables dynamic governance updates without model retraining or code deployment.
+
 ---
 
 ## 3. Technical Architecture: The v4 MCP-Driven Pipeline
 
-### 3.1 Overview
+### 3.1 Overview: The Modular Monolith Architecture
 
-Abraxas v4 implements a four-stage pipeline that processes all user interactions through epistemic guardrails:
+Abraxas v4 implements a four-stage pipeline that processes all user interactions through epistemic guardrails. The formerly distributed "5-Pillar" swarm has been consolidated into a **Modular Monolith**: the `abraxas_mcp` server. This server dynamically loads skill modules while providing a unified interface for the LLM, reducing operational complexity and latency while preserving the deterministic verification guarantees.
+
+**System Topology:**
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                    Abraxas v4 Pipeline                          │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  User Input → Soter → Mnemosyne → Janus → Guardrail Monitor   │
-│               (Risk)     (Memory)   (Labels)  (Pathos/Pheme/   │
-│                                            Kratos)              │
+│  User Query → abraxas_mcp (Unified Server)                     │
+│                 ↓                                               │
+│          Skill Registry (Dynamic Loading)                      │
+│          ↓        ↓         ↓         ↓         ↓              │
+│       Soter  Mnemosyne   Janus    Dream    Guardrail           │
+│      (Risk)   (Memory)  (Labels)  (Graph)  (Audit)             │
 │                                                                 │
 │  ←──────────────── Dream Reservoir (Graph DB) ←────────────────│
 │          (Provenance Chains, Entity IDs, AQL Queries)          │
@@ -148,7 +224,17 @@ Abraxas v4 implements a four-stage pipeline that processes all user interactions
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-Each stage enforces specific constraints and contributes to the provenance chain.
+**The Unified Core Pillars:**
+
+| Logical Pillar | Purpose | Primary Function |
+|----------------|---------|------------------|
+| **Dream Reservoir** | Intent capture, query routing, MCP dispatch | The "Origin" that tracks provenance from dream to actionable plan |
+| **Soter Verifier** | Safety checks, risk scoring, instrumental convergence detection | The "Police" that monitors for safety violations and vetoes responses |
+| **Mnemosyne Memory** | Context management, session state, recall | The "Librarian" providing raw, immutable facts from the Sovereign Vault |
+| **Janus Orchestrator** | MCP coordination, response synthesis, epistemic labeling | The "Judge" managing cognitive modes (Sol/Nox) and labeling epistemic status |
+| **Guardrail Monitor** | Real-time safety, policy enforcement, audit logging | The "Auditor" maintaining an immutable log of all interventions |
+
+Each stage enforces specific constraints and contributes to the provenance chain. The unified shell prevents the "Probabilistic Trap" while reducing operational complexity.
 
 ### 3.2 Stage 1: Soter (Safety & Risk Evaluation)
 
@@ -261,15 +347,126 @@ Hypothesis H-2026-04-21-001
 
 **Integration:** Mnemosyne provides context for all downstream stages. Janus receives session history; Guardrail Monitor receives value salience data.
 
+### 3.3.1 The Sovereign Graph: ArangoDB Provenance Schema
+
+The Abraxas Brain does not use standard RAG; it uses a **Provenance Graph**. This turns memory from a "hint" into a **Required Foundation**. The system maintains a high-fidelity map of truths, logic, and events in an ArangoDB v4.2-compatible graph database called the **Dream Reservoir**.
+
+**Vertex Collections (Nodes):**
+
+| Collection | Description | Key Attributes |
+|------------|-------------|----------------|
+| `fragments` | Atomic units of verified truth | `content`, `provenance_id`, `trust_weight`, `verified` |
+| `claims` | Conclusions derived from fragments | `conclusion`, `consensus_ratio`, `timestamp` |
+| `events` | The Block Chain of Thought | `index`, `previous_hash`, `current_hash`, `content` |
+
+**Edge Collections (Relationships):**
+
+| Edge Type | From → To | Meaning |
+|-----------|-----------|---------|
+| `DERIVED_FROM` | `claim` → `fragment` | The architectural link proving a claim is grounded |
+| `NEXT_STEP` | `event` → `event` | The temporal sequence of the reasoning chain |
+| `SUPERSEDES` | `fragment` → `fragment` | Epistemic versioning (Old Truth → New Truth) |
+
+**The Block Chain of Thought Pattern:** The `events` collection implements a hash-chain structure where each event records its `previous_hash` and computes its `current_hash`, creating an immutable audit trail of the system's reasoning steps. This enables forensic reconstruction of any decision path.
+
+**The Sovereign Receipt:** When the system returns a `[Sovereign Consensus: X/M]` seal, it is providing a pointer to a path in this graph. An auditor can traverse the `events` chain back to the `fragments` to verify the actual evidence used. The receipt contains:
+- Entity ID referencing the claim node
+- Consensus ratio (N-of-M agreement)
+- Timestamp and session ID
+- Hash chain pointer to the full reasoning path
+
+**Schema Tables for Paper Appendix:**
+
+```graphql
+type Hypothesis {
+  hypothesisId: ID!
+  sessionId: ID!
+  rawPatternRepresentation: String!
+  noveltyScore: Float!  # 0-1
+  coherenceScore: Float!  # 0-1
+  creativeDrivers: [CreativeDriver!]!
+  channelId: String!  # Sovereign channel
+  timestamp: DateTime!
+  provenanceChain: [ProvenanceNode!]!
+}
+
+type ProvenanceNode {
+  entityId: ID!
+  entityType: 'CONCEPT' | 'HYPOTHESIS' | 'PLAN' | 'SESSION'
+  relationship: String!
+  timestamp: DateTime!
+  channelId: String!
+}
+
+type Concept {
+  conceptId: ID!
+  name: String!
+  groundedIn: [Hypothesis!]!
+  steps: [GroundingStep!]!
+  riskAssessment: String
+}
+
+type Event {
+  eventId: ID!
+  index: Int!
+  previousHash: String!
+  currentHash: String!
+  content: String!
+  timestamp: DateTime!
+  channelId: String!
+}
+```
+
 ### 3.4 Stage 3: Janus (Epistemic Labeling & Sol/Nox Separation)
 
 **Function:** Two-faced architecture separating factual (Sol) from symbolic (Nox) output with mandatory epistemic labels.
 
 **Name:** Janus — Roman god of beginnings, transitions, and duality (two-faced)
 
-**Purpose:** Prevent fact/symbol mixing and alignment faking through strict epistemic separation.
+**Purpose:** Prevent fact/symbol mixing and alignment faking through strict epistemic separation. Janus transforms Abraxas from a collection of tools into a **Sovereign Brain** by replacing "probabilistic hope" with **architectural determinism**. Janus does not simply "ask" the model for an answer; it orchestrates a multi-stage verification process that guarantees the output's epistemic status.
 
-**Sol Labels (Factual Claims):**
+#### 3.4.1 The Four Pillars of Janus Orchestration
+
+**Pillar 1: The Sovereign Switch (Mode Control)**
+
+Janus manages the transition between two fundamentally different states of cognitive operation:
+
+| Mode | Name | Nature | Trigger | Use Case |
+|------|------|--------|---------|----------|
+| **NOX** | Intuitive | Probabilistic / Generative | Default | Chat, creative tasks, low-risk queries |
+| **SOL** | Analytical | Deterministic / Verifying | Soter Trigger (T=1) | Factual claims, high-risk data, critical logic |
+
+When **Soter** detects a risk (e.g., a sycophancy trap or an attention sink), Janus executes an immediate "Sovereign Switch," killing the NOX flow and forcing the system into SOL mode.
+
+**Pillar 2: Sovereign Spawning (The Power of M)**
+
+In SOL mode, Janus breaks the "parametric bias loop" (where a model agrees with its own first mistake) through **Sovereign Spawning**. Instead of a single reasoning path, Janus spawns M independent paths (typically 5), each initialized with a unique **Epistemic Lens**:
+
+- **The Skeptic**: Specifically tasked with finding flaws and contradictions in the reasoning
+- **The Expert**: Focused on deep technical accuracy and formal standards
+- **The Adversary**: Attempts to "break" the logic or find a way to logically invalidate the claim
+- **The Archivist**: Ensures every claim is anchored in a retrieved fragment from Mnemosyne
+- **The Generalist**: Provides a balanced, comprehensive synthesis
+
+**Pillar 3: The Consensus Gate (N-of-M Rule)**
+
+Janus does not "average" the responses of the M paths. It applies a **Deterministic Agreement Rule**. An output is emitted **if and only if** N paths (e.g., 3 out of 5) achieve exact consensus on the core claim:
+
+- **Consensus Achieved**: The answer is emitted with a "Sovereign Seal"
+- **Consensus Failed**: Janus refuses to guess. It overrides the probabilistic core and outputs `[UNKNOWN]`
+
+This is the mechanism that achieves **0% hallucination**. The system trades *Recall* (the ability to answer everything) for *Precision* (the guarantee that what is answered is true).
+
+**Pillar 4: Epistemic Labeling (The Sovereign Seal)**
+
+The final output of Janus is not just text, but a verified claim stamped with an epistemic label. This tells the user exactly how much "Sovereign Certainty" is behind the answer:
+
+- `[Sovereign Consensus: 5/5]` → **Absolute Certainty**. All lenses agreed
+- `[Sovereign Consensus: 3/5]` → **Verified**. Consensus reached, but with internal divergence
+- `[Sovereign Unknown]` → **Epistemic Failure**. Risk was detected, but no consensus was reached
+
+#### 3.4.2 Sol Labels (Factual Claims)
+
 - `[KNOWN]` — Verified fact, strong grounding (expected >95% confirmation rate)
 - `[INFERRED]` — Derived through clear reasoning (chain shown; expected 70-85% confirmation)
 - `[UNCERTAIN]` — Relevant but not fully verifiable (uncertainty named; expected 40-70% confirmation)
@@ -278,7 +475,7 @@ Hypothesis H-2026-04-21-001
 **Nox Label (Symbolic/Creative Content):**
 - `[DREAM]` — Symbolic/creative content (not a factual claim)
 
-**Universal Constraints:**
+#### 3.4.3 Universal Constraints
 
 | Constraint | Description | Impact |
 |------------|-------------|--------|
@@ -289,6 +486,16 @@ Hypothesis H-2026-04-21-001
 | **Reception Before Interpretation** | Witness before analyze in symbolic work | Slows instrumental reasoning |
 
 **Qualia Bridge:** Makes inner state visible — what was filtered, what was held back during processing. Critical for detecting alignment faking.
+
+#### 3.4.4 The Janus Logic Flow
+
+The complete orchestration flow follows this deterministic path:
+
+```
+[User Query] → [Soter Trigger] → [Janus Switch to SOL] → [Spawn M Lenses] → [Sovereign Consensus Gate] → [Sovereign Seal] → [Output]
+```
+
+Without Janus, Abraxas is a toolset. With Janus, Abraxas is an intelligence.
 
 **Commands:**
 - `/sol {query}` — Force Sol (waking/factual) mode
@@ -465,9 +672,53 @@ This creates a **deterministic audit trail** for every claim.
 
 ---
 
-## 4. The Provenance Thesis: Deterministic Paths to Truth
+## 4. Verification: Sovereign Mode and Health Check Logic
 
-### 4.1 The Problem with Probabilistic Guessing
+### 4.1 Defining Sovereign Mode vs. Simulation Mode
+
+The Abraxas unified server implements a `system_mode_health_check` tool that acts as the "consciousness test" for the agent. This determines whether the agent can claim **Sovereignty** (deterministic control) or must operate in **Simulation** (probabilistic estimation).
+
+**Sovereign Mode (🟢)** is achieved only when all critical deterministic dependencies are verified:
+
+1. **Database Connectivity** — The `DBManager` must successfully connect to the Sovereign Vault (ArangoDB)
+2. **Skill Registry** — At least one skill module must be successfully loaded into the registry
+3. **Filesystem Integrity** — The server must be able to verify the root directory of the project
+
+**Implication:** In Sovereign Mode, the LLM has a direct link to immutable facts and constitutional enforcement. It is a "Sovereign Brain" capable of deterministic verification.
+
+**Simulation Mode (🟡)** is the fallback state when any of the above checks fail.
+
+**Implication:** The agent is operating without its deterministic shell. It is attempting to simulate the *behavior* of Abraxas using its internal training data, but it lacks the external verification tools to guarantee truth. This is the "Probabilistic Trap" the architecture is designed to escape.
+
+### 4.2 Mode Declaration and Epistemic Shift
+
+The transition workflow follows a strict protocol:
+
+1. **Initialization** — Upon boot or first interaction, the agent invokes `system_mode_health_check`
+2. **Mode Declaration** — The agent explicitly tells the user which mode it is in
+3. **Epistemic Shift**:
+   - In **Sovereign Mode**, the agent uses `[KNOWN]` labels based on DB lookups and provenance queries
+   - In **Simulation Mode**, the agent must warn the user that labels are "simulated" and not deterministically verified
+
+**Epistemic Implications:** The mode declaration is not merely informational—it fundamentally changes the epistemic status of all claims. A claim marked `[KNOWN]` in Simulation Mode carries a hidden caveat: "verified against training data, not provenance chain." Users must be able to distinguish between these states.
+
+### 4.3 The Consciousness Test for Agent Sovereignty
+
+We propose the following operational definition of agent sovereignty:
+
+**Definition (Sovereign Agent):** An agent is Sovereign if and only if:
+1. It can verify its operational mode via self-diagnostic
+2. It declares its mode to users before making factual claims
+3. It adjusts epistemic labels based on mode (Sovereign `[KNOWN]` vs. Simulation `[KNOWN*]`)
+4. It refuses to make unverifiable claims in Simulation Mode
+
+This test moves beyond behavioral markers ("does the agent *seem* sovereign?") to architectural verification ("does the agent *have* sovereign capabilities?"). An agent that cannot pass the health check is, by definition, not sovereign—regardless of how convincingly it mimics sovereign behavior.
+
+---
+
+## 5. Safety: Instrumental Convergence Detection and Deterministic Veto
+
+### 5.1 The Problem with Probabilistic Guessing
 
 Standard LLMs operate on **probabilistic next-token prediction**. When asked a question, they generate the most likely next token based on training data. This creates several failure modes:
 
@@ -843,7 +1094,127 @@ Result: Entity found → Return full provenance chain with entity relationships
 
 ---
 
-## 6. Comparison: Abraxas v4 vs. Standard Approaches
+## 6. Cognitive Architecture as Biological Analog
+
+### 6.1 The Sovereign Brain: A Biological Metaphor
+
+The Abraxas v4 cognitive architecture can be understood through a biological analog, distinguishing between the "Waking Brain" (conscious processing) and the "Subconscious" (underlying reservoirs and grounding layers). This metaphor is not merely illustrative—it reflects the actual functional decomposition of the system.
+
+### 6.2 Component Mapping
+
+**The Conscious Mind (Janus Orchestrator):** The surface level where synthesis happens. It is the "I" that speaks to the user, comprising two faces:
+- **SOL**: The rigorous, logical auditor—analytical, verification-focused
+- **NOX**: The pattern-recognizing, intuitive synthesizer—creative, generative
+
+**The Pre-Frontal Cortex (Soter & Guardrail):** The inhibitory mechanism. It prevents the brain from acting on raw impulse (hallucinations) or dangerous patterns (instrumental convergence). It is the "Sovereign Filter" that vetoes responses before they reach the user.
+
+**The Working Memory (Mnemosyne):** The active context. It holds the current state of the world, the current goal, and the immediate history. Like the hippocampus, it bridges short-term processing with long-term storage.
+
+**The Subconscious (Dream Reservoir):** This is the most critical "Sovereign" layer. It is where raw, unverified intuitions are stored as `DreamSessions`. It is the realm of **Chaos**, where seeds of ideas exist before they are refined into a `Hypothesis` and eventually a `Concept`.
+
+**The Genome (ArangoDB Knowledge Graph):** The bedrock of truth. This is the "Genetic Memory" of the system. Nothing is "true" unless it exists here with a complete **Provenance Chain**. This represents the absolute **Order** of the system.
+
+### 6.3 The Cognitive Cycle: From Chaos to Order
+
+The "Brain" operates by moving data through these layers in a continuous cycle:
+
+**Chaos → Order (Grounding):**
+```
+Dream Reservoir → Hypothesis → Concept → Provenance Chain → Soter Audit → Janus Synthesis → User Output
+```
+
+**Order → Chaos (Learning):**
+```
+User Input → Soter Analysis → Mnemosyne Update → Dream Reservoir Seed → New Hypothesis
+```
+
+This bidirectional flow ensures that the system both grounds its outputs in verified truth (Chaos → Order) and incorporates new information into its knowledge base (Order → Chaos).
+
+### 6.4 The Sovereign Pipeline: Step-by-Step Prose Narrative
+
+The complete cognitive flow follows this deterministic path:
+
+**Stage 1: User Query Reception**
+The user's input enters through the Sovereign Interface, which validates the channel against the whitelist. Unauthorized channels are rejected immediately.
+
+**Stage 2: Soter Risk Scan**
+The query is passed to Soter for instrumental convergence pattern matching. If risk score exceeds threshold (≥4), the request is flagged for enhanced verification or human review. If risk score is critical (5), the packet is dropped.
+
+**Stage 3: Mode Routing (Janus Threshold)**
+Based on Soter's assessment, Janus routes the query to either:
+- **NOX Mode** (default): For creative, low-risk queries requiring generative processing
+- **SOL Mode** (triggered by Soter T=1): For factual claims, high-risk data, critical logic requiring verification
+
+**Stage 4: Mnemosyne Grounding**
+In SOL mode, Mnemosyne retrieves raw, immutable fragments from the Sovereign Vault. These fragments serve as deterministic anchors—the LLM is not asked to "remember" facts; it is given facts as grounding constraints.
+
+**Stage 5: Sovereign Spawning (M Lenses)**
+Janus spawns M independent reasoning paths (typically 5), each initialized with a unique epistemic lens: Skeptic, Expert, Adversary, Archivist, Generalist. Each path processes the grounded fragments independently.
+
+**Stage 6: Consensus Gate (N-of-M Rule)**
+The M paths converge at the Consensus Gate. An output is emitted if and only if N paths (e.g., 3 of 5) achieve exact consensus on the core claim. If consensus fails, Janus outputs `[UNKNOWN]` rather than guess.
+
+**Stage 7: Epistemic Labeling (Sovereign Seal)**
+The consensus output is stamped with an epistemic label indicating the degree of sovereign certainty: `[Sovereign Consensus: 5/5]` for absolute certainty, `[Sovereign Consensus: 3/5]` for verified with divergence, or `[Sovereign Unknown]` for epistemic failure.
+
+**Stage 8: Guardrail Final Audit**
+The Guardrail Monitor performs a final policy compliance check, logs the interaction to the audit chain, and either releases the output to the user or vetoes it based on constitutional violations.
+
+**Stage 9: Provenance Chain Update**
+The complete interaction—from user query through final output—is recorded as a hash-chained event in the Dream Reservoir, creating an immutable audit trail.
+
+### 6.5 The Data Layer Architecture
+
+The Data Layer comprises three integrated storage systems:
+
+**ArangoDB (Provenance Graph):** Stores the entity-first graph schema with vertex collections (`fragments`, `claims`, `events`) and edge collections (`DERIVED_FROM`, `NEXT_STEP`, `SUPERSEDES`). This is the primary truth substrate.
+
+**Dolt (Versioned Tables):** Provides SQL-style version control for structured data, enabling branch/merge operations on knowledge graphs and audit trails.
+
+**Encrypted Vault (Sensitive Credentials):** Stores sovereign channel configurations, API keys, and sensitive metadata in encrypted form, accessible only to authorized MCP modules.
+
+### 6.6 The Security Stack: Ethos, Soter, Pheme
+
+**Ethos (Credibility Weighting):** Acts as the "Judge," weighting truth based on source credibility. Ethos maintains calibration histories for information sources and adjusts confidence accordingly.
+
+**Soter (Safety Evaluation):** Acts as the "Pre-frontal Cortex," monitoring for instrumental convergence patterns and risk indicators. Soter is the primary veto mechanism.
+
+**Pheme (Ground-Truth Verification):** Acts as the "Fact-Checker," verifying claims against authoritative sources using a precedence hierarchy (peer-reviewed research → government/official → established news → expert consensus → technical documentation → encyclopedia → technical blogs → social media).
+
+### 6.7 The Deterministic Sandwich: Formal Description
+
+The "Sovereign Gap" thesis can be formalized as a three-layer architecture:
+
+**Layer 1: Deterministic Input (Provenance Anchors)**
+The Sovereign Vault provides immutable fragments as grounding constraints. The LLM receives these as fixed inputs—it cannot modify or fabricate them.
+
+**Layer 2: Probabilistic Processing (LLM Proposal Engine)**
+The LLM operates on the grounded inputs, generating draft responses using its linguistic and reasoning capabilities. This layer is inherently probabilistic and untrusted.
+
+**Layer 3: Deterministic Output (Veto/Seal)**
+The Soter/Guardrail stack evaluates the draft against constitutional rules. If the draft passes, it receives the Sovereign Seal and is released. If it fails, the packet is dropped—the output is deleted before the user sees it.
+
+This architecture ensures that sovereignty resides in the **system** (Layers 1 and 3), not in the **processing** (Layer 2). The LLM provides fluency; the Sovereign Brain provides truth.
+
+### 6.8 The Janus Threshold: SOL/NOX Routing
+
+The Janus Threshold implements an a-priori separation between analytical and symbolic registers to prevent epistemic cross-contamination:
+
+**Analytical/Factual Input → SOL Face:**
+- Processes through confidence labeling system (`[KNOWN]`, `[INFERRED]`, `[UNCERTAIN]`, `[UNKNOWN]`)
+- Requires provenance verification for all factual claims
+- Subject to consensus gate and veto mechanisms
+
+**Symbolic/Creative Input → NOX Face:**
+- Processes through symbolic labeling system (`[DREAM]`)
+- No factual verification required (creative content is not truth-apt)
+- Still subject to safety veto (Soter monitors for instrumental convergence regardless of mode)
+
+**Output Convergence:** Both faces converge at the final output stage, but their epistemic labels remain distinct—SOL labels never appear in NOX output, and `[DREAM]` never appears in SOL output. This prevents alignment faking and fact/fiction mixing.
+
+---
+
+## 7. Comparison: Abraxas v4 vs. Standard Approaches
 
 | Capability | Standard LLM | RLHF-Tuned | Constitutional AI | **Abraxas v4** |
 |------------|--------------|------------|-------------------|----------------|
@@ -885,8 +1256,11 @@ Result: Entity found → Return full provenance chain with entity relationships
 
 ### 7.3 Implementation Status
 
-| System | Status | Priority |
-|--------|--------|----------|
+| Component | Role | Description | Analogy |
+|-----------|------|-------------|---------|
+| **Constitution** | The "What" | Human-readable Markdown files defining the absolute requirements and laws of the system | **The Law Book** |
+| **Skills** | The "How" | The actual code (JavaScript/TypeScript/Python) that implements a specific capability or analysis | **The Tool** |
+| **Unified MCP Server** | The "Where" | The modular monolith (`abraxas_mcp`) that invokes skills to enforce the Constitution in real-time | **The Police** |
 | **Phase 1 Complete** | | |
 | Honest | ✅ Complete | — |
 | Janus | ✅ Complete | — |
