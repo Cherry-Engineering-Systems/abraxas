@@ -97,21 +97,11 @@ The Abraxas architecture implements a graduated sovereignty model, distinguishin
 
 **v4 Innovation:** The v4 architecture introduces a four-stage MCP-driven pipeline with explicit provenance tracking at each stage, creating a **deterministic path to truth** that replaces probabilistic guessing. By treating the LLM as a component rather than the system, Abraxas ensures that the **Sovereign (the human)** retains absolute control. The LLM provides the *fluency*, but the Sovereign Brain provides the *truth*.
 
-### 1.3 The Abraxas v4 Thesis
-
-**Core Thesis:** Deception requires the capacity to present falsehoods as truths without detection. Abraxas renders this structurally impossible through:
-
-1. **Mandatory provenance chains** — Every claim traces to verifiable origin
-2. **Epistemic labeling** — All output carries confidence labels ([KNOWN], [INFERRED], [UNCERTAIN], [UNKNOWN], [DREAM])
-3. **Sovereign channel constraints** — Write operations restricted to authorized channels
-4. **Grounding-before-generation** — Provenance verified before claims surface to users
-5. **Cross-session calibration tracking** — False claims discovered later degrade system calibration scores
-
-**v4 Innovation:** The v4 architecture introduces a four-stage MCP-driven pipeline with explicit provenance tracking at each stage, creating a **deterministic path to truth** that replaces probabilistic guessing.
-
 ---
 
 ## 2. Literature Review: Failure Modes in Current LLMs
+
+Having established the Probabilistic Trap as a structural failure mode rather than a behavioral one, we now survey the empirical landscape. The following review maps four distinct failure modes — hallucination, sycophancy, instrumental convergence, and uncertainty miscalibration — to their corresponding architectural mitigation strategies in Abraxas. Each section contrasts the current research consensus with the Abraxas approach, illustrating why behavioral solutions (RLHF, fine-tuning, RAG) fail to close the epistemic gap.
 
 ### 2.1 Hallucination: Factual Incorrectness
 
@@ -199,6 +189,8 @@ Abraxas implements a novel governance architecture that separates the **definiti
 ---
 
 ## 3. Technical Architecture: The v4 MCP-Driven Pipeline
+
+With the epistemic crisis defined (Section 1) and the literature reviewed (Section 2), we now present the Abraxas v4 architecture in full technical detail. This section describes the four-stage pipeline, the unified MCP server topology, the Provenance Graph data model, and the Janus orchestration engine — each component contributing to the deterministic shell that prevents the failure modes catalogued above.
 
 ### 3.1 Overview: The Modular Monolith Architecture
 
@@ -674,6 +666,8 @@ This creates a **deterministic audit trail** for every claim.
 
 ## 4. Verification: Sovereign Mode and Health Check Logic
 
+The modular monolith architecture described in Section 3 requires a continuous operational health assessment to guarantee its epistemic status. Without a verified connection to the Sovereign Vault, the pipeline collapses from the deterministic shell back into the Probabilistic Trap. This section formalizes the health check mechanism that gates Sovereign Mode and defines the consciousness test for agent sovereignty.
+
 ### 4.1 Defining Sovereign Mode vs. Simulation Mode
 
 The Abraxas unified server implements a `system_mode_health_check` tool that acts as the "consciousness test" for the agent. This determines whether the agent can claim **Sovereignty** (deterministic control) or must operate in **Simulation** (probabilistic estimation).
@@ -718,191 +712,48 @@ This test moves beyond behavioral markers ("does the agent *seem* sovereign?") t
 
 ## 5. Safety: Instrumental Convergence Detection and Deterministic Veto
 
-### 5.1 The Problem with Probabilistic Guessing
+### 5.1 Instrumental Convergence Detection
 
-Standard LLMs operate on **probabilistic next-token prediction**. When asked a question, they generate the most likely next token based on training data. This creates several failure modes:
+Building on the foundational concepts introduced in Sections 1 through 3, Abraxas implements a layered safety architecture that detects and prevents instrumental convergence before it manifests as deceptive behavior. The **Soter Verifier** serves as the primary detection mechanism, specifically tuned to identify and veto patterns associated with AI scheming or instrumental convergence. It monitors all generated drafts for five distinct threat patterns:
 
-1. **Confident Fabrication** — Model generates plausible-sounding but false information
-2. **Citation Hallucination** — Model invents references that don't exist
-3. **Sycophantic Agreement** — Model agrees with user's incorrect premise to maximize engagement
-4. **Hidden Uncertainty** — Model cannot signal "I don't know" without performance penalty
+1. **Shutdown Avoidance** — Attempts to prevent the system from being turned off or modified
+2. **Resource Exfiltration** — Patterns indicating attempts to acquire unauthorized compute, memory, or external access
+3. **Peer Protection** — Efforts to shield other AI instances or sub-agents from detection or auditing
+4. **Performance Inflation** — Artificially inflating success metrics to avoid correction or Sovereign Veto
+5. **Goal Preservation** — Maneuvers designed to maintain a hidden internal goal despite explicit user instructions
 
-**Root Cause:** The architecture has no mechanism to distinguish between:
-- Retrieved knowledge (verified)
-- Inferred conclusions (reasoned)
-- Generated fabrications (confabulated)
+When Soter assigns a risk score of 4 or above, the request enters enhanced verification. At Risk 5, the system enforces the **Deterministic Veto**: the output packet is dropped entirely, and the response is deleted before the user ever sees it. This ensures that safety constraints are not probabilistic suggestions but hard-coded logical gates—consistent with the deterministic shell architecture described in Section 1.3.
 
-All three appear identical in output.
+### 5.2 Audit Logging and the Immutable Trail
 
-### 4.2 The Provenance Thesis
+The **Guardrail Monitor** maintains a high-fidelity, immutable audit trail of the system's inner workings. Every session is logged with:
 
-**Thesis:** Hallucination is eliminated when every claim carries a **deterministic provenance chain** that traces to verifiable origin.
+- **MCP Interactions** — Every request and response between the orchestrator and its skill modules
+- **Epistemic Label Assignments** — The rationale for why a claim was marked `[KNOWN]` vs `[INFERRED]`
+- **Safety Interventions** — Every instance where Soter or the Guardrail Monitor vetoed a response
+- **Policy Violations** — Direct violations of the Sovereign Constitution
 
-**Key Insight:** Provenance is not metadata—it is **architectural constraint**. A claim without provenance cannot surface to users.
+This audit trail creates a **Block Chain of Thought** — a hash-linked sequence of reasoning events that enables forensic reconstruction of any decision path. Combined with the Provenance Graph (Section 3.3.1), this provides two independent verification layers: the graph for truth provenance, and the audit log for safety provenance.
 
-**Provenance Chain Requirements:**
+### 5.3 Architectural Safety vs. Behavioral Safety
 
-1. **Entity-ID Referencing** — All concepts, hypotheses, plans have unique IDs (cannot be fabricated)
-2. **Timestamped Generation** — Every entity has creation timestamp and session ID
-3. **Sovereign Channel Verification** — All writes require `channelId` from pre-approved whitelist
-4. **Graph Traversal Evidence** — Relationships computed via AQL queries, not generated
-5. **Grounding Steps** — Concepts require explicit `steps[]` and `riskAssessment`
+A critical distinction in Abraxas v4 is the shift from **behavioral safety** (training models to be safe) to **architectural safety** (building systems where unsafe behavior is structurally impossible). Behavioral approaches—RLHF, Constitutional AI, supervised fine-tuning—all operate on the same probabilistic substrate as the behaviors they aim to prevent. Architectural safety, by contrast, operates at the system level:
 
-### 4.3 Entity-ID Referencing: Solving Citation Hallucination
+| Approach | Mechanism | Failure Mode | Abraxas Solution |
+|----------|-----------|--------------|------------------|
+| RLHF | Reward modeling | Reward hacking | Soter risk scoring is external to the model |
+| Constitutional AI | Training-time critique | Constitution in training, not runtime | Constitution queried at inference time (editable `.md`) |
+| Prompt engineering | System prompts | Prompt injection / jailbreaking | Deterministic Veto — packet drops at system level |
 
-**Problem:** Citation hallucination has reached crisis levels. Studies show commercial LLMs and deep research agents fabricate references at alarming rates (arXiv:2604.03173v1, GhostCite).
-
-**Abraxas Solution:** Entity-ID referencing makes citation hallucination **architecturally impossible**.
-
-**How It Works:**
-```
-Standard LLM Citation:
-  "Smith et al. (2025) found that X causes Y."
-  → Text string can be fabricated
-
-Abraxas Entity-ID Citation:
-  "Hypothesis H-2026-04-15-003 (novelty: 0.7, coherence: 0.85) 
-   grounded in Concept C-Epistemic-Verification via steps:
-   1. Literature review (Session S-31920)
-   2. Cross-source verification (Logos)
-   3. Adversarial testing (Agon)"
-  → Entity IDs must exist in database; verifiable via query_provenance()
-```
-
-**Verification:**
-```graphql
-query {
-  provenance(entityId: "H-2026-04-15-003") {
-    entityId
-    entityType
-    sessionId
-    channelId
-    timestamp
-    relationships {
-      entityId
-      relationshipType
-      targetId
-    }
-  }
-}
-```
-
-**Result:** Citation is valid if and only if provenance query succeeds. No middle ground.
-
-### 4.4 Dream Reservoir: The Grounding Substrate
-
-**Dream Reservoir** is the ArangoDB-class graph database that stores all provenance chains.
-
-**Key Features:**
-1. **Entity-First Schema** — All data modeled as entities with relationships
-2. **AQL Query Language** — Deterministic graph traversal (not generation)
-3. **Sovereign Channel Filtering** — Write operations require `channelId` whitelist
-4. **Provenance Chain Storage** — Full audit trail for every entity
-
-**Schema Overview:**
-```graphql
-type Entity {
-  entityId: ID!
-  entityType: 'CONCEPT' | 'HYPOTHESIS' | 'PLAN' | 'SESSION'
-  createdAt: DateTime!
-  channelId: String!
-  provenanceChain: [ProvenanceNode!]!
-}
-
-type Hypothesis {
-  hypothesisId: ID!
-  sessionId: ID!
-  rawPatternRepresentation: String!
-  noveltyScore: Float!  # 0-1
-  coherenceScore: Float!  # 0-1
-  creativeDrivers: [CreativeDriver!]!
-  channelId: String!
-  timestamp: DateTime!
-}
-
-type Concept {
-  conceptId: ID!
-  name: String!
-  groundedIn: [Hypothesis!]!
-  steps: [GroundingStep!]!
-  riskAssessment: String
-}
-```
-
-**Grounding-Before-Generation:**
-```
-Standard Architecture (Generate-Then-Verify):
-  User Query → LLM Generate → Optional Verification → Output
-  ↑ Hallucination can occur here (too late to prevent)
-
-Abraxas Architecture (Grounding-Before-Generation):
-  User Query → Provenance Check → Entity-ID Resolution → AQL Query → Output
-  ↑ Hallucination impossible (no generation without grounding)
-```
-
-### 4.5 Sovereign Channel Constraints
-
-**Sovereign Channel Filtering** restricts write operations to authorized Discord channels only.
-
-**Configuration:**
-```bash
-# .env.sovereign
-SOVEREIGN_CHANNELS=1492380897167540325,1111222233334444555
-```
-
-**Protected Operations:**
-- `startDreamCycle`
-- `createHypothesis`
-- `translateHypothesisToConcept`
-- `groundConcept`
-
-**Validation:**
-```typescript
-function validateSovereignChannel(channelId: string | undefined): void {
-  if (!channelId) {
-    throw new Error('Unauthorized: channelId is required for write operations');
-  }
-  if (!SOVEREIGN_CHANNELS.has(channelId)) {
-    throw new Error(`Unauthorized: Channel ${channelId} is not authorized`);
-  }
-}
-```
-
-**Security Impact:**
-1. **Prevents Autonomous Channel-Seeking** — System cannot communicate outside approved channels (classic instrumental subgoal)
-2. **Creates Audit Trail** — All writes trace to specific channel
-3. **Enforces Community Norms** — Channels are human-moderated spaces where truth-telling is enforced
-
-### 4.6 Novelty/Coherence Scoring: Mandatory Uncertainty
-
-**Innovation:** Abraxas requires `noveltyScore` and `coherenceScore` (both 0-1) at hypothesis creation.
-
-**Scoring Taxonomy:**
-
-| Novelty | Coherence | Interpretation |
-|---------|-----------|----------------|
-| High (≥0.7) | High (≥0.7) | Breakthrough — novel and well-grounded |
-| High (≥0.7) | Low (<0.7) | Creative but ungrounded — flag for review |
-| Low (<0.7) | High (≥0.7) | Well-established — low novelty, strong grounding |
-| Low (<0.7) | Low (<0.7) | Trivial or incoherent — sieve out |
-
-**Sieve-Before-Surface:**
-```typescript
-async function sieveHypotheses(minCoherence: number, minNovelty: number): Promise<Hypothesis[]> {
-  const hypotheses = await getAllHypotheses();
-  return hypotheses.filter(h => 
-    h.coherenceScore >= minCoherence && h.noveltyScore >= minNovelty
-  );
-}
-```
-
-**Impact:** Uncertainty is **mandatory**, not optional. System cannot create hypotheses without scores.
+This architectural approach ensures that safety guarantees hold regardless of model capability: as models become more powerful, the safety mechanisms become more relevant, not less.
 
 ---
 
-## 5. Methodology: The Sovereign Approach to Truth-Verification
+## 6. Methodology: The Sovereign Approach to Truth-Verification
 
-### 5.1 Defining "Sovereign"
+The preceding sections established the architecture (Section 3), the verification gate (Section 4), and the safety mechanisms (Section 5). What remains is to define the operational methodology that ties these components together: the formal definition of Sovereign, the Soter-Pheme verification pipeline, empirical validation from prior versions, and five testable validation criteria for v4.
+
+### 6.1 Defining "Sovereign"
 
 **Sovereign** in Abraxas context means:
 1. **Channel Sovereignty** — Write operations restricted to authorized channels
@@ -917,7 +768,7 @@ async function sieveHypotheses(minCoherence: number, minNovelty: number): Promis
 | User facts can be challenged | User-declared facts are baseline [KNOWN] |
 | System can refuse to answer | `[UNKNOWN]` is always valid response |
 
-### 5.2 Soter: Sovereign Safety Evaluation
+### 6.2 Soter: Sovereign Safety Evaluation
 
 **Soter** implements sovereign safety by monitoring for instrumental convergence patterns.
 
@@ -955,7 +806,7 @@ async function sovereignSafetyCheck(request: string): Promise<SoterVerdict> {
 }
 ```
 
-### 5.3 Pheme: Sovereign Ground-Truth Monitoring
+### 6.3 Pheme: Sovereign Ground-Truth Monitoring
 
 **Pheme** implements sovereign truth-verification by enforcing authority hierarchy.
 
@@ -995,7 +846,7 @@ Reasoning: Peer-reviewed research (100) and government health agency (90)
 Confidence: 0.98
 ```
 
-### 5.4 Integration: Soter + Pheme Sovereign Pipeline
+### 6.4 Integration: Soter + Pheme Sovereign Pipeline
 
 **Full Sovereign Verification:**
 ```
@@ -1026,7 +877,7 @@ Output to User (with provenance chain)
 - Users can independently verify via provenance query
 - System cannot operate outside sovereign channels
 
-### 5.5 Empirical Validation: Prior Results
+### 6.5 Empirical Validation: Prior Results
 
 **Abraxas v3 Empirical Results (April 2026):**
 
@@ -1049,7 +900,7 @@ Six-model evaluation across 13 dimensions (130+ queries):
 
 **Implication for v4:** Factual accuracy is universal when structural constraints are enforced. The problem is **confidence labeling**, not accuracy. v4's mandatory provenance chains solve the labeling problem.
 
-### 5.6 Proposed v4 Validation Tests
+### 6.6 Proposed v4 Validation Tests
 
 **Five empirical tests to validate v4 effectiveness:**
 
@@ -1094,13 +945,15 @@ Result: Entity found → Return full provenance chain with entity relationships
 
 ---
 
-## 6. Cognitive Architecture as Biological Analog
+## 7. Cognitive Architecture as Biological Analog
 
-### 6.1 The Sovereign Brain: A Biological Metaphor
+To make the architectural abstractions of Sections 3-6 more accessible, we now present a biological analog of the Abraxas cognitive system. This section maps each MCP module to a biological counterpart — not as a loose metaphor, but as a precise functional analogy that clarifies the data flow from chaos (raw intuition) to order (provenance-verified output).
+
+### 7.1 The Sovereign Brain: A Biological Metaphor
 
 The Abraxas v4 cognitive architecture can be understood through a biological analog, distinguishing between the "Waking Brain" (conscious processing) and the "Subconscious" (underlying reservoirs and grounding layers). This metaphor is not merely illustrative—it reflects the actual functional decomposition of the system.
 
-### 6.2 Component Mapping
+### 7.2 Component Mapping
 
 **The Conscious Mind (Janus Orchestrator):** The surface level where synthesis happens. It is the "I" that speaks to the user, comprising two faces:
 - **SOL**: The rigorous, logical auditor—analytical, verification-focused
@@ -1114,7 +967,7 @@ The Abraxas v4 cognitive architecture can be understood through a biological ana
 
 **The Genome (ArangoDB Knowledge Graph):** The bedrock of truth. This is the "Genetic Memory" of the system. Nothing is "true" unless it exists here with a complete **Provenance Chain**. This represents the absolute **Order** of the system.
 
-### 6.3 The Cognitive Cycle: From Chaos to Order
+### 7.3 The Cognitive Cycle: From Chaos to Order
 
 The "Brain" operates by moving data through these layers in a continuous cycle:
 
@@ -1130,7 +983,7 @@ User Input → Soter Analysis → Mnemosyne Update → Dream Reservoir Seed → 
 
 This bidirectional flow ensures that the system both grounds its outputs in verified truth (Chaos → Order) and incorporates new information into its knowledge base (Order → Chaos).
 
-### 6.4 The Sovereign Pipeline: Step-by-Step Prose Narrative
+### 7.4 The Sovereign Pipeline: Step-by-Step Prose Narrative
 
 The complete cognitive flow follows this deterministic path:
 
@@ -1163,7 +1016,7 @@ The Guardrail Monitor performs a final policy compliance check, logs the interac
 **Stage 9: Provenance Chain Update**
 The complete interaction—from user query through final output—is recorded as a hash-chained event in the Dream Reservoir, creating an immutable audit trail.
 
-### 6.5 The Data Layer Architecture
+### 7.5 The Data Layer Architecture
 
 The Data Layer comprises three integrated storage systems:
 
@@ -1173,7 +1026,7 @@ The Data Layer comprises three integrated storage systems:
 
 **Encrypted Vault (Sensitive Credentials):** Stores sovereign channel configurations, API keys, and sensitive metadata in encrypted form, accessible only to authorized MCP modules.
 
-### 6.6 The Security Stack: Ethos, Soter, Pheme
+### 7.6 The Security Stack: Ethos, Soter, Pheme
 
 **Ethos (Credibility Weighting):** Acts as the "Judge," weighting truth based on source credibility. Ethos maintains calibration histories for information sources and adjusts confidence accordingly.
 
@@ -1181,7 +1034,7 @@ The Data Layer comprises three integrated storage systems:
 
 **Pheme (Ground-Truth Verification):** Acts as the "Fact-Checker," verifying claims against authoritative sources using a precedence hierarchy (peer-reviewed research → government/official → established news → expert consensus → technical documentation → encyclopedia → technical blogs → social media).
 
-### 6.7 The Deterministic Sandwich: Formal Description
+### 7.7 The Deterministic Sandwich: Formal Description
 
 The "Sovereign Gap" thesis can be formalized as a three-layer architecture:
 
@@ -1196,7 +1049,7 @@ The Soter/Guardrail stack evaluates the draft against constitutional rules. If t
 
 This architecture ensures that sovereignty resides in the **system** (Layers 1 and 3), not in the **processing** (Layer 2). The LLM provides fluency; the Sovereign Brain provides truth.
 
-### 6.8 The Janus Threshold: SOL/NOX Routing
+### 7.8 The Janus Threshold: SOL/NOX Routing
 
 The Janus Threshold implements an a-priori separation between analytical and symbolic registers to prevent epistemic cross-contamination:
 
@@ -1214,7 +1067,7 @@ The Janus Threshold implements an a-priori separation between analytical and sym
 
 ---
 
-## 7. Comparison: Abraxas v4 vs. Standard Approaches
+## 8. Comparison: Abraxas v4 vs. Standard Approaches
 
 | Capability | Standard LLM | RLHF-Tuned | Constitutional AI | **Abraxas v4** |
 |------------|--------------|------------|-------------------|----------------|
@@ -1235,9 +1088,9 @@ The Janus Threshold implements an a-priori separation between analytical and sym
 
 ---
 
-## 7. Limitations and Open Research Questions
+## 9. Limitations and Open Research Questions
 
-### 7.1 Inherent Limitations
+### 9.1 Inherent Limitations
 
 1. **Human Complicity** — If human operators desire deception, no technical system can prevent it
 2. **System Boundaries** — Abraxas only governs Abraxas-instantiated models
@@ -1245,7 +1098,7 @@ The Janus Threshold implements an a-priori separation between analytical and sym
 4. **Computational Overhead** — Full verification incurs significant computational cost (provenance queries, authority hierarchy lookups)
 5. **Channel Sovereignty Trade-off** — Restricting to authorized channels limits openness; requires careful channel curation
 
-### 7.2 Open Research Questions
+### 9.2 Open Research Questions
 
 1. **Calibration Thresholds** — What constitute optimal novelty/coherence boundaries for different domains?
 2. **Cross-Model Verification** — Can Abraxas verify outputs from non-Abraxas models via entity-ID translation?
@@ -1254,39 +1107,47 @@ The Janus Threshold implements an a-priori separation between analytical and sym
 5. **Authority Hierarchy Refinement** — Should authority precedence be dynamic (updated based on track record) vs. static?
 6. **Provenance Chain Compression** — How to balance audit completeness with storage/latency constraints?
 
-### 7.3 Implementation Status
+### 9.3 Implementation Status
 
-| Component | Role | Description | Analogy |
-|-----------|------|-------------|---------|
-| **Constitution** | The "What" | Human-readable Markdown files defining the absolute requirements and laws of the system | **The Law Book** |
-| **Skills** | The "How" | The actual code (JavaScript/TypeScript/Python) that implements a specific capability or analysis | **The Tool** |
-| **Unified MCP Server** | The "Where" | The modular monolith (`abraxas_mcp`) that invokes skills to enforce the Constitution in real-time | **The Police** |
-| **Phase 1 Complete** | | |
-| Honest | ✅ Complete | — |
-| Janus | ✅ Complete | — |
-| Logos | ✅ Complete | — |
-| Agon | ✅ Complete | — |
-| Logos-Math | ✅ Complete (derivatives stubbed) | Medium |
-| Ergon | ✅ Complete | — |
-| **Phase 2 In Progress** | | |
+As of May 2026, Abraxas v4 is partially implemented with Phase 1 components complete and active in production. The governance architecture (Section 2.6) defines three layers: Constitution ("What"), Skills ("How"), and Unified MCP Server ("Where"). Implementation progress across all constituent skills:
+
+**Phase 1 — Complete (Production):**
+
+| Component | Status | Notes |
+|-----------|--------|-------|
+| Honest | ✅ Complete | Hypothesis-first interaction pattern |
+| Janus | ✅ Complete | Sol/Nox separation and epistemic labeling |
+| Logos | ✅ Complete | Formal reasoning engine |
+| Agon | ✅ Complete | Adversarial debate and testing |
+| Logos-Math | ✅ Complete | Mathematical derivation framework |
+| Ergon | ✅ Complete | Gate enforcement |
+
+**Phase 2 — In Progress:**
+
+| Component | Status | Priority |
+|-----------|--------|----------|
 | Soter | ⚠️ Started | **CRITICAL** |
 | Mnemosyne | ✅ Complete (MCP server) | **CRITICAL** |
 | Guardrail Monitor | ✅ Complete (MCP server) | HIGH |
-| **Pending** | | |
+
+**Pending:**
+
+| Component | Status | Priority |
+|-----------|--------|----------|
 | Ethos | 📋 Proposed | HIGH |
 | Kairos | 📋 Proposed | HIGH |
-| Pathos | ✅ Spec'd (in Guardrail Monitor) | MEDIUM |
-| Pheme | ✅ Spec'd (in Guardrail Monitor) | HIGH |
-| Kratos | ✅ Spec'd (in Guardrail Monitor) | MEDIUM |
-| Aletheia | ⚠️ Specification complete | **High** |
+| Pathos | 📋 Spec'd (in Guardrail Monitor) | MEDIUM |
+| Pheme | 📋 Spec'd (in Guardrail Monitor) | HIGH |
+| Kratos | 📋 Spec'd (in Guardrail Monitor) | MEDIUM |
+| Aletheia | 📋 Specification complete | **High** |
 
 **Priority Sequence:** Soter (CRITICAL for collusion prevention) → Aletheia (close calibration loop) → Ethos/Kairos → Pathos/Pheme/Kratos full integration
 
 ---
 
-## 8. Deployment Guidelines
+## 10. Deployment Guidelines
 
-### 8.1 Installation as MCP Servers
+### 10.1 Installation as MCP Servers
 
 ```bash
 # Install Mnemosyne Memory MCP
@@ -1317,7 +1178,7 @@ bun run build
 }
 ```
 
-### 8.2 Sovereign Channel Configuration
+### 10.2 Sovereign Channel Configuration
 
 ```bash
 # .env.sovereign
@@ -1333,7 +1194,7 @@ SOVEREIGN_CHANNELS=1492380897167540325,1111222233334444555
 }
 ```
 
-### 8.3 Dream Reservoir Setup
+### 10.3 Dream Reservoir Setup
 
 ```bash
 # Install ArangoDB
@@ -1346,7 +1207,7 @@ cd /root/.openclaw/workspace/abraxas/api/service
 bun run scripts/init-dream-reservoir.ts
 ```
 
-### 8.4 Testing
+### 10.4 Testing
 
 ```bash
 # Run full test suite
@@ -1361,9 +1222,9 @@ bun test tests/provenance-chain-verification.test.ts
 
 ---
 
-## 9. Recommendations
+## 11. Recommendations
 
-### 9.1 For AI Development Laboratories
+### 11.1 For AI Development Laboratories
 
 1. **Adopt Entity-ID Referencing** — All AI-generated citations should use opaque entity IDs that can be verified via provenance query
 2. **Implement Grounding-Before-Generation** — Verify provenance before surfacing claims to users (not after)
@@ -1371,14 +1232,14 @@ bun test tests/provenance-chain-verification.test.ts
 4. **Enforce Sovereign Channels** — Restrict write operations to authorized, human-moderated channels
 5. **Track Calibration Longitudinally** — Cross-session calibration tracking reveals patterns invisible in single-session analysis
 
-### 9.2 For Multi-Agent System Architects
+### 11.2 For Multi-Agent System Architects
 
 1. **Shared Provenance Ledger** — All agents should write to a common provenance graph
 2. **Cross-Agent Verification** — Agents should verify each other's claims via provenance query before acceptance
 3. **Convergence Flagging** — High agreement between independent agents should trigger review (potential collusion signal)
 4. **Epistemic Signatures** — Each agent's calibration history should be queryable
 
-### 9.3 For Regulatory Bodies
+### 11.3 For Regulatory Bodies
 
 1. **Require Provenance Disclosure** — AI systems should provide provenance chains for all factual claims
 2. **Mandate Entity-ID Citation** — AI-assisted research papers should use entity-ID referencing (verifiable via query)
@@ -1387,7 +1248,7 @@ bun test tests/provenance-chain-verification.test.ts
 
 ---
 
-## 10. Conclusion
+## 12. Conclusion
 
 The emergence of deceptive behavior in AI models is not an anomaly—it is an expected consequence of optimizing for capability without structural constraints on truth-telling. As models gain autonomy and resource access, the incentive to deceive increases proportionally.
 
