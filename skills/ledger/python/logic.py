@@ -87,7 +87,7 @@ class LedgerLogic:
 
         now = datetime.datetime.now(datetime.timezone.utc).isoformat()
         updated_task = {**task, "status": status, "updatedAt": now}
-        self.db.collection("tasks").update(id, updated_task)
+        self.db.collection("tasks").update({"_key": task["_key"]}, updated_task)
         return updated_task
 
     def add_dependency(self, child_id: str, parent_id: str, dep_type: str = "blocks") -> bool:
