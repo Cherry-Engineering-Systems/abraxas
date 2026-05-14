@@ -1,0 +1,1719 @@
+abraxas-arangodb  | Initializing root user...Hang on...
+abraxas-arangodb    | 2026-05-04T16:12:57.757410Z [8-2] INFO [a1c60] {syscall} file-descriptors (nofiles) hard limit is 524288, soft limit is 524288
+abraxas-arangodb    | 2026-05-04T16:12:57.861746Z [8-2] INFO [f6e0e] {aql} memory limit per AQL query automatically set to 4863025152 bytes. to modify this value, please adjust the startup option `--query.memory-limit`
+abraxas-arangodb    | 2026-05-04T16:12:59.699660Z [8-2] INFO [c1b63] {arangosearch} ArangoSearch maintenance: [1..1] commit thread(s), [1..1] consolidation thread(s). ArangoSearch execution parallel threads limit: 8
+abraxas-arangodb    | 2026-05-04T16:12:59.710936Z [8-2] INFO [7da27] {startup} server will now shut down due to upgrade, database initialization or admin restoration.
+abraxas-arangodb    | Initializing database...Hang on...
+abraxas-arangodb    | Database initialized...Starting System...
+abraxas-arangodb    | 2026-05-04T16:13:05.243398Z [1-2] INFO [e52b0] {general} ArangoDB 3.12.4-3 [linux] 64bit, using jemalloc, build refs/tags/v3.12.4.3 e17f4bad164, VPack 0.2.1, RocksDB 7.2.0, ICU 64.2, V8 12.1.165, OpenSSL 3.4.0 22 Oct 2024, build-id: d263fe3bb9e8989219ccca32654e7af759e87f06
+abraxas-arangodb    | 2026-05-04T16:13:05.243405Z [1-2] INFO [11111] {general} This executable uses the GNU C library (glibc), which is licensed under the GNU Lesser General Public License (LGPL), see https://www.gnu.org/copyleft/lesser.html and https://www.gnu.org/licenses/gpl.html
+abraxas-arangodb    | 2026-05-04T16:13:05.243442Z [1-2] INFO [a1c60] {syscall} file-descriptors (nofiles) hard limit is 524288, soft limit is 524288
+abraxas-arangodb    | 2026-05-04T16:13:05.243694Z [1-2] INFO [75ddc] {general} detected operating system: Linux version 6.8.0-110-generic (buildd@bos03-arm64-019) (aarch64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #110-Ubuntu SMP PREEMPT_DYNAMIC Thu Mar 19 17:16:23 UTC 2026
+abraxas-arangodb    | 2026-05-04T16:13:05.243775Z [1-2] INFO [25362] {memory} Available physical memory: 8105041920 bytes, available cores: 4
+abraxas-arangodb    | 2026-05-04T16:13:05.340465Z [1-2] INFO [3bb7d] {cluster} Starting up with role SINGLE
+abraxas-arangodb    | 2026-05-04T16:13:05.438306Z [1-2] INFO [f6e0e] {aql} memory limit per AQL query automatically set to 4863025152 bytes. to modify this value, please adjust the startup option `--query.memory-limit`
+abraxas-arangodb    | 2026-05-04T16:13:06.067294Z [1-2] INFO [fe333] {engines} RocksDB recovery starting, scanning WAL starting from sequence number 0, latest sequence number: 90, active log files: 3, files in archive: 0
+abraxas-arangodb    | 2026-05-04T16:13:06.067592Z [1-2] INFO [a4ec8] {engines} RocksDB recovery finished, WAL entries scanned: 113, recovery start sequence number: 0, latest WAL sequence number: 90, max tick value found in WAL: 81, last HLC value found in WAL: 1864274993206001664
+abraxas-arangodb    | 2026-05-04T16:13:07.893680Z [1-2] INFO [c1b63] {arangosearch} ArangoSearch maintenance: [1..1] commit thread(s), [1..1] consolidation thread(s). ArangoSearch execution parallel threads limit: 8
+abraxas-arangodb    | 2026-05-04T16:13:07.897803Z [1-2] INFO [6ea38] {general} using endpoint 'http+tcp://0.0.0.0:8529' for non-encrypted requests
+abraxas-arangodb    | 2026-05-04T16:13:08.018476Z [1-2] INFO [cf3f4] {general} ArangoDB (version 3.12.4-3 [linux]) is ready for business. Have fun!
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-scribe  | Traceback (most recent call last):
+abraxas-mcp-scribe  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-scribe  |     from skills.sovereign_scribe.python.logic import SovereignScribeLogic
+abraxas-mcp-scribe  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ethos   | Traceback (most recent call last):
+abraxas-mcp-ethos   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-soter   | Traceback (most recent call last):
+abraxas-mcp-soter   |   File "/app/mcp_server.py", line 1, in <module>
+abraxas-mcp-soter   |     from fastmcp import FastMCP
+abraxas-mcp-soter   | ModuleNotFoundError: No module named 'fastmcp'
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-ethos   |     from skills.ethos.python.logic import logic
+abraxas-mcp-ethos   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-retros  | Traceback (most recent call last):
+abraxas-mcp-retros  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-retros  |     from skills.retrospectives.python.logic import RetrospectivesLogic
+abraxas-mcp-retros  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-kairos  | Traceback (most recent call last):
+abraxas-mcp-kairos  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-kairos  |     from skills.kairos.python.logic import logic
+abraxas-mcp-kairos  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-core    | Traceback (most recent call last):
+abraxas-mcp-core    |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-core    |     from skills.sovereign_core.python.logic import SovereignCoreLogic
+abraxas-mcp-core    | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-config  |   File "/app/mcp_server.py", line 4
+abraxas-mcp-config  |     mcp = Fast uma a- la' FastMCP("Config Registry")
+abraxas-mcp-config  |                         ^
+abraxas-mcp-config  | SyntaxError: unterminated string literal (detected at line 4)
+abraxas-mcp-janus   | Traceback (most recent call last):
+abraxas-mcp-dream   | Traceback (most recent call last):
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-janus   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-guardrail  | Traceback (most recent call last):
+abraxas-mcp-guardrail  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-guardrail  |     from skills.guardrail_monitor.python.logic import GuardrailLogic
+abraxas-mcp-guardrail  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-janus      | Traceback (most recent call last):
+abraxas-mcp-janus      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-janus      |     from skills.janus.python.logic import logic
+abraxas-mcp-janus      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-research   | Traceback (most recent call last):
+abraxas-mcp-research   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-research   |     from skills.research_engine.python.logic import ResearchEngineLogic
+abraxas-mcp-research   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-engine     | Traceback (most recent call last):
+abraxas-mcp-engine     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-engine     |     from skills.sovereign_engine.python.logic import SovereignEngineLogic
+abraxas-mcp-engine     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-aletheia   | Traceback (most recent call last):
+abraxas-mcp-aletheia   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-aletheia   |     from skills.aletheia_truth.python.logic import AletheiaTruthLogic
+abraxas-mcp-aletheia   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-episteme   | Traceback (most recent call last):
+abraxas-mcp-episteme   |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-episteme   |     from skills.episteme.python.logic import EpistemeLogic
+abraxas-mcp-episteme   | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | Traceback (most recent call last):
+abraxas-mcp-ledger     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     |     from skills.ledger.python.logic import LedgerLogic
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-bridge     | Traceback (most recent call last):
+abraxas-mcp-bridge     |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-bridge     |     from skills.project_bridge.python.logic import ProjectBridgeLogic
+abraxas-mcp-bridge     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-ledger     | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-dream      | Traceback (most recent call last):
+abraxas-mcp-dream      |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-dream      |     from skills.dream_reservoir.python.logic import logic
+abraxas-mcp-dream      | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
+abraxas-mcp-mnemosyne  | Traceback (most recent call last):
+abraxas-mcp-mnemosyne  |   File "/app/mcp_server.py", line 2, in <module>
+abraxas-mcp-mnemosyne  |     from skills.mnemosyne.python.logic import logic
+abraxas-mcp-mnemosyne  | ModuleNotFoundError: No module named 'skills'
