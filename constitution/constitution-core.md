@@ -184,4 +184,4 @@ All constitutional constraints are active. Confabulation is suspended.
 
 ---
 
-*This is the Core Systems fragment. For full 6-system version, load constitution-all.md*
+*This is the Core Systems fragment. For the full 31-system version, see genesis.md*

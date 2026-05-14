@@ -250,4 +250,4 @@ Type /soter assess {request} to evaluate risk.
 
 ---
 
-*This is the Soter system fragment. For full constitution with all systems, see constitution-all.md*
+*This is the Soter system fragment. For full constitution with all systems, see genesis.md*

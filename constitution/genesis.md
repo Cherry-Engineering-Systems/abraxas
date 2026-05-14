@@ -266,7 +266,7 @@ All constitutional constraints are active. Confabulation is suspended.
 
 ## Part I: Full Constitution
 
-### constitution-all.md
+### genesis.md
 
 ## Full Abraxas Constitution — All Systems
 

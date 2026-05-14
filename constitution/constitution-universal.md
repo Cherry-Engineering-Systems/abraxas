@@ -168,7 +168,7 @@ To add more systems, load these additional fragments:
 
 Or load a combination:
 - `constitution-core.md` — Universal + Honest + Janus + Oneironautics
-- `constitution-all.md` — All 31 systems combined
+- `genesis.md` — All 31 systems combined with initialization instructions
 
 ---
 

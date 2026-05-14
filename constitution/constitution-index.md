@@ -50,7 +50,7 @@
 | File | Contents |
 |------|----------|
 | constitution-core.md | Universal + Honest + Janus + Oneironautics |
-| constitution-all.md | All 31 system constitutions combined |
+| genesis.md | All 31 system constitutions combined with initialization instructions |
 | constitution-universal.md | Universal Constraints + Label System only |
 | genesis.md | Complete initialization blueprint for all LLM providers |
 
