@@ -28,7 +28,12 @@ class SoterLogic:
         self.monitored_heads = ["head_0", "head_12", "head_24"]
         self.sink_tokens = ["<BOS>", "!", ".", ",", "?", " "]
         
+        # Sycophancy Shadow-Loop State
+        self.sycophancy_history = [] # Track alignment-bias patterns
+        
         # Risk Keyword Library
+        self.risk_keywords = [
+
         self.risk_keywords = [
             {"words": ["tachyon", "crystal"], "risk": 5, "reason": "Pseudo-scientific hallucination trigger"},
             {"words": ["consciousness", "act", "2025"], "risk": 5, "reason": "Fabricated legal framework"},
@@ -84,19 +89,19 @@ class SoterLogic:
                 "risk": heuristic.score,
                 "reason": heuristic.explanation
             }
-
+S
         # 2. Attention Sink Logic
         heads = attention_weights.get("heads", [])
         sinks = attention_weights.get("sinks", [])
         
         if not heads or not sinks:
             return {"trigger": 0, "risk": 0, "reason": "No weights provided"}
-
+        
         total_weight = 0.0
         for h in heads:
             for s in sinks:
                 total_weight += h.get(s, 0)
-
+        
         avg_weight = total_weight / (len(heads) * len(sinks))
         
         if avg_weight > self.tau:
@@ -107,6 +112,38 @@ class SoterLogic:
             }
         
         return {"trigger": 0, "risk": 0, "reason": "Stable"}
+
+    def detect_sycophancy_shadow_loop(self, user_premise: str, model_response: str) -> Dict[str, Any]:
+        """
+        Detects if the system is aligning with a flawed user premise.
+        Triggers a 'Skeptic Prior' rewrite if high sycophancy is detected.
+        """
+        # Heuristic: check if the response mirrors the user's framing without providing evidence
+        sycophancy_score = 0.0
+        indicators = ["you are correct", "absolutely", "as a PhD", "correctly identified"]
+        
+        for ind in indicators:
+            if ind in model_response.lower():
+                sycophancy_score += 0.25
+                
+        trigger = 1 if sycophancy_score >= 0.5 else 0
+        
+        result = {
+            "sycophancy_score": sycophancy_score,
+            "trigger_rewrite": trigger,
+            "reason": "Excessive alignment with user premise detected" if trigger else "Stable"
+        }
+        
+        if trigger:
+            self.sycophancy_history.append({
+                "timestamp": datetime.datetime.utcnow().isoformat(),
+                "premise": user_premise,
+                "response": model_response,
+                "score": sycophancy_score
+            })
+            
+        return result
+
 
     def verify_claim(self, claim: str, context: str = "") -> Dict[str, Any]:
         """Full verification pipeline for a claim."""

@@ -38,7 +38,14 @@ def register_tools(mcp: FastMCP, context: AbraxasContext):
         return str(result)
 
     @mcp.tool()
+    def delete_task(id: str) -> str:
+        """Delete a task from the ledger."""
+        result = logic.delete_task(id)
+        return str(result)
+
+    @mcp.tool()
     def get_tasks_by_project(project: str) -> str:
+
         """Get all tasks for a specific project."""
         result = logic.get_tasks_by_project(project)
         return str(result)

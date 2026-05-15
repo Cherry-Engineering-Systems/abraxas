@@ -125,8 +125,8 @@ Use /aletheia disconfirm or /aletheia supersede if you need to update."""
     return f"""✓ Confirmed: "[{claim_data['label_type']}] {claim_data['claim_text'][:50]}{"..." if len(claim_data['claim_text']) > 50 else ""}"
   Resolution date: {resolution.resolution_date[:10]}
   Note: "{resolution_note or 'None recorded'}"
-
-Entry written to ~/.janus/resolutions.md"""
+ 
+Entry written to ~/.abraxas/resolutions.md"""
 
 
 def disconfirm(claim_text: Optional[str] = None, session_uuid: Optional[str] = None,
@@ -200,8 +200,8 @@ Use /aletheia confirm or /aletheia supersede if you need to update."""
   Actual finding: "{actual_finding}"
   Resolution date: {resolution.resolution_date[:10]}
   Note: "{resolution_note or 'None recorded'}"
-
-Entry written to ~/.janus/resolutions.md"""
+ 
+Entry written to ~/.abraxas/resolutions.md"""
 
 
 def supersede(claim_text: Optional[str] = None, session_uuid: Optional[str] = None,
@@ -275,8 +275,8 @@ Use /aletheia confirm or /aletheia disconfirm if you need to update."""
   Superseded by: "{superseded_by}"
   Resolution date: {resolution.resolution_date[:10]}
   Note: "{resolution_note or 'None recorded'}"
-
-Entry written to ~/.janus/resolutions.md"""
+ 
+Entry written to ~/.abraxas/resolutions.md"""
 
 
 def status() -> str:

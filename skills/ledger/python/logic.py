@@ -82,63 +82,37 @@ class LedgerLogic:
         if status not in ["open", "ready", "testing", "closed"]:
             raise ValueError(f"Invalid status: {status}. Must be one of ['open', 'ready', 'testing', 'closed']")
 
-        now = datetime.datetime.now(datetime.timezone.utc).isoformat()
-        cursor = self.db.aql.execute(
-            "FOR t IN tasks FILTER t._key == @key UPDATE t WITH { status: @status, updatedAt: @now } IN tasks RETURN NEW",
-            bind_vars={"key": id, "status": status, "now": now}
-        )
-        results = list(cursor)
-        if not results:
+        task = self.db.collection("tasks").get(id)
+        if not task:
             raise ValueError(f"Task with id {id} not found")
-        
-        task = results[0]
-        retro_result = None
-        
-        # Auto-generate retrospective when a task is closed
+
+        now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        updated_task = {**task, "status": status, "updatedAt": now}
+        self.db.collection("tasks").update({"_key": task["_key"]}, updated_task)
+
+        # Trigger Auto-Retrospective if status is 'closed'
         if status == "closed":
             try:
                 from skills.retrospectives.python.logic import RetrospectivesLogic
                 retro_logic = RetrospectivesLogic()
-                
-                # Build a deterministic retro_id from the task key
-                retro_id = f"task_{id}"
-                retro_date = now[:10]  # YYYY-MM-DD
-                
+                today = datetime.datetime.utcnow().strftime('%Y-%m-%d')
                 retro_content = {
-                    "task_title": task.get("title", ""),
-                    "task_id": id,
-                    "task_key": task.get("_key", id),
-                    "project": task.get("project", ""),
-                    "priority": task.get("priority", ""),
-                    "scope": task.get("scope", ""),
-                    "created_at": task.get("createdAt", ""),
-                    "closed_at": now,
-                    "auto_generated": True,
-                    "went_well": "Automatically generated on task close",
-                    "not_well": "",
-                    "start": "",
-                    "stop": "",
-                    "continue": "",
-                    "improvements": "",
+                    "task_id": task["_key"],
+                    "task_title": task["title"],
+                    "status": "closed",
+                    "closure_date": now,
+                    "auto_generated": True
                 }
-                
-                retro_logic.save_retro(retro_date, "task", retro_id, retro_content)
-                retro_result = {
-                    "generated": True,
-                    "retro_id": retro_id,
-                    "date": retro_date,
-                }
-                logger.info(f"Auto-generated retrospective for closed task {id}")
+                retro_logic.save_retro(
+                    date=today,
+                    retro_type="task",
+                    retro_id=task["_key"],
+                    content=retro_content
+                )
             except Exception as e:
-                # Retro failure should NOT block the status update
-                logger.error(f"Failed to auto-generate retrospective for task {id}: {e}")
-                retro_result = {
-                    "generated": False,
-                    "error": str(e),
-                }
-        
-        task["_retro"] = retro_result
-        return task
+                logger.error(f"Auto-retrospective trigger failed: {e}")
+
+        return updated_task
 
     def add_dependency(self, child_id: str, parent_id: str, dep_type: str = "blocks") -> bool:
         """Add a dependency between two tasks. Child blocks Parent."""
@@ -153,6 +127,14 @@ class LedgerLogic:
     def get_task(self, id: str) -> Optional[Dict[str, Any]]:
         """Get a single task by id."""
         return self.db.collection("tasks").get(id)
+
+    def delete_task(self, id: str) -> bool:
+        """Delete a task from the ledger."""
+        task = self.db.collection("tasks").get(id)
+        if not task:
+            return False
+        self.db.collection("tasks").delete(task["_key"])
+        return True
 
     def get_tasks_by_project(self, project: str) -> List[Dict[str, Any]]:
         """Get all tasks for a specific project."""

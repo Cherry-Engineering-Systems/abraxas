@@ -2,7 +2,7 @@
 Aletheia Storage Layer - File I/O for resolutions.md
 
 Handles reading, writing, and backing up the resolution index.
-Maintains append-only invariant for ~/.janus/resolutions.md
+Maintains append-only invariant for ~/.abraxas/resolutions.md
 """
 
 import os
@@ -12,7 +12,7 @@ from typing import Optional, Dict, List, Any
 from dataclasses import dataclass, asdict
 from pathlib import Path
 
-JANUS_DIR = Path(os.environ.get("JANUS_DIR", os.path.expanduser("~/.janus")))
+JANUS_DIR = Path(os.environ.get("ABRAXAS_DIR", os.path.expanduser("~/.abraxas")))
 RESOLUTIONS_FILE = JANUS_DIR / "resolutions.md"
 RESOLUTIONS_BACKUP = JANUS_DIR / "resolutions.md.bak"
 INDEX_FILE = JANUS_DIR / ".aletheia-index"
@@ -37,8 +37,8 @@ class Resolution:
             self.created_at = datetime.utcnow().isoformat() + "Z"
 
 
-def ensure_janus_dir():
-    """Create ~/.janus/ and ~/.janus/sessions/ if they don't exist"""
+def ensure_abraxas_dir():
+    """Create ~/.abraxas/ and ~/.abraxas/sessions/ if they don't exist"""
     JANUS_DIR.mkdir(parents=True, exist_ok=True)
     (JANUS_DIR / "sessions").mkdir(exist_ok=True)
 
@@ -48,7 +48,7 @@ def create_header_if_needed() -> bool:
     Create resolutions.md with schema header if it doesn't exist.
     Returns True if file was created, False if it already existed.
     """
-    ensure_janus_dir()
+    ensure_abraxas_dir()
     
     if RESOLUTIONS_FILE.exists():
         return False
@@ -295,9 +295,10 @@ def get_resolutions_by_label(label_type: str) -> List[Resolution]:
 def build_index():
     """
     Build performance index for fast lookups.
-    Creates ~/.janus/.aletheia-index
+    Creates ~/.abraxas/.aletheia-index
     """
     resolutions = load_resolutions()
+
     index = {}
     
     for res in resolutions:

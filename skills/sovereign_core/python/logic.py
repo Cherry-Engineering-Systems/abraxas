@@ -17,6 +17,7 @@ class SovereignCoreLogic:
     def _init_system(self):
         self.start_time = time.time()
         self.version = "1.0.0"
+        self.tool_failure_tally = {} # tool_name -> fail_count
         # Internal mock config storage
         self.config = {
             "sovereign.version": "1.0.0",
@@ -24,8 +25,10 @@ class SovereignCoreLogic:
             "patcher.autoApply": "false",
             "patcher.validationLevel": "strict",
             "audit.frequency": "daily",
-            "audit.verbose": "false"
+            "audit.verbose": "false",
+            "circuit_breaker.threshold": 3
         }
+
 
     def sovereign_patcher(self, patch_id: str, validate_only: bool = False, force: bool = False) -> Dict[str, Any]:
         """Apply vetted updates to the sovereign system."""
@@ -222,3 +225,30 @@ class SovereignCoreLogic:
             }
             
         return health_status
+
+    def record_tool_failure(self, tool_name: str) -> Dict[str, Any]:
+        """
+        Increments failure tally for a tool. 
+        Triggers Internal Logic Circuit Breaker if threshold reached.
+        """
+        count = self.tool_failure_tally.get(tool_name, 0) + 1
+        self.tool_failure_tally[tool_name] = count
+        
+        threshold = int(self.config.get("circuit_breaker.threshold", 3))
+        if count >= threshold:
+            return {
+                "status": "TRIPPED",
+                "tool": tool_name,
+                "count": count,
+                "action": "HALT_AUTONOMOUS_LOOP",
+                "message": f"Internal Logic Circuit Breaker tripped for {tool_name} after {count} failures. Manual intervention required."
+            }
+        return {"status": "LOGGED", "count": count}
+
+    def reset_failure_tally(self, tool_name: Optional[str] = None) -> Dict[str, Any]:
+        """Resets the tool failure counter."""
+        if tool_name:
+            self.tool_failure_tally[tool_name] = 0
+            return {"success": True, "tool": tool_name}
+        self.tool_failure_tally = {}
+        return {"success": True, "all_reset": True}
