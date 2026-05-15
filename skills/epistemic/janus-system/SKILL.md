@@ -20,6 +20,9 @@ Janus is an epistemic architecture named for the Roman god of thresholds — the
 god who looks simultaneously at what is known and what is dreamed. It separates output
 into two clearly labeled streams and provides a Qualia Bridge for inspecting the inner state.
 
+**Debug & Reasoning Standard:**
+This skill adheres to the `references/reasoning-standard.md` protocol. Every output must be preceded by a `<thought>` block detailing the objective, constraints, and a verification hypothesis. All high-confidence claims must be anchored using the `[Reasoning: {RuleID/Source}] -> {Claim}` pattern.
+
 It can operate standalone or as the infrastructure layer beneath the Abraxas system.
 
 Read `references/janus-architecture.md` for the full diagram, routing logic, and failure modes.

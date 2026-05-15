@@ -1,9 +1,13 @@
 import os
 import logging
 import httpx
+import time
 from typing import List, Dict, Any, Optional
 from dataclasses import dataclass
 from .config import config
+from .logging_utils import get_correlation_id
+
+logger = logging.getLogger("janus-orchestrator")
 
 logger = logging.getLogger("janus-orchestrator")
 
@@ -47,10 +51,18 @@ class JanusOrchestrator:
                     "stream": False
                 }
                 # Use the configured URL
+                start_time = time.perf_counter()
                 resp = await client.post(f"{self.ollama_url}/api/chat", json=payload)
+                latency = time.perf_counter() - start_time
                 resp.raise_for_status()
-                content = resp.json().get("message", {}).get("content", "")
-                results.append(LensResponse(name=name, content=content, raw_output=resp.json()))
+                
+                raw_json = resp.json()
+                content = raw_json.get("message", {}).get("content", "")
+                
+                logger.debug(f"RID:{get_correlation_id()} | Lens: {name} | Latency: {latency:.3f}s | Prompt: {system_prompt[:100]}... | Response: {content[:100]}...")
+                
+                results.append(LensResponse(name=name, content=content, raw_output=raw_json))
+
 
         # 2. Deterministic Agreement Math
         consensus_count = self._calculate_agreement(results)

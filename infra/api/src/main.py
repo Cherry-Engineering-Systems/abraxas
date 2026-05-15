@@ -3,16 +3,20 @@ Abraxas API Gateway
 Unified API for Abraxas epistemic AI systems
 """
 
-import os
-from contextlib import asynccontextmanager
+import logging
 
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("abraxas-api")
+
+# ... (rest of imports)
+
 
 from src.api.v1 import chat, models, health
 from src.middleware.rate_limit import RateLimitMiddleware
 from src.middleware.auth import AuthMiddleware
+from src.core.logging_utils import CorrelationMiddleware, setup_correlation_logging
 from src.metrics import setup_metrics
+
 
 # Get configuration from environment
 API_HOST = os.getenv("API_HOST", "0.0.0.0")
@@ -24,13 +28,15 @@ REDIS_URL = os.getenv("REDIS_URL", None)
 async def lifespan(app: FastAPI):
     """Application lifespan handler."""
     # Startup
+    setup_correlation_logging()
     from src.core.graph import SovereignGraphClient
+
     try:
         graph_client = SovereignGraphClient()
         graph_client.ensure_skeleton_collections()
-        print("✅ Sovereign Graph Skeleton verified and initialized.")
+        logger.info("✅ Sovereign Graph Skeleton verified and initialized.")
     except Exception as e:
-        print(f"❌ Critical Error: Sovereign Graph initialization failed: {e}")
+        logger.error(f"❌ Critical Error: Sovereign Graph initialization failed: {e}")
         # In a true skeletal system, we fail fast.
         # raise e 
 
@@ -50,8 +56,12 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+# Add correlation middleware (must be first to wrap all requests)
+app.add_middleware(CorrelationMiddleware)
+
 # Add CORS middleware
 app.add_middleware(
+
     CORSMiddleware,
     allow_origins=["*"],  # Configure for production
     allow_credentials=True,

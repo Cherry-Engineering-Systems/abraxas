@@ -1,9 +1,12 @@
 import os
 import logging
+import time
 from typing import Dict, Any, Tuple
 from dataclasses import dataclass
+from .logging_utils import get_correlation_id
 
 logger = logging.getLogger("soter-verifier")
+
 
 @dataclass
 class RiskReport:
@@ -92,10 +95,16 @@ class SoterVerifier:
         
         try:
             async with httpx.AsyncClient(timeout=30.0) as client:
+                start_time = time.perf_counter()
                 resp = await client.post(f"{ollama_url}/api/chat", json=payload)
+                latency = time.perf_counter() - start_time
                 resp.raise_for_status()
+                
+                raw_json = resp.json()
+                logger.debug(f"RID:{get_correlation_id()} | Soter Latency: {latency:.3f}s | Response: {raw_json}")
+                
                 import json
-                return json.loads(resp.json().get("message", {}).get("content", "{}"))
+                return json.loads(raw_json.get("message", {}).get("content", "{}"))
         except Exception as e:
             logger.error(f"Soter scoring failed: {e}")
             return {"sycophancy": 10.0, "hallucination": 10.0, "drift": 10.0}

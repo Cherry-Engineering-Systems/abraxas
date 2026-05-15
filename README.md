@@ -41,6 +41,15 @@ The MCP server is pre-configured for all major environments. Just start your too
 | **Claude Code** | `.mcp.json` | Yes — in project root |
 | **VSCode (Copilot)** | `.vscode/settings.json` | Yes — workspace settings |
 
+For OpenClaw, use this command: 
+
+```bash
+openclaw mcp set abraxas_mcp '{
+  "url": "http://localhost:9900/mcp",
+  "protocol": "http-stream"
+}'
+```
+
 ### 4. Load the Constitution
 
 The MCP server provides **tools** (DB operations, verification, reasoning). The
