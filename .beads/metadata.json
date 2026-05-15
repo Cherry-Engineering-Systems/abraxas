@@ -1,7 +1,0 @@
-{
-  "database": "dolt",
-  "backend": "dolt",
-  "dolt_mode": "embedded",
-  "dolt_database": "abraxas",
-  "project_id": "2f036a17-1b37-472f-98c0-207f799f2ab8"
-}

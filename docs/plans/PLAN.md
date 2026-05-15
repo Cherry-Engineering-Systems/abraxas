@@ -1,4 +1,3 @@
-# Abraxas — Project Plan
 
 **Solomon's Gate and the Six Systems.**
 
