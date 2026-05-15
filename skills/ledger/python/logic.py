@@ -77,7 +77,8 @@ class LedgerLogic:
         return list(cursor)
 
     def update_task_status(self, id: str, status: str) -> Dict[str, Any]:
-        """Update the status of a task using AQL for guaranteed persistence."""
+        """Update the status of a task using AQL for guaranteed persistence.
+        When closing a task, automatically generates a retrospective."""
         if status not in ["open", "ready", "testing", "closed"]:
             raise ValueError(f"Invalid status: {status}. Must be one of ['open', 'ready', 'testing', 'closed']")
 
@@ -89,7 +90,55 @@ class LedgerLogic:
         results = list(cursor)
         if not results:
             raise ValueError(f"Task with id {id} not found")
-        return results[0]
+        
+        task = results[0]
+        retro_result = None
+        
+        # Auto-generate retrospective when a task is closed
+        if status == "closed":
+            try:
+                from skills.retrospectives.python.logic import RetrospectivesLogic
+                retro_logic = RetrospectivesLogic()
+                
+                # Build a deterministic retro_id from the task key
+                retro_id = f"task_{id}"
+                retro_date = now[:10]  # YYYY-MM-DD
+                
+                retro_content = {
+                    "task_title": task.get("title", ""),
+                    "task_id": id,
+                    "task_key": task.get("_key", id),
+                    "project": task.get("project", ""),
+                    "priority": task.get("priority", ""),
+                    "scope": task.get("scope", ""),
+                    "created_at": task.get("createdAt", ""),
+                    "closed_at": now,
+                    "auto_generated": True,
+                    "went_well": "Automatically generated on task close",
+                    "not_well": "",
+                    "start": "",
+                    "stop": "",
+                    "continue": "",
+                    "improvements": "",
+                }
+                
+                retro_logic.save_retro(retro_date, "task", retro_id, retro_content)
+                retro_result = {
+                    "generated": True,
+                    "retro_id": retro_id,
+                    "date": retro_date,
+                }
+                logger.info(f"Auto-generated retrospective for closed task {id}")
+            except Exception as e:
+                # Retro failure should NOT block the status update
+                logger.error(f"Failed to auto-generate retrospective for task {id}: {e}")
+                retro_result = {
+                    "generated": False,
+                    "error": str(e),
+                }
+        
+        task["_retro"] = retro_result
+        return task
 
     def add_dependency(self, child_id: str, parent_id: str, dep_type: str = "blocks") -> bool:
         """Add a dependency between two tasks. Child blocks Parent."""

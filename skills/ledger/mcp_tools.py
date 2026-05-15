@@ -20,7 +20,8 @@ def register_tools(mcp: FastMCP, context: AbraxasContext):
 
     @mcp.tool()
     def update_task_status(id: str, status: str) -> str:
-        """Update the status of a task. Valid statuses: open, ready, testing, closed."""
+        """Update the status of a task. Valid statuses: open, ready, testing, closed.
+        When closing a task, automatically generates a retrospective."""
         result = logic.update_task_status(id, status)
         return str(result)
 
