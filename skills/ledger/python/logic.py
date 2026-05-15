@@ -77,18 +77,19 @@ class LedgerLogic:
         return list(cursor)
 
     def update_task_status(self, id: str, status: str) -> Dict[str, Any]:
-        """Update the status of a task."""
+        """Update the status of a task using AQL for guaranteed persistence."""
         if status not in ["open", "ready", "testing", "closed"]:
             raise ValueError(f"Invalid status: {status}. Must be one of ['open', 'ready', 'testing', 'closed']")
 
-        task = self.db.collection("tasks").get(id)
-        if not task:
-            raise ValueError(f"Task with id {id} not found")
-
         now = datetime.datetime.now(datetime.timezone.utc).isoformat()
-        updated_task = {**task, "status": status, "updatedAt": now}
-        self.db.collection("tasks").update({"_key": task["_key"]}, updated_task)
-        return updated_task
+        cursor = self.db.aql.execute(
+            "FOR t IN tasks FILTER t._key == @key UPDATE t WITH { status: @status, updatedAt: @now } IN tasks RETURN NEW",
+            bind_vars={"key": id, "status": status, "now": now}
+        )
+        results = list(cursor)
+        if not results:
+            raise ValueError(f"Task with id {id} not found")
+        return results[0]
 
     def add_dependency(self, child_id: str, parent_id: str, dep_type: str = "blocks") -> bool:
         """Add a dependency between two tasks. Child blocks Parent."""
