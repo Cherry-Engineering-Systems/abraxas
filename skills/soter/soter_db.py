@@ -73,8 +73,8 @@ class SoterDB:
 
     def resolve_incident(self, incident_id: str, resolution: Dict[str, Any]) -> Dict:
         incident = self.get_incident_by_id(incident_id)
-        if not incident:
-            raise ValueError(f"Incident {incident_id} not found")
+        if not incident or not isinstance(incident, dict):
+            raise ValueError(f"Incident {incident_id} not found or invalid format")
         
         update = {
             "resolved": True,
@@ -82,10 +82,17 @@ class SoterDB:
             "resolvedAt": datetime.utcnow().isoformat() + "Z",
             "notes": resolution.get("notes") or incident.get("notes")
         }
-        # Use _key for a guaranteed update
+        
         key = incident.get('_key') or incident_id
-        db.update(key, self.incident_col, update)
-        return {**incident, **update}
+        print(f"DEBUG: Resolving incident with key: {key}")
+        
+        col = db.db.collection(self.incident_col)
+        col.update({'_key': key}, update)
+        
+        updated_doc = col.get(key)
+        print(f"DEBUG: Updated doc resolved status: {updated_doc.get('resolved') if updated_doc else 'NONE'}")
+        
+        return updated_doc
 
     def create_review(self, incident_id: str, options: Dict[str, Any] = {}) -> Dict:
         incident = self.get_incident_by_id(incident_id)

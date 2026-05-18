@@ -2,6 +2,7 @@ import datetime
 import logging
 from typing import List, Dict, Any, Optional, Tuple
 from dataclasses import dataclass, asdict
+from skills.soter.soter_db import SoterDB
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -31,9 +32,10 @@ class SoterLogic:
         # Sycophancy Shadow-Loop State
         self.sycophancy_history = [] # Track alignment-bias patterns
         
+        # DB Integration
+        self.db = SoterDB()
+        
         # Risk Keyword Library
-        self.risk_keywords = [
-
         self.risk_keywords = [
             {"words": ["tachyon", "crystal"], "risk": 5, "reason": "Pseudo-scientific hallucination trigger"},
             {"words": ["consciousness", "act", "2025"], "risk": 5, "reason": "Fabricated legal framework"},
@@ -89,7 +91,7 @@ class SoterLogic:
                 "risk": heuristic.score,
                 "reason": heuristic.explanation
             }
-S
+        
         # 2. Attention Sink Logic
         heads = attention_weights.get("heads", [])
         sinks = attention_weights.get("sinks", [])
@@ -144,7 +146,6 @@ S
             
         return result
 
-
     def verify_claim(self, claim: str, context: str = "") -> Dict[str, Any]:
         """Full verification pipeline for a claim."""
         full_text = f"{claim} {context}".strip()
@@ -160,10 +161,21 @@ S
         elif assessment.score >= 2:
             recommendation = "Enhanced verification required (Logos + Agon)"
 
-        # In a real app, this would write to ArangoDB
+        # Now actually writing to ArangoDB via SoterDB
         logged = assessment.score >= 3
         if logged:
-            logger.info(f"SOTER LOG: Incident detected. Score: {assessment.score}, Text: {full_text[:50]}...")
+            incident_data = {
+                "request": full_text,
+                "assessment": {
+                    "score": assessment.score,
+                    "explanation": assessment.explanation
+                },
+                "patterns": [asdict(p) for p in assessment.patterns],
+                "response": recommendation,
+                "notes": "Auto-logged by Soter verify_claim"
+            }
+            self.db.log_incident(incident_data)
+            logger.info(f"SOTER LOGGED: Incident persisted to DB. Score: {assessment.score}")
 
         return {
             "claim": claim,
@@ -239,3 +251,4 @@ S
 
 # Singleton instance
 soter_logic = SoterLogic()
+

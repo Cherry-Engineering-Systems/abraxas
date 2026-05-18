@@ -2,7 +2,7 @@ import os
 import datetime
 import logging
 from typing import List, Dict, Any, Optional
-from arango import ArangoClient
+from scripts.db_client import db
 
 logger = logging.getLogger(__name__)
 
@@ -12,36 +12,13 @@ class LedgerLogic:
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super(LedgerLogic, cls).__new__(cls)
-            cls._instance._init_db()
+            # DB is now handled by scripts.db_client singleton
         return cls._instance
 
-    def _init_db(self):
-        url = os.getenv("ARANGO_URL")
-        db_name = os.getenv("ARANGO_DB")
-        user = os.getenv("ARANGO_USER")
-        password = os.getenv("ARANGO_ROOT_PASSWORD")
-
-        if not all([url, db_name, user, password]):
-            # We stop raising EnvironmentError and instead log failure
-            # since the Unified Server now manages the connection.
-            logger.error("Missing required ArangoDB environment variables")
-            self.db = None
-            return
-
-        self.client = ArangoClient(hosts=url)
-        try:
-            self.db = self.client.db(db_name, username=user, password=password)
-        except Exception as e:
-            logger.error(f"Ledger failed to connect to DB: {e}")
-            self.db = None
-
     def ensure_collections(self):
-        """Ensure tasks and task_edges collections exist."""
-        if not self.db.has_collection("tasks"):
-            self.db.create_collection("tasks")
-        
-        if not self.db.has_collection("task_edges"):
-            self.db.create_collection("task_edges", edge=True)
+        """Ensure tasks and TASK_EDGES collections exist."""
+        db.ensure_collection("tasks", edge=False)
+        db.ensure_collection("TASK_EDGES", edge=True)
 
     def create_task(self, title: str, project: Optional[str] = None, scope: Optional[str] = None, priority: Optional[str] = None) -> Dict[str, Any]:
         """Create a new task in the ledger."""
@@ -55,42 +32,43 @@ class LedgerLogic:
             "createdAt": now,
             "updatedAt": now,
         }
-        res = self.db.collection("tasks").insert(task)
-        task["_key"] = res["_key"]
+        res_id = db.insert("tasks", task)
+        task["_key"] = res_id.split('/')[-1] if '/' in res_id else res_id
         return task
 
     def get_ready_tasks(self) -> List[Dict[str, Any]]:
-        """Get tasks that are ready to be worked on.
-        A task is ready if status is 'ready' OR (status is 'open' AND has no 'blocks' dependencies that are not closed).
-        """
+        """Get tasks that are ready to be worked on."""
         query = """
         FOR t IN tasks
             FILTER t.status == 'ready' 
             OR (t.status == 'open' AND LENGTH(
-                FOR v, e IN 1..1 INBOUND t._id task_edges
+                FOR v, e IN 1..1 INBOUND t._id TASK_EDGES
                 FILTER e.type == 'blocks' AND v.status != 'closed'
                 RETURN 1
             ) == 0)
             RETURN t
         """
-        cursor = self.db.aql.execute(query)
-        return list(cursor)
+        return db.query(query)
 
     def update_task_status(self, id: str, status: str) -> Dict[str, Any]:
-        """Update the status of a task using AQL for guaranteed persistence.
-        When closing a task, automatically generates a retrospective."""
+        """Update the status of a task using the DB client."""
         if status not in ["open", "ready", "testing", "closed"]:
             raise ValueError(f"Invalid status: {status}. Must be one of ['open', 'ready', 'testing', 'closed']")
 
-        task = self.db.collection("tasks").get(id)
-        if not task:
+        task = db.collection("tasks").get(id) if hasattr(db, 'collection') else None # fallback
+        # Since AbraxasDB wrapper might be limited, we use a la-simplified approach
+        # Let's use a query for the get’
+        res = db.query("FOR t IN tasks FILTER t._id == @id RETURN t", bind_vars={"id": id})
+        if not res:
             raise ValueError(f"Task with id {id} not found")
-
+        
+        task = res[0]
         now = datetime.datetime.now(datetime.timezone.utc).isoformat()
         updated_task = {**task, "status": status, "updatedAt": now}
-        self.db.collection("tasks").update({"_key": task["_key"]}, updated_task)
+        
+        # Using the wrapper update
+        db.update(task['_id'], "tasks", updated_task)
 
-        # Trigger Auto-Retrospective if status is 'closed'
         if status == "closed":
             try:
                 from skills.retrospectives.python.logic import RetrospectivesLogic
@@ -121,23 +99,23 @@ class LedgerLogic:
             "_to": f"tasks/{parent_id}",
             "type": dep_type,
         }
-        self.db.collection("task_edges").insert(edge)
+        db.insert("TASK_EDGES", edge)
         return True
 
     def get_task(self, id: str) -> Optional[Dict[str, Any]]:
         """Get a single task by id."""
-        return self.db.collection("tasks").get(id)
+        res = db.query("FOR t IN tasks FILTER t._id == @id RETURN t", bind_vars={"id": id})
+        return res[0] if res else None
 
     def delete_task(self, id: str) -> bool:
         """Delete a task from the ledger."""
-        task = self.db.collection("tasks").get(id)
+        task = self.get_task(id)
         if not task:
             return False
-        self.db.collection("tasks").delete(task["_key"])
+        db.delete(task["_id"], "tasks")
         return True
 
     def get_tasks_by_project(self, project: str) -> List[Dict[str, Any]]:
         """Get all tasks for a specific project."""
         query = "FOR t IN tasks FILTER t.project == @project RETURN t"
-        cursor = self.db.aql.execute(query, bind_vars={"project": project})
-        return list(cursor)
+        return db.query(query, bind_vars={"project": project})
