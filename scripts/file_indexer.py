@@ -4,7 +4,7 @@ import logging
 from datetime import datetime, timezone
 from typing import Dict, Any
 from pathlib import Path
-from scripts.db_client import db
+from scripts.db_client import get_db
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("file-indexer")
@@ -16,7 +16,8 @@ class AbraxasFileIndexer:
     def __init__(self, root_dir: str):
         self.root_dir = root_dir
         self.collection = "files"
-        db.ensure_collection(self.collection, edge=False)
+        self.db = get_db()
+        self.db.ensure_collection(self.collection, edge=False)
 
     def _compute_hash(self, file_path: Path) -> str:
         """Compute SHA-256 hash of a file."""
@@ -66,7 +67,7 @@ class AbraxasFileIndexer:
         
         # We use a simplified update: just insert/overwrite
         # In a real production system, we'd check the hash first to avoid unnecessary writes
-        db.update(f"files/{safe_key}", "files", doc) if hasattr(db, 'update') else db.insert("files", doc)
+        self.db.update(f"files/{safe_key}", "files", doc) if hasattr(self.db, 'update') else self.db.insert("files", doc)
 
 if __name__ == "__main__":
     # Example usage within project

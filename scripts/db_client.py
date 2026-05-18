@@ -50,10 +50,22 @@ class AbraxasDB:
     def update(self, doc_id: str, collection: str, update_data: Dict[str, Any]):
         col = self.db.collection(collection)
         key = doc_id.split('/')[-1] if '/' in doc_id else doc_id
-        # Use update instead of replace to preserve other fields
-        col.update({'_key': key}, update_data)
-        # Re-fetch and return the updated document for verification
-        return col.get(key)
+        
+        # Use AQL for an upsert (update or insert) operation
+        # This ensures that if the document does not exist, it is created.
+        aql = f"""
+        UPSERT {{ "_key": @key }}
+        INSERT @doc
+        UPDATE @doc
+        IN {collection}
+        RETURN NEW
+        """
+        # We need to ensure the document has the key inside and the correct ID
+        full_doc = update_data.copy()
+        full_doc['_key'] = key
+        
+        res = self.query(aql, bind_vars={"key": key, "doc": full_doc})
+        return res[0] if res else None
 
     def delete(self, doc_id: str, collection: str):
         col = self.db.collection(collection)
@@ -64,4 +76,12 @@ class AbraxasDB:
         return self.db.aql.execute(aql, bind_vars=bind_vars)
 
 # Singleton for shared use across scripts
-db = AbraxasDB()
+db = None
+
+def get_db():
+    global db
+    if db is None:
+        db = AbraxasDB()
+    return db
+
+

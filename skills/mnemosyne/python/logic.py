@@ -1,7 +1,13 @@
-from scripts.db_client import db
+from dataclasses import dataclass
+from typing import Optional
+import datetime
+from scripts.db_client import get_db
+
+db = get_db()
 
 @dataclass
 class Fragment:
+
     id: str
     fragment: str
     provenance: str

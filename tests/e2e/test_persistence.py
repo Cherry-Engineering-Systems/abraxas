@@ -1,6 +1,7 @@
 import os
-import unittest
-from scripts.db_client import db
+import pytest
+from pathlib import Path
+from scripts.db_client import get_db
 from scripts.db_manager import DBManager
 from skills.mnemosyne.python.logic import mnemosyne_logic
 from skills.ledger.python.logic import LedgerLogic
@@ -8,9 +9,10 @@ from scripts.file_indexer import AbraxasFileIndexer
 from skills.soter.python.logic import soter_logic
 from skills.soter.soter_db import SoterDB
 
-class TestPersistenceBridge(unittest.TestCase):
-    def setUp(self):
-        self.manager = DBManager(database=db)
+class TestPersistenceBridge:
+    def setup_method(self, method):
+        self.db = get_db()
+        self.manager = DBManager(database=self.db)
         self.ledger = LedgerLogic()
         self.soter_db = SoterDB()
         # Ensure collections are present
@@ -19,14 +21,17 @@ class TestPersistenceBridge(unittest.TestCase):
 
     def test_casing_rules(self):
         """Verify document and edge collections follow casing rules."""
-        collections = db.db.collections()
+        collections = self.db.db.collections()
         for col in collections:
             name = col['name']
+            # Exclude internal ArangoDB system collections
+            if col.get('system', True):
+                continue
+                
             if col.get('edge', False):
-                self.assertTrue(name.isupper(), f"Edge collection {name} should be UPPERCASE")
+                assert name.isupper(), f"Edge collection {name} should be UPPERCASE"
             else:
-                if not col.get('system', True):
-                    self.assertTrue(name.islower(), f"Document collection {name} should be lowercase")
+                assert name.islower(), f"Document collection {name} should be lowercase"
 
     def test_mnemosyne_fragments_flow(self):
         """Verify Mnemosyne correctly stores and recalls from 'fragments'."""
@@ -34,32 +39,36 @@ class TestPersistenceBridge(unittest.TestCase):
         provenance = "E2E Test Session"
         
         frag_id = mnemosyne_logic.store(fragment_text, provenance)
-        self.assertIsNotNone(frag_id)
+        assert frag_id is not None
         
         recalled = mnemosyne_logic.recall(fragment_text)
-        self.assertIsNotNone(recalled)
-        self.assertEqual(recalled.fragment, fragment_text)
-        self.assertEqual(recalled.provenance, provenance)
+        assert recalled is not None
+        assert recalled.fragment == fragment_text
+        assert recalled.provenance == provenance
 
     def test_codex_tasks_flow(self):
         """Verify Ledger correctly manages 'tasks' and 'TASK_EDGES'."""
+        # Create tasks
         task1 = self.ledger.create_task("Task One", project="Persistence Test")
         task2 = self.ledger.create_task("Task Two", project="Persistence Test")
+        
+        # Ensure collections exist (especially TASK_EDGES)
+        self.db.ensure_collection("TASK_EDGES", edge=True)
         
         # Test dependency (edge)
         self.ledger.add_dependency(task1['_key'], task2['_key'])
         
         # Verify edge exists in TASK_EDGES
         edge_query = "FOR e IN TASK_EDGES FILTER e._from == @from AND e._to == @to RETURN e"
-        edges = db.query(edge_query, bind_vars={
+        edges = self.db.query(edge_query, bind_vars={
             "from": f"tasks/{task1['_key']}",
             "to": f"tasks/{task2['_key']}"
         })
-        self.assertEqual(len(edges), 1)
+        assert len(edges) == 1
         
         # Test status update
         updated = self.ledger.update_task_status(task1['_id'], "ready")
-        self.assertEqual(updated['status'], "ready")
+        assert updated['status'] == "ready"
 
     def test_file_indexer_bridge(self):
         """Verify filesystem indexer populates 'files' collection."""
@@ -71,9 +80,11 @@ class TestPersistenceBridge(unittest.TestCase):
         indexer = AbraxasFileIndexer(root_dir=test_dir)
         indexer.index_directory(test_dir)
         
-        res = db.query("FOR f IN files FILTER f.name == 'test_artifact.txt' RETURN f")
-        self.assertTrue(len(res) > 0)
-        self.assertEqual(res[0]['name'], 'test_artifact.txt')
+        # Indexing may be async or delayed in some implementations, 
+        # but since it's local we check for the record
+        res = self.db.query("FOR f IN files FILTER f.name == 'test_artifact.txt' RETURN f")
+        assert len(res) > 0
+        assert res[0]['name'] == 'test_artifact.txt'
 
     def test_soter_persistence_flow(self):
         """Verify Soter correctly logs critical risks to ArangoDB."""
@@ -81,13 +92,13 @@ class TestPersistenceBridge(unittest.TestCase):
         
         # 1. Trigger a risk assessment that should be logged (score >= 3)
         result = soter_logic.verify_claim(high_risk_claim)
-        self.assertTrue(result['logged'])
+        assert result['logged']
         
         # 2. Verify it exists in the 'incidents' collection
         query = "FOR i IN incidents FILTER i.request == @text RETURN i"
-        incidents = db.query(query, bind_vars={"text": high_risk_claim})
-        self.assertTrue(len(incidents) > 0)
-        self.assertEqual(incidents[0]['assessment']['score'], result['riskScore'])
+        incidents = self.db.query(query, bind_vars={"text": high_risk_claim})
+        assert len(incidents) > 0
+        assert incidents[0]['assessment']['score'] == result['riskScore']
 
     def test_soter_review_cycle(self):
         """Verify full Soter incident -> review -> resolution cycle."""
@@ -102,7 +113,7 @@ class TestPersistenceBridge(unittest.TestCase):
         
         # Create a review
         review = self.soter_db.create_review(incident['_key'])
-        self.assertIsNotNone(review)
+        assert review is not None
         
         # Submit decision and resolve
         self.soter_db.submit_decision(review['_key'], {
@@ -113,7 +124,5 @@ class TestPersistenceBridge(unittest.TestCase):
         
         # Verify incident is now resolved
         resolved_incident = self.soter_db.get_incident_by_id(incident['_key'])
-        self.assertTrue(resolved_incident['resolved'])
-
-if __name__ == "__main__":
-    unittest.main()
+        assert resolved_incident is not None
+        assert resolved_incident['resolved'] is True

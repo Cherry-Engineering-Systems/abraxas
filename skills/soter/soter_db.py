@@ -5,11 +5,19 @@ import os
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-sys.path.append(os.path.join(os.getcwd(), "scripts"))
+import sys
+import argparse
+import json
+import os
+from datetime import datetime
+from typing import Any, Dict, List, Optional
+from scripts.db_client import get_db
+
+# Handle legacy imports
 try:
-    from scripts.db_client import db
-except ImportError:
-    sys.path.append("/Users/tylergarlick/@Projects/abraxas/scripts")
+    db = get_db()
+except Exception:
+    # Fallback for environments where get_db isn't available
     from scripts.db_client import db
 
 class SoterDB:

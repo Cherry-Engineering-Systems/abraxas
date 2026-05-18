@@ -1,7 +1,7 @@
 import sys
 import logging
 from typing import Any, List, Dict
-from scripts.db_client import db
+from scripts.db_client import get_db
 
 logger = logging.getLogger("db-manager")
 logging.basicConfig(level=logging.INFO)
@@ -11,8 +11,8 @@ class DBManager:
     Authoritative schema manager for Abraxas ArangoDB.
     Ported from infra/mcp/db_manager.py
     """
-    def __init__(self, database=db):
-        self.db = database
+    def __init__(self, database=None):
+        self.db = database or get_db()
 
     def initialize_schema(self, skill_manifests: List[Dict] = None):
         logger.info("Initializing AbraxasDB Schema...")
@@ -32,7 +32,7 @@ class DBManager:
             sovereign_edges = [
                 "DERIVED_FROM", "NEXT_STEP", "SUPERSEDES", 
                 "SESS_TO_HYPO", "HYPO_TO_CONCEPT", "CONCEPT_TO_PLAN",
-                "DEPENDS_ON", "STORED_IN", "PROVENANCE_OF"
+                "DEPENDS_ON", "STORED_IN", "PROVENANCE_OF", "TASK_EDGES"
             ]
             for edge in sovereign_edges:
                 if not self.db.has_collection(edge):

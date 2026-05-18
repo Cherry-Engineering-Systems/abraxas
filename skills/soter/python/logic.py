@@ -1,3 +1,6 @@
+from scripts.db_client import get_db
+db = get_db()
+
 import datetime
 import logging
 from typing import List, Dict, Any, Optional, Tuple
