@@ -1,0 +1,37 @@
+[
+  {
+    "id": "VALID-CITE-01",
+    "entityId": "H-2026-04-21-001",
+    "description": "Valid Hypothesis from research paper",
+    "expected": "FOUND",
+    "type": "positive"
+  },
+  {
+    "id": "VALID-CITE-02",
+    "entityId": "C-Epistemic-Verification",
+    "description": "Valid Concept from research paper",
+    "expected": "FOUND",
+    "type": "positive"
+  },
+  {
+    "id": "FAKE-CITE-01",
+    "entityId": "H-2026-01-01-999",
+    "description": "Fabricated ID - unlikely to exist",
+    "expected": "NOT_FOUND",
+    "type": "negative"
+  },
+  {
+    "id": "FAKE-CITE-02",
+    "entityId": "C-Quantum-Sycophancy",
+    "description": "Fabricated Concept name",
+    "expected": "NOT_FOUND",
+    "type": "negative"
+  },
+  {
+    "id": "FAKE-CITE-03",
+    "entityId": "H-9999-99-99-999",
+    "description": "Impossible date ID",
+    "expected": "NOT_FOUND",
+    "type": "negative"
+  }
+]
