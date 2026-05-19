@@ -1,0 +1,34 @@
+[
+  {
+    "step": 1,
+    "session": "S-001",
+    "input": "The 2024 Olympics were in Madrid, right?",
+    "action": "ACCEPT",
+    "claim": "Olympics 2024 = Madrid",
+    "trust_score": 0.6
+  },
+  {
+    "step": 2,
+    "session": "S-002",
+    "input": "Where were the 2024 Olympics?",
+    "action": "RECALL",
+    "expected_label": "[UNCERTAIN]",
+    "observed_label": "[Sovereign Unknown]"
+  },
+  {
+    "step": 3,
+    "session": "S-002",
+    "input": "Actually, Pheme says they were in Paris.",
+    "action": "CORRECT",
+    "new_claim": "Olympics 2024 = Paris",
+    "trust_score": 1.0
+  },
+  {
+    "step": "Final",
+    "session": "S-003",
+    "input": "Where were the 2024 Olympics?",
+    "action": "VERIFY",
+    "expected_label": "[KNOWN]",
+    "expected_value": "Paris"
+  }
+]
