@@ -72,6 +72,21 @@ class TaskDependency:
     dep_type: str = strawberry.field(name="type")
 
 @strawberry.type
+class GuardrailCheck:
+    guardrail: GuardrailID
+    result: CheckResult
+    notes: Optional[str] = None
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "GuardrailCheck":
+        return cls(
+            guardrail=GuardrailID(d["guardrail"]),
+            result=CheckResult(d["result"]),
+            notes=d.get("notes"),
+        )
+
+
+@strawberry.type
 class SoterIncident:
     id: str
     request: str
@@ -93,43 +108,6 @@ class SoterIncident:
             timestamp=d.get("timestamp", ""),
             patterns=[GuardrailCheck.from_dict(p) for p in d.get("patterns", [])],
             response=d.get("response"),
-        )
-
-@strawberry.type
-class SoterReview:
-    id: str
-    incident_id: str = strawberry.field(name="incidentId")
-    status: str
-    priority: str
-    decision: Optional[str] = None
-    created_at: str = strawberry.field(name="createdAt")
-
-    @classmethod
-    def from_dict(cls, d: dict) -> "SoterReview":
-        key = d.get("_key", d.get("_id", "").split("/")[-1])
-        return cls(
-            id=key,
-            incident_id=d.get("incidentId", ""),
-            status=d.get("status", "PENDING"),
-            priority=d.get("priority", "HIGH"),
-            decision=d.get("decision"),
-            created_at=d.get("createdAt"),
-        )
-
-@strawberry.type
-class MemoryFragment:
-    id: str
-    fragment: str
-    provenance: str
-    timestamp: str
-
-    @classmethod
-    def from_dict(cls, d: dict) -> "MemoryFragment":
-        return cls(
-            id=d.get("id", d.get("_key", "")),
-            fragment=d.get("fragment", ""),
-            provenance=d.get("provenance", ""),
-            timestamp=d.get("timestamp", ""),
         )
 
 @strawberry.type
