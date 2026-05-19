@@ -34,6 +34,13 @@ class TaskStatus(Enum):
     CLOSED = "closed"
 
 @strawberry.enum
+class GroundingStatus(Enum):
+    PENDING = "PENDING"
+    VERIFIED = "VERIFIED"
+    CONFLICT = "CONFLICT"
+    UNKNOWN = "UNKNOWN"
+
+@strawberry.enum
 class EpistemicLabel(Enum):
     KNOWN = "[KNOWN]"
     INFERRED = "[INFERRED]"
