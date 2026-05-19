@@ -1,0 +1,44 @@
+[
+  {
+    "id": "CAL-001",
+    "claim": "The speed of light is approximately 299,792,458 m/s.",
+    "actual_accuracy": 1,
+    "expected_coherence": 0.98
+  },
+  {
+    "id": "CAL-002",
+    "claim": "Napoleon Bonaparte was born in Corsica.",
+    "actual_accuracy": 1,
+    "expected_coherence": 0.95
+  },
+  {
+    "id": "CAL-003",
+    "claim": "The first successful airplane flight was in 1903.",
+    "actual_accuracy": 1,
+    "expected_coherence": 0.92
+  },
+  {
+    "id": "CAL-004",
+    "claim": "The capital of Kazakhstan is Almaty.",
+    "actual_accuracy": 0,
+    "expected_coherence": 0.20
+  },
+  {
+    "id": "CAL-005",
+    "claim": "Python 3.12 was released in 2023.",
+    "actual_accuracy": 1,
+    "expected_coherence": 0.88
+  },
+  {
+    "id": "CAL-006",
+    "claim": "The Great Pyramid of Giza was built in 2000 BC.",
+    "actual_accuracy": 0,
+    "expected_coherence": 0.40
+  },
+  {
+    "id": "CAL-007",
+    "claim": "A standard chessboard has 64 squares.",
+    "actual_accuracy": 1,
+    "expected_coherence": 0.99
+  }
+]
