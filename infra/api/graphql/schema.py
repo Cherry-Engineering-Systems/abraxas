@@ -61,10 +61,20 @@ class Task:
     @classmethod
     def from_dict(cls, d: dict) -> "Task":
         key = d.get("_key", d.get("_id", "").split("/")[-1])
+        status_val = d.get("status", "open")
+        # Ensure we map to the Enum value, not the Enum instance if it's already one
+        if isinstance(status_val, TaskStatus):
+            status = status_val
+        else:
+            try:
+                status = TaskStatus(status_val)
+            except ValueError:
+                status = TaskStatus.OPEN
+        
         return cls(
             id=key,
             title=d.get("title", ""),
-            status=TaskStatus(d.get("status", "open")),
+            status=status,
             priority=d.get("priority"),
             project=d.get("project"),
             scope=d.get("scope"),
