@@ -17,6 +17,7 @@ from schema import (
     Concept,
     ActionablePlan,
     EdgeInfo,
+    TaskDependency,
     GuardrailCheck,
     ProvenanceChain,
     BenchmarkResult,
