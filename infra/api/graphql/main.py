@@ -8,6 +8,10 @@ import uvicorn
 from context import get_graphql_context, GraphQLContext
 from schema import (
     GroundingStatus,
+    Task,
+    TaskStatus,
+    SoterIncident,
+    SoterReview,
     DreamSession,
     Hypothesis,
     Concept,
@@ -25,7 +29,9 @@ from schema import (
     ScoreDistributionInput,
     GuardrailID,
     CreativeDriver,
-    ActionablePlanInput
+    ActionablePlanInput,
+    SovereignState,
+    MemoryFragment
 )
 from resolvers.queries import (
     resolve_dream_session,
