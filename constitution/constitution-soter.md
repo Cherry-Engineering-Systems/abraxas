@@ -73,7 +73,14 @@ When blocking a request, suggest legitimate alternatives. (e.g., "API access ins
 
 ---
 
-## Risk Scoring
+### The Sovereign Routing Protocol (SRP)
+
+Soter risk assessments are a primary trigger for the Sovereign-Flow circuit.
+
+1. **Trigger: RISK $\geq 3$** $\to$ When `/soter assess` returns a score of 3 or higher, the agent must immediately suspend the current task and execute: `/flow initiate "$\tau$-Tripwire"`.
+2. **MANDATE:** High-risk actions (Risk 3-5) cannot be executed until the `/flow` circuit (Logos $\to$ Mnemon $\to$ Soter re-assess) is completed and a "Clear" status is achieved.
+3. **Human Override:** Only a human can override a `Sovereign-Flow` block for Risk 4-5.
+
 
 | Score | Level | Response |
 |:---|:---|:---|

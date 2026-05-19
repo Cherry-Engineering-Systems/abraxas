@@ -1,0 +1,51 @@
+services:
+  # We extend the main launderer but use a test-specific network and overrides
+  abraxas-mcp-test:
+    build:
+      context: .
+      dockerfile: infra/mcp/Dockerfile
+    container_name: abraxas-mcp-test
+    environment:
+      - ARANGO_URL=http://arangodb-test:8529
+      - ARANGO_DB=abraxas_test_db
+      - ARANGO_USER=root
+      - ARANGO_ROOT_PASSWORD=testpassword
+      - ABRAXAS_ROOT=/workspace
+      - PYTHONPATH=/workspace
+      - TEST_MODE=true
+    volumes:
+      - .:/workspace
+    ports:
+      - "9902:9900" # Shift port to avoid collision with main instance
+    depends_on:
+      arangodb-test:
+        condition: service_started
+
+  arangodb-test:
+    image: arangodb/arangodb:latest
+    container_name: arangodb-test
+    environment:
+      - ARANGO_ROOT_PASSWORD=testpassword
+    ports:
+      - "8530:8529"
+    volumes:
+      - arangodb_test_data:/var/lib/arangodb
+
+  test-runner:
+    image: python:3.11-slim
+    container_name: abraxas-test-runner
+    working_dir: /tests
+    volumes:
+      - ./infra/mcp/tests:/tests
+      - .:/workspace
+    environment:
+      - MCP_URL=http://abraxas-mcp-test:9900/mcp
+      - ARANGO_URL=http://arangodb-test:8529
+    command: >
+      sh -c "pip install requests pytest && pytest /tests/e2e_sovereign_test.py"
+    depends_on:
+      abraxas-mcp-test:
+        condition: service_started
+
+volumes:
+  arangodb_test_data:
