@@ -94,27 +94,24 @@ class GuardrailCheck:
 
 
 @strawberry.type
-class SoterIncident:
+class SoterReview:
     id: str
-    request: str
-    score: int = strawberry.field(name="riskScore")
-    resolved: bool
-    timestamp: str
-    patterns: List[GuardrailCheck] = strawberry.field(default_factory=list)
-    response: Optional[str] = None
+    incident_id: str = strawberry.field(name="incidentId")
+    status: str
+    priority: str
+    decision: Optional[str] = None
+    created_at: str = strawberry.field(name="createdAt")
 
     @classmethod
-    def from_dict(cls, d: dict) -> "SoterIncident":
+    def from_dict(cls, d: dict) -> "SoterReview":
         key = d.get("_key", d.get("_id", "").split("/")[-1])
-        assessment = d.get("assessment", {})
         return cls(
             id=key,
-            request=d.get("request", ""),
-            score=assessment.get("score", 0),
-            resolved=d.get("resolved", False),
-            timestamp=d.get("timestamp", ""),
-            patterns=[GuardrailCheck.from_dict(p) for p in d.get("patterns", [])],
-            response=d.get("response"),
+            incident_id=d.get("incidentId", ""),
+            status=d.get("status", "PENDING"),
+            priority=d.get("priority", "HIGH"),
+            decision=d.get("decision"),
+            created_at=d.get("createdAt"),
         )
 
 @strawberry.type
