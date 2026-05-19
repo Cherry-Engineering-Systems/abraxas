@@ -111,6 +111,22 @@ class SoterIncident:
         )
 
 @strawberry.type
+class MemoryFragment:
+    id: str
+    fragment: str
+    provenance: str
+    timestamp: str
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "MemoryFragment":
+        return cls(
+            id=d.get("id", d.get("_key", "")),
+            fragment=d.get("fragment", ""),
+            provenance=d.get("provenance", ""),
+            timestamp=d.get("timestamp", ""),
+        )
+
+@strawberry.type
 class SovereignState:
     unresolved_incidents: int = strawberry.field(name="unresolvedIncidents")
     ready_tasks: List[Task] = strawberry.field(name="readyTasks")
