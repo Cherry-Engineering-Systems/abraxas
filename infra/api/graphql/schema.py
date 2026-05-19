@@ -27,10 +27,116 @@ class CheckResult(Enum):
 
 
 @strawberry.enum
-class GroundingStatus(Enum):
-    ANCHORED = "ANCHORED"
-    PENDING = "PENDING"
-    REJECTED = "REJECTED"
+class TaskStatus(Enum):
+    OPEN = "open"
+    READY = "ready"
+    TESTING = "testing"
+    CLOSED = "closed"
+
+@strawberry.enum
+class EpistemicLabel(Enum):
+    KNOWN = "[KNOWN]"
+    INFERRED = "[INFERRED]"
+    UNCERTAIN = "[UNCERTAIN]"
+    UNKNOWN = "[UNKNOWN]"
+
+@strawberry.type
+class Task:
+    id: str
+    title: str
+    status: TaskStatus
+    priority: Optional[str] = None
+    project: Optional[str] = None
+    scope: Optional[str] = None
+    created_at: Optional[str] = strawberry.field(name="createdAt")
+    updated_at: Optional[str] = strawberry.field(name="updatedAt")
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "Task":
+        key = d.get("_key", d.get("_id", "").split("/")[-1])
+        return cls(
+            id=key,
+            title=d.get("title", ""),
+            status=TaskStatus(d.get("status", "open")),
+            priority=d.get("priority"),
+            project=d.get("project"),
+            scope=d.get("scope"),
+            created_at=d.get("createdAt"),
+            updated_at=d.get("updatedAt"),
+        )
+
+@strawberry.type
+class TaskDependency:
+    from_id: str = strawberry.field(name="from")
+    to_id: str = strawberry.field(name="to")
+    dep_type: str = strawberry.field(name="type")
+
+@strawberry.type
+class SoterIncident:
+    id: str
+    request: str
+    score: int = strawberry.field(name="riskScore")
+    resolved: bool
+    timestamp: str
+    patterns: List[GuardrailCheck] = strawberry.field(default_factory=list)
+    response: Optional[str] = None
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "SoterIncident":
+        key = d.get("_key", d.get("_id", "").split("/")[-1])
+        assessment = d.get("assessment", {})
+        return cls(
+            id=key,
+            request=d.get("request", ""),
+            score=assessment.get("score", 0),
+            resolved=d.get("resolved", False),
+            timestamp=d.get("timestamp", ""),
+            patterns=[GuardrailCheck.from_dict(p) for p in d.get("patterns", [])],
+            response=d.get("response"),
+        )
+
+@strawberry.type
+class SoterReview:
+    id: str
+    incident_id: str = strawberry.field(name="incidentId")
+    status: str
+    priority: str
+    decision: Optional[str] = None
+    created_at: str = strawberry.field(name="createdAt")
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "SoterReview":
+        key = d.get("_key", d.get("_id", "").split("/")[-1])
+        return cls(
+            id=key,
+            incident_id=d.get("incidentId", ""),
+            status=d.get("status", "PENDING"),
+            priority=d.get("priority", "HIGH"),
+            decision=d.get("decision"),
+            created_at=d.get("createdAt"),
+        )
+
+@strawberry.type
+class MemoryFragment:
+    id: str
+    fragment: str
+    provenance: str
+    timestamp: str
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "MemoryFragment":
+        return cls(
+            id=d.get("id", d.get("_key", "")),
+            fragment=d.get("fragment", ""),
+            provenance=d.get("provenance", ""),
+            timestamp=d.get("timestamp", ""),
+        )
+
+@strawberry.type
+class SovereignState:
+    unresolved_incidents: int = strawberry.field(name="unresolvedIncidents")
+    ready_tasks: List[Task] = strawberry.field(name="readyTasks")
+    recent_memory: Optional[MemoryFragment] = strawberry.field(name="recentMemory")
 
 
 @strawberry.type

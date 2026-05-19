@@ -33,6 +33,12 @@ from resolvers.queries import (
     resolve_concept,
     resolve_actionable_plans,
     resolve_benchmark_results,
+    resolve_tasks,
+    resolve_task_tree,
+    resolve_incident_log,
+    resolve_pending_reviews,
+    resolve_memory_recall,
+    resolve_sovereign_state,
 )
 from resolvers.mutations import (
     resolve_start_dream_cycle,
@@ -78,6 +84,30 @@ class Query:
     @strawberry.field
     def benchmark_results(self, model_id: Optional[str] = None) -> List[BenchmarkResult]:
         return resolve_benchmark_results(model_id)
+
+    @strawberry.field
+    def tasks(self, project: Optional[str] = None, status: Optional[TaskStatus] = None) -> List[Task]:
+        return resolve_tasks(project, status)
+
+    @strawberry.field
+    def task_tree(self, task_id: strawberry.ID) -> List[TaskDependency]:
+        return resolve_task_tree(str(task_id))
+
+    @strawberry.field
+    def incident_log(self, min_score: int = 0) -> List[SoterIncident]:
+        return resolve_incident_log(min_score)
+
+    @strawberry.field
+    def pending_reviews(self, priority: Optional[str] = None) -> List[SoterReview]:
+        return resolve_pending_reviews(priority)
+
+    @strawberry.field
+    def memory_recall(self, query: str) -> Optional[MemoryFragment]:
+        return resolve_memory_recall(query)
+
+    @strawberry.field
+    def sovereign_state(self) -> SovereignState:
+        return resolve_sovereign_state()
 
     @strawberry.field
     def search(
