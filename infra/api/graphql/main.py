@@ -86,8 +86,16 @@ class Query:
         return resolve_project_uncertainty()
 
     @field
-    def ready_tasks(self) -> List["Task"]:
-        return resolve_ready_tasks()
+    def tasks(
+        self, 
+        project: Optional[str] = None, 
+        status: Optional["TaskStatus"] = None, 
+        query: Optional[str] = None, 
+        limit: Optional[int] = None, 
+        offset: Optional[int] = None
+    ) -> List["Task"]:
+        from resolvers.queries import resolve_tasks
+        return resolve_tasks(project, status, query, limit, offset)
 
     @field
     def soter_incidents(self, min_score: int = 0) -> List["SoterIncident"]:

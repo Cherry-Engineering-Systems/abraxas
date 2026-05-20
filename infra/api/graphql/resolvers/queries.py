@@ -64,21 +64,42 @@ def resolve_benchmark_results(model_id: Optional[str] = None) -> List[BenchmarkR
     results = ctx.execute_aql(query, bind_vars)
     return [BenchmarkResult.from_dict(r) for r in results]
 
-def resolve_tasks(project: Optional[str] = None, status: Optional[TaskStatus] = None) -> List[Task]:
+def resolve_tasks(
+    project: Optional[str] = None, 
+    status: Optional[TaskStatus] = None, 
+    query: Optional[str] = None, 
+    limit: Optional[int] = None, 
+    offset: Optional[int] = None
+) -> List[Task]:
     ctx = get_graphql_context()
-    query = "FOR t IN tasks"
+    aql_query = "FOR t IN tasks"
     bind_vars = {}
     filters = []
+    
     if project:
         filters.append("t.project == @project")
         bind_vars["project"] = project
     if status:
         filters.append("t.status == @status")
         bind_vars["status"] = status.value
+    if query:
+        # Search in both title and scope/description (using LOWER for case-insensitivity)
+        filters.append("(CONTAINS(LOWER(t.title), LOWER(@query)) OR CONTAINS(LOWER(t.scope), LOWER(@query)))")
+        bind_vars["query"] = query
+        
     if filters:
-        query += " FILTER " + " AND ".join(filters)
-    query += " RETURN t"
-    results = ctx.execute_aql(query, bind_vars)
+        aql_query += " FILTER " + " AND ".join(filters)
+        
+    if limit is not None and offset is not None:
+        aql_query += " LIMIT @offset, @limit"
+        bind_vars["offset"] = offset
+        bind_vars["limit"] = limit
+    elif limit is not None:
+        aql_query += " LIMIT @limit"
+        bind_vars["limit"] = limit
+        
+    aql_query += " RETURN t"
+    results = ctx.execute_aql(aql_query, bind_vars)
     return [Task.from_dict(r) for r in results]
 
 def resolve_ready_tasks() -> List[Task]:
