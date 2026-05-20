@@ -47,7 +47,7 @@ class TestPersistenceBridge:
         assert recalled.provenance == provenance
 
     def test_codex_tasks_flow(self):
-        """Verify Ledger correctly manages 'tasks' and 'TASK_EDGES'."""
+        """Verify Tasks correctly manages 'tasks' and 'TASK_EDGES'."""
         # Create tasks
         task1 = self.ledger.create_task("Task One", project="Persistence Test")
         task2 = self.ledger.create_task("Task Two", project="Persistence Test")

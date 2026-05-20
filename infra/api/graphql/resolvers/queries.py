@@ -124,7 +124,7 @@ def resolve_tasks(
 
 def resolve_ready_tasks() -> List[Task]:
     ctx = get_graphql_context()
-    # Logic from Ledger Skill:
+    # Logic from Tasks Skill:
     # A task is ready if:
     # 1. status == 'ready'
     # 2. status == 'open' AND has no remaining 'blocks' dependencies leading to tasks that are not 'closed'

@@ -87,7 +87,7 @@ The Sovereign Codex documents the architectural transition of Abraxas from a pro
 | **Sovereign Era** | Architectural approach to honesty via deterministic constraints. Sovereign Gap closed. |
 | **Lapping the Tracks** | Self-reinforcing hallucination spiral where model treats its own output as ground truth. |
 | **Soter** | Attention-sink monitor; triggers Epistemic Crisis at $\tau = 0.15$. |
-| **Sovereign-Nexus** | SHA-256 hash-linked cognitive ledger ("Iron Chain"). |
+| **Sovereign-Nexus** | SHA-256 hash-linked cognitive task-chain ("Iron Chain"). |
 | **Sovereign-Anchor** | Human-truth injection protocol; Genesis Blocks with Divine Priority. |
 | **Janus** | Cognitive orchestrator managing NOX/SOL modes and M-Lens consensus. |
 | **NOX Mode** | Probabilistic/generative; default for low-risk queries. |
@@ -123,8 +123,8 @@ The Sovereign Codex documents the architectural transition of Abraxas from a pro
 | Sovereign-Anchor | `infra/api/src/core/anchor.py` |
 | SovereignGraph Client | `infra/api/src/core/graph.py` |
 | Janus Orchestrator | `infra/api/src/core/orchestrator.py` |
-| Ledger Logic | `skills/ledger/python/logic.py` |
-| Ledger MCP Tools | `skills/ledger/mcp_tools.py` |
+| Tasks Logic | `skills/ledger/python/logic.py` |
+| Tasks MCP Tools | `skills/ledger/mcp_tools.py` |
 | Gauntlet Tests | `tests/gauntlet_stress_test.py` |
 | Chaos Suite Tests | `tests/chaos_suite.py` |
 | SV-Doc | `docs/verification/SV-Doc.md` |
