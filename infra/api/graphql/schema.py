@@ -1,5 +1,5 @@
 from strawberry import input, field, type, enum
-from strawberry.typing import JSON
+from strawberry.scalars import JSON
 from enum import Enum
 from typing import List, Optional
 
