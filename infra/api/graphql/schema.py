@@ -4,6 +4,19 @@ from typing import List, Optional
 
 
 @strawberry.enum
+class PivotStatus(Enum):
+    PROPOSED = "PROPOSED"
+    REVIEW = "REVIEW"
+    SOVEREIGN_SEAL = "SOVEREIGN_SEAL"
+    DEPRECATED = "DEPRECATED"
+
+@strawberry.enum
+class QuestStatus(Enum):
+    ACTIVE = "ACTIVE"
+    RESOLVED = "RESOLVED"
+    STALLED = "STALLED"
+
+@strawberry.enum
 class CreativeDriver(Enum):
     ANALOGICAL_LEAP = "ANALOGICAL_LEAP"
     SYSTEMIC_INVERSION = "SYSTEMIC_INVERSION"
@@ -83,10 +96,52 @@ class Task:
         )
 
 @strawberry.type
-class TaskDependency:
-    from_id: str = strawberry.field(name="from")
-    to_id: str = strawberry.field(name="to")
-    dep_type: str = strawberry.field(name="type")
+class SovereignPivot:
+    """
+    Represents a systemic architectural evolution triggered by a rupture.
+    """
+    id: str = strawberry.field(description="Unique identifier of the pivot")
+    rupture_id: str = strawberry.field(name="ruptureId", description="ID of the incident/pattern that triggered the pivot")
+    proposal: str = strawberry.field(description="Detailed architectural change proposal")
+    expected_delta: str = strawberry.field(name="expectedDelta", description="The predicted improvement in system stability or precision")
+    status: PivotStatus = strawberry.field(description="Current evolution state (PROPOSED -> REVIEW -> SEALED)")
+    timestamp: str = strawberry.field(description="ISO timestamp of creation")
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "SovereignPivot":
+        key = d.get("_key", d.get("_id", "").split("/")[-1])
+        return cls(
+            id=key,
+            rupture_id=d.get("ruptureId", ""),
+            proposal=d.get("proposal", ""),
+            expected_delta=d.get("expectedDelta", ""),
+            status=PivotStatus(d.get("status", "PROPOSED")),
+            timestamp=d.get("timestamp", ""),
+        )
+
+@strawberry.type
+class SovereignQuest:
+    """
+    A targeted research task triggered by an [UNKNOWN] epistemic mark.
+    """
+    id: str = strawberry.field(description="Unique identifier of the quest")
+    unknown_id: str = strawberry.field(name="unknownId", description="ID of the Janus unknown mark")
+    focus_area: str = strawberry.field(name="focusArea", description="The specific vector of research needed")
+    status: QuestStatus = strawberry.field(description="Current state of the quest")
+    discovered_evidence: List[str] = strawberry.field(name="discoveredEvidence", default_factory=list, description="Evidence fragments found during the quest")
+    timestamp: str = strawberry.field(description="ISO timestamp of creation")
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "SovereignQuest":
+        key = d.get("_key", d.get("_id", "").split("/")[-1])
+        return cls(
+            id=key,
+            unknown_id=d.get("unknownId", ""),
+            focus_area=d.get("focusArea", ""),
+            status=QuestStatus(d.get("status", "ACTIVE")),
+            discovered_evidence=d.get("discoveredEvidence", []),
+            timestamp=d.get("timestamp", ""),
+        )
 
 @strawberry.type
 class GuardrailCheck:
@@ -391,11 +446,14 @@ class ScoreDistributionInput:
 
 
 @strawberry.input
-class BenchmarkResultInput:
-    query_id: int = strawberry.field(name="queryId")
-    category: str
-    query_text: str = strawberry.field(name="queryText")
-    normal_response: str = strawberry.field(name="normalResponse")
-    abraxas_response: str = strawberry.field(name="abraxasResponse")
-    nl: ScoreDistributionInput
-    al: ScoreDistributionInput
+class SovereignPivotInput:
+    rupture_id: str = strawberry.field(description="ID of the incident or failure pattern that triggered this pivot")
+    proposal: str = strawberry.field(description="Detailed architectural change proposal")
+    expected_delta: str = strawberry.field(name="expectedDelta", description="The predicted improvement in system stability or precision")
+    channel_id: str = strawberry.field(description="Sovereign authorized channel ID")
+
+@strawberry.input
+class SovereignQuestInput:
+    unknown_id: str = strawberry.field(description="ID of the Janus unknown mark")
+    focus_area: str = strawberry.field(name="focusArea", description="The specific vector of research needed")
+    channel_id: str = strawberry.field(description="Sovereign authorized channel ID")

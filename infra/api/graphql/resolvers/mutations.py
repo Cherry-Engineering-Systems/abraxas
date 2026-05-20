@@ -11,6 +11,12 @@ from infra.api.graphql.schema import (
     ActionablePlan,
     ActionablePlanInput,
     BenchmarkResultInput,
+    SovereignPivot,
+    SovereignQuest,
+    SovereignPivotInput,
+    SovereignQuestInput,
+    PivotStatus,
+    QuestStatus,
 )
 
 
@@ -198,7 +204,7 @@ def resolve_upload_benchmark_batch(
                 "al": {
                     "known": res.al.known,
                     "inferred": res.al.inferred,
-                    "uncertain": res.al.uncertain,
+                    "uncertain": res.nl.uncertain,
                     "unknown": res.al.unknown,
                     "dream": res.al.dream,
                 },
@@ -210,3 +216,41 @@ def resolve_upload_benchmark_batch(
         coll.insert(doc)
 
     return len(results)
+
+
+def resolve_propose_sovereign_pivot(
+    input: SovereignPivotInput,
+) -> SovereignPivot:
+    _validate_channel(input.channel_id)
+    ctx = get_graphql_context()
+    
+    coll = ctx.db.collection("pivots")
+    pivot_doc = {
+        "ruptureId": input.rupture_id,
+        "proposal": input.proposal,
+        "expectedDelta": input.expected_delta,
+        "status": PivotStatus.PROPOSED.value,
+        "channelId": input.channel_id,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+    }
+    result = coll.insert(pivot_doc)
+    return SovereignPivot.from_dict({**result, **pivot_doc})
+
+
+def resolve_trigger_sovereign_quest(
+    input: SovereignQuestInput,
+) -> SovereignQuest:
+    _validate_channel(input.channel_id)
+    ctx = get_graphql_context()
+    
+    coll = ctx.db.collection("quests")
+    quest_doc = {
+        "unknownId": input.unknown_id,
+        "focusArea": input.focus_area,
+        "status": QuestStatus.ACTIVE.value,
+        "discoveredEvidence": [],
+        "channelId": input.channel_id,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+    }
+    result = coll.insert(quest_doc)
+    return SovereignQuest.from_dict({**result, **quest_doc})
