@@ -23,6 +23,15 @@ from infra.api.graphql.schema import (
     TaskStatus,
     TaskDependency,
     DependencyInput,
+    SoterIncident,
+    SoterReview,
+    SoterIncidentInput,
+    SoterReviewInput,
+    ShadowEntry,
+    ShadowEntryInput,
+    SymbolNode,
+    SymbolUpdateInput,
+    AlchemicalStage,
 )
 
 
@@ -280,8 +289,6 @@ def resolve_update_task_status(input: TaskStatusInput) -> Task:
     ctx = get_graphql_context()
     coll = ctx.db.collection("tasks")
     
-    # In Arango, a document key is usually used for get/update. 
-    # If the ID provided is exactly the key, it works.
     doc = coll.get(input.id)
     if doc is None:
         raise ValueError(f"Task {input.id} not found")
@@ -290,3 +297,82 @@ def resolve_update_task_status(input: TaskStatusInput) -> Task:
     doc["updatedAt"] = datetime.now(timezone.utc).isoformat()
     coll.update(input.id, doc)
     return Task.from_dict(doc)
+
+def resolve_add_dependency(input: DependencyInput) -> TaskDependency:
+    ctx = get_graphql_context()
+    edge_coll = ctx.db.collection("task_edges")
+    
+    # Ensure both tasks exist (basic validation)
+    if not ctx.document("tasks", input.from_id) or not ctx.document("tasks", input.to_id):
+        raise ValueError("One or both task IDs are invalid")
+        
+    edge_doc = {
+        "_from": f"tasks/{input.from_id}",
+        "_to": f"tasks/{input.to_id}",
+        "type": input.dep_type,
+        "createdAt": datetime.now(timezone.utc).isoformat(),
+    }
+    result = edge_coll.insert(edge_doc)
+    return TaskDependency.from_dict({**result, **edge_doc})
+
+def resolve_report_soter_incident(input: SoterIncidentInput, channel_id: str) -> SoterIncident:
+    _validate_channel(channel_id)
+    ctx = get_graphql_context()
+    coll = ctx.db.collection("incidents")
+    
+    incident_doc = {
+        "request": input.request,
+        "assessment": {"score": input.score},
+        "resolved": input.resolved,
+        "timestamp": input.timestamp or datetime.now(timezone.utc).isoformat(),
+        "patterns": [p.from_dict(p) if hasattr(p, 'from_dict') else p for p in input.patterns],
+        "channelId": channel_id,
+    }
+    result = coll.insert(incident_doc)
+    return SoterIncident.from_dict({**result, **incident_doc})
+
+def resolve_soter_review(input: SoterReviewInput, channel_id: str) -> SoterReview:
+    _validate_channel(channel_id)
+    ctx = get_graphql_context()
+    coll = ctx.db.collection("reviews")
+    
+    review_doc = {
+        "incidentId": input.incident_id,
+        "status": input.status,
+        "priority": input.priority,
+        "decision": input.decision,
+        "createdAt": datetime.now(timezone.utc).isoformat(),
+        "channelId": channel_id,
+    }
+    result = coll.insert(review_doc)
+    return SoterReview.from_dict({**result, **review_doc})
+
+def resolve_log_shadow_entry(input: ShadowEntryInput, channel_id: str) -> ShadowEntry:
+    _validate_channel(channel_id)
+    ctx = get_graphql_context()
+    coll = ctx.db.collection("shadow_ledger")
+    
+    doc = {
+        "category": input.category,
+        "content": input.content,
+        "sessionId": input.session_id,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "channelId": channel_id,
+    }
+    result = coll.insert(doc)
+    return ShadowEntry.from_dict({**result, **doc})
+
+def resolve_update_symbol_stage(input: SymbolUpdateInput, channel_id: str) -> SymbolNode:
+    _validate_channel(channel_id)
+    ctx = get_graphql_context()
+    coll = ctx.db.collection("symbols")
+    
+    doc = coll.get(input.id)
+    if doc is None:
+        raise ValueError(f"Symbol {input.id} not found")
+        
+    doc["stage"] = input.stage.value
+    doc["intention"] = input.intention
+    doc["updatedAt"] = datetime.now(timezone.utc).isoformat()
+    coll.update(input.id, doc)
+    return SymbolNode.from_dict(doc)

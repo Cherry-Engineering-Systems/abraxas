@@ -81,6 +81,32 @@ def resolve_tasks(project: Optional[str] = None, status: Optional[TaskStatus] = 
     results = ctx.execute_aql(query, bind_vars)
     return [Task.from_dict(r) for r in results]
 
+def resolve_ready_tasks() -> List[Task]:
+    ctx = get_graphql_context()
+    # Logic from Ledger Skill:
+    # A task is ready if:
+    # 1. status == 'ready'
+    # 2. status == 'open' AND has no remaining 'blocks' dependencies leading to tasks that are not 'closed'
+    query = """
+    FOR t IN tasks
+        FILTER t.status == 'ready' 
+        OR (
+            t.status == 'open' 
+            AND NOT (
+                FOR edge IN task_edges
+                    FILTER edge._to == CONCAT('tasks/', t._key) 
+                    FILTER edge.type == 'blocks'
+                    FOR parent IN tasks
+                        FILTER parent._key == SUBSTR(edge._from, 7)
+                        FILTER parent.status != 'closed'
+                        RETURN 1
+            )
+        )
+        RETURN t
+    """
+    results = ctx.execute_aql(query)
+    return [Task.from_dict(r) for r in results]
+
 def resolve_task_tree(task_id: str) -> List[TaskDependency]:
     ctx = get_graphql_context()
     query = "FOR e IN TASK_EDGES FILTER e._from == @id OR e._to == @id RETURN e"

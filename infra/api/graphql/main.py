@@ -67,6 +67,10 @@ class Query:
         return resolve_project_uncertainty()
 
     @field
+    def ready_tasks(self) -> List["Task"]:
+        return resolve_ready_tasks()
+
+    @field
     def search(
             self,
             query: str,
@@ -236,6 +240,22 @@ class Mutation:
     @mutation
     def add_task_dependency(self, input: "DependencyInput") -> TaskDependency:
         return resolve_add_dependency(input)
+
+    @mutation
+    def report_soter_incident(self, input: "SoterIncidentInput", channel_id: str = "") -> SoterIncident:
+        return resolve_report_soter_incident(input, channel_id)
+
+    @mutation
+    def resolve_soter_review(self, input: "SoterReviewInput", channel_id: str = "") -> SoterReview:
+        return resolve_soter_review(input, channel_id)
+
+    @mutation
+    def log_shadow_entry(self, input: "ShadowEntryInput", channel_id: str = "") -> ShadowEntry:
+        return resolve_log_shadow_entry(input, channel_id)
+
+    @mutation
+    def update_symbol_stage(self, input: "SymbolUpdateInput", channel_id: str = "") -> SymbolNode:
+        return resolve_update_symbol_stage(input, channel_id)
 
 
 def _resolve_edge_outbound(parent_id: str, edge_collection: str) -> Optional[dict]:
