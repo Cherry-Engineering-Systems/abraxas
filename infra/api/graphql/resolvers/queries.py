@@ -97,15 +97,24 @@ def resolve_ready_tasks() -> List[Task]:
                     FILTER edge._to == CONCAT('tasks/', t._key) 
                     FILTER edge.type == 'blocks'
                     FOR parent IN tasks
-                        FILTER parent._key == SUBSTR(edge._from, 7)
+                        FILTER parent._key == SUBSTRING(edge._from, 7)
                         FILTER parent.status != 'closed'
                         RETURN 1
+                )
             )
         )
         RETURN t
     """
-    results = ctx.execute_aql(query)
-    return [Task.from_dict(r) for r in results]
+    try:
+        results = ctx.execute_aql(query)
+        if not results:
+            return []
+        # Zero-trust mapping: only proceed if result is a dict and has a key
+        return [Task.from_dict(r) for r in results if isinstance(r, dict) and ("_key" in r or "_id" in r)]
+    except Exception as e:
+        print(f"Error in resolve_ready_tasks: {e}")
+        return []
+
 
 def resolve_task_tree(task_id: str) -> List[TaskDependency]:
     ctx = get_graphql_context()

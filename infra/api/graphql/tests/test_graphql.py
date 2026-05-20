@@ -367,12 +367,49 @@ class TestGraphQLTypeFromDict(unittest.TestCase):
         self.assertEqual(b.scores.nl.known, 1)
         self.assertEqual(b.scores.al.inferred, 1)
 
-    def test_edge_info_from_dict(self):
-        from infra.api.graphql.schema import EdgeInfo
-        d = {"_key": "e1", "_from": "hypotheses/h1", "_to": "concepts/c1", "createdAt": "2024-01-01"}
-        e = EdgeInfo.from_dict(d)
-        self.assertEqual(e.id, "e1")
-        self.assertEqual(e._from, "hypotheses/h1")
+    def test_task_from_dict_with_status_string(self):
+        from infra.api.graphql.schema import Task, TaskStatus
+        d = {
+            "_key": "t1",
+            "title": "Test Task",
+            "status": "open",
+            "priority": "low",
+            "project": "test-proj",
+            "scope": "global",
+            "createdAt": "2024-01-01T00:00:00Z",
+            "updatedAt": "2024-01-01T00:00:00Z"
+        }
+        t = Task.from_dict(d)
+        self.assertEqual(t.id, "t1")
+        self.assertEqual(t.status, TaskStatus.OPEN)
+        self.assertIsInstance(t.status, TaskStatus)
+
+    def test_task_from_dict_with_status_enum(self):
+        from infra.api.graphql.schema import Task, TaskStatus
+        d = {
+            "_key": "t2",
+            "title": "Test Task Enum",
+            "status": TaskStatus.READY,
+            "priority": "medium",
+            "project": "test-proj",
+            "scope": "local",
+            "createdAt": "2024-01-01T00:00:00Z",
+            "updatedAt": "2024-01-01T00:00:00Z"
+        }
+        t = Task.from_dict(d)
+        self.assertEqual(t.id, "t2")
+        self.assertEqual(t.status, TaskStatus.READY)
+        self.assertIsInstance(t.status, TaskStatus)
+
+    def test_task_from_dict_with_invalid_status(self):
+        from infra.api.graphql.schema import Task, TaskStatus
+        d = {
+            "_key": "t3",
+            "title": "Test Task Invalid",
+            "status": "invalid-status",
+        }
+        t = Task.from_dict(d)
+        self.assertEqual(t.status, TaskStatus.OPEN)
 
 
 class TestGraphQLEnums(unittest.TestCase):

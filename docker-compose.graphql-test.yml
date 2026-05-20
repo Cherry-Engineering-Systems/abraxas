@@ -1,0 +1,50 @@
+services:
+  arangodb-test:
+    image: arangodb/arangodb:latest
+    container_name: arangodb-test
+    environment:
+      - ARANGO_ROOT_PASSWORD=testpassword
+    ports:
+      - "8530:8529"
+    volumes:
+      - arangodb_test_data:/var/lib/arangodb
+    restart: always
+
+  abraxas-graphql-test:
+    build:
+      context: .
+      dockerfile: infra/api/graphql/Dockerfile
+    container_name: abraxas-graphql-test
+    environment:
+      - ARANGO_URL=http://arangodb-test:8529
+      - ARANGO_DB=abraxas_test_db
+      - ARANGO_USER=root
+      - ARANGO_ROOT_PASSWORD=testpassword
+      - PYTHONPATH=/workspace
+    volumes:
+      - .:/workspace
+    ports:
+      - "4001:4000"
+    depends_on:
+      arangodb-test:
+        condition: service_started
+
+  test-runner:
+    image: python:3.11-slim
+    container_name: abraxas-graphql-test-runner
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    environment:
+      - ARANGO_URL=http://arangodb-test:8529
+      - ARANGO_DB=abraxas_test_db
+      - ARANGO_USER=root
+      - ARANGO_ROOT_PASSWORD=testpassword
+    command: >
+      sh -c "pip install requests python-arango && python /workspace/infra/api/graphql/tests/smoke_ready_tasks.py"
+    depends_on:
+      abraxas-graphql-test:
+        condition: service_started
+
+volumes:
+  arangodb_test_data:

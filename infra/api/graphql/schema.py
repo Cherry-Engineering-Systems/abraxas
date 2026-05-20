@@ -38,7 +38,7 @@ class CheckResult(Enum):
     FAIL = "FAIL"
 
 @enum
-class TaskStatus(Enum):
+class TaskStatus(str, Enum):
     OPEN = "open"
     READY = "ready"
     TESTING = "testing"
@@ -102,13 +102,20 @@ class Task:
     def from_dict(cls, d: dict) -> "Task":
         key = d.get("_key", d.get("_id", "").split("/")[-1])
         status_val = d.get("status", "open")
+        
+        # If it's already a TaskStatus member, use it.
+        # If it's a string, try to convert it to a TaskStatus member.
         if isinstance(status_val, TaskStatus):
             status = status_val
-        else:
+        elif isinstance(status_val, str):
             try:
+                # This looks up the enum member by its value (e.g., "open")
                 status = TaskStatus(status_val)
             except ValueError:
                 status = TaskStatus.OPEN
+        else:
+            status = TaskStatus.OPEN
+            
         return cls(
             id=key,
             title=d.get("title", ""),
@@ -309,13 +316,34 @@ class Concept:
     description: str
 
     @classmethod
-    def from_dict(cls, d: dict) -> "Concept":
+    def from_dict(cls, d: dict) -> "Task":
+        if not isinstance(d, dict):
+            # This should be caught by the resolver, but we provide a fallback
+            return cls(id="unknown", title="Corrupted Task", status=TaskStatus.OPEN)
+
         key = d.get("_key", d.get("_id", "").split("/")[-1])
+        if not key:
+            key = "unknown"
+            
+        status_val = d.get("status", "open")
+        if isinstance(status_val, TaskStatus):
+            status = status_val
+        else:
+            try:
+                status = TaskStatus(status_val)
+            except (ValueError, TypeError):
+                status = TaskStatus.OPEN
         return cls(
             id=key,
-            name=d.get("name", ""),
-            description=d.get("description", ""),
+            title=d.get("title", "Untitled Task"),
+            status=status,
+            priority=d.get("priority"),
+            project=d.get("project"),
+            scope=d.get("scope"),
+            created_at=d.get("createdAt"),
+            updated_at=d.get("updatedAt"),
         )
+
 
 @type
 class ActionablePlan:
