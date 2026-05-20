@@ -19,6 +19,10 @@ from resolvers.mutations import (
 
 from resolvers.queries import (
     resolve_project_uncertainty,
+    resolve_ready_tasks,
+    resolve_incident_log,
+    resolve_pending_reviews,
+    resolve_shadow_entries,
 )
 from resolvers.search import (
     resolve_search,
