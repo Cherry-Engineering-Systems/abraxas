@@ -1,49 +1,11 @@
 from typing import List, Optional
 
-import strawberry
+from strawberry import mutation, fastapi, field, Schema, ID, type
+import uvicorn
 from fastapi import FastAPI, Response
 from strawberry.fastapi import GraphQLRouter
-import uvicorn
 
 from context import get_graphql_context, GraphQLContext
-from schema import (
-    GroundingStatus,
-    Task,
-    TaskStatus,
-    SoterIncident,
-    SoterReview,
-    DreamSession,
-    Hypothesis,
-    Concept,
-    ActionablePlan,
-    EdgeInfo,
-    GuardrailCheck,
-    ProvenanceChain,
-    BenchmarkResult,
-    HypothesisMetadata,
-    HypothesisMetadataInput,
-    CheckResult,
-    BenchmarkScores,
-    ScoreDistribution,
-    ScoreDistributionInput,
-    GuardrailID,
-    CreativeDriver,
-    ActionablePlanInput,
-    SovereignState,
-    MemoryFragment, BenchmarkResultInput
-)
-from resolvers.queries import (
-    resolve_dream_session,
-    resolve_hypothesis,
-    resolve_concept,
-    resolve_actionable_plans,
-    resolve_benchmark_results,
-    resolve_tasks,
-    resolve_task_tree,
-    resolve_incident_log,
-    resolve_pending_reviews,
-    resolve_memory_recall, resolve_project_uncertainty,
-)
 from resolvers.mutations import (
     resolve_start_dream_cycle,
     resolve_create_hypothesis,
@@ -51,6 +13,12 @@ from resolvers.mutations import (
     resolve_archive_hypothesis,
     resolve_ground_concept,
     resolve_upload_benchmark_batch,
+    resolve_create_task,
+    resolve_update_task_status,
+)
+
+from resolvers.queries import (
+    resolve_project_uncertainty,
 )
 from resolvers.search import (
     resolve_search,
@@ -61,31 +29,44 @@ from resolvers.search import (
     SearchResult,
     StatsResult,
 )
+from schema import (
+    GroundingStatus,
+    DreamSession,
+    Hypothesis,
+    Concept,
+    ActionablePlan,
+    EdgeInfo,
+    GuardrailCheck,
+    ProvenanceChain,
+    HypothesisMetadataInput,
+    ActionablePlanInput,
+    BenchmarkResultInput
+)
 
 
 def _ctx() -> GraphQLContext:
     return get_graphql_context()
 
 
-@strawberry.type
+@type
 class EpistemicHeatMap:
-    known: int = strawberry.field(description="Total verified ground-truth counts")
-    inferred: int = strawberry.field(description="Total logically derived counts")
-    uncertain: int = strawberry.field(description="Total confidence-gap counts")
-    unknown: int = strawberry.field(description="Total identified gaps")
-    dream: int = strawberry.field(description="Total speculative/creative counts")
-    total_samples: int = strawberry.field(description="Total data points analyzed")
-    sovereign_gap_index: float = strawberry.field(description="The delta between confidence and grounding")
+    known: int = field(description="Total verified ground-truth counts")
+    inferred: int = field(description="Total logically derived counts")
+    uncertain: int = field(description="Total confidence-gap counts")
+    unknown: int = field(description="Total identified gaps")
+    dream: int = field(description="Total speculative/creative counts")
+    total_samples: int = field(description="Total data points analyzed")
+    sovereign_gap_index: float = field(description="The delta between confidence and grounding")
 
 
-@strawberry.type
+@type
 class Query:
     # ... existing queries ...
-    @strawberry.field
+    @field
     def project_uncertainty(self) -> EpistemicHeatMap:
         return resolve_project_uncertainty()
 
-    @strawberry.field
+    @field
     def search(
             self,
             query: str,
@@ -94,19 +75,19 @@ class Query:
     ) -> List[SearchResult]:
         return resolve_search(query, collections, limit)
 
-    @strawberry.field
-    def related_to(self, id: strawberry.ID, depth: int = 1) -> List["RelatedNode"]:
+    @field
+    def related_to(self, id: ID, depth: int = 1) -> List["RelatedNode"]:
         nodes = resolve_related_to(str(id), depth)
         return [RelatedNode.from_dict(n) for n in nodes]
 
-    @strawberry.field
+    @field
     def recent(
             self, limit: int = 10, collection: Optional[str] = None
     ) -> List["RecentNode"]:
         nodes = resolve_recent(limit, collection)
         return [RecentNode.from_dict(n) for n in nodes]
 
-    @strawberry.field
+    @field
     def explore(self, name: str) -> List[ProvenanceChain]:
         paths = resolve_explore(name)
         result = []
@@ -116,17 +97,17 @@ class Query:
                 result.append(chain)
         return result
 
-    @strawberry.field
+    @field
     def stats(self) -> StatsResult:
         return resolve_stats()
 
 
-@strawberry.type
+@type
 class RelatedNode:
     id: str
     collection: str
     label: str
-    edge_id: Optional[str] = strawberry.field(name="edgeId")
+    edge_id: Optional[str] = field(name="edgeId")
 
     @classmethod
     def from_dict(cls, d: dict) -> "RelatedNode":
@@ -140,7 +121,7 @@ class RelatedNode:
         )
 
 
-@strawberry.type
+@type
 class RecentNode:
     id: str
     collection: str
@@ -194,18 +175,18 @@ def _build_provenance_chain(p: dict) -> Optional[ProvenanceChain]:
 
 
 
-@strawberry.type
+@type
 class Mutation:
-    @strawberry.mutation
+    @mutation
     def start_dream_cycle(
             self, prompt: str, seed_concepts: Optional[List[str]] = None, channel_id: str = ""
     ) -> DreamSession:
         return resolve_start_dream_cycle(prompt, seed_concepts, channel_id)
 
-    @strawberry.mutation
+    @mutation
     def create_hypothesis(
             self,
-            session_id: strawberry.ID,
+            session_id: ID,
             raw_pattern_representation: str,
             metadata: "HypothesisMetadataInput",
             channel_id: str = "",
@@ -214,10 +195,10 @@ class Mutation:
             str(session_id), raw_pattern_representation, metadata, channel_id
         )
 
-    @strawberry.mutation
+    @mutation
     def translate_hypothesis_to_concept(
             self,
-            hypothesis_id: strawberry.ID,
+            hypothesis_id: ID,
             name: str,
             description: str,
             channel_id: str = "",
@@ -226,23 +207,35 @@ class Mutation:
             str(hypothesis_id), name, description, channel_id
         )
 
-    @strawberry.mutation
+    @mutation
     def archive_hypothesis(
-            self, hypothesis_id: strawberry.ID, is_valuable: bool, channel_id: str = ""
+            self, hypothesis_id: ID, is_valuable: bool, channel_id: str = ""
     ) -> Hypothesis:
         return resolve_archive_hypothesis(str(hypothesis_id), is_valuable, channel_id)
 
-    @strawberry.mutation
+    @mutation
     def ground_concept(
-            self, concept_id: strawberry.ID, plan: "ActionablePlanInput", channel_id: str = ""
+            self, concept_id: ID, plan: "ActionablePlanInput", channel_id: str = ""
     ) -> ActionablePlan:
         return resolve_ground_concept(str(concept_id), plan, channel_id)
 
-    @strawberry.mutation
+    @mutation
     def upload_benchmark_batch(
             self, model_id: str, results: List["BenchmarkResultInput"], channel_id: str = ""
     ) -> int:
         return resolve_upload_benchmark_batch(model_id, results, channel_id)
+
+    @mutation
+    def create_task(self, input: "TaskInput") -> Task:
+        return resolve_create_task(input)
+
+    @mutation
+    def update_task_status(self, input: "TaskStatusInput") -> Task:
+        return resolve_update_task_status(input)
+
+    @mutation
+    def add_task_dependency(self, input: "DependencyInput") -> TaskDependency:
+        return resolve_add_dependency(input)
 
 
 def _resolve_edge_outbound(parent_id: str, edge_collection: str) -> Optional[dict]:
@@ -269,9 +262,9 @@ def _resolve_edge_inbound(parent_id: str, edge_collection: str) -> Optional[dict
     return results[0] if results else None
 
 
-@strawberry.type
+@type
 class DreamSessionGraph(DreamSession):
-    @strawberry.field
+    @field
     def hypotheses(self) -> List[Hypothesis]:
         ctx = _ctx()
         results = ctx.execute_aql(
@@ -280,7 +273,7 @@ class DreamSessionGraph(DreamSession):
         )
         return [Hypothesis.from_dict(r) for r in results]
 
-    @strawberry.field
+    @field
     def inspired_by(self) -> Optional[List[Hypothesis]]:
         ctx = _ctx()
         results = ctx.execute_aql(
@@ -300,19 +293,19 @@ class DreamSessionGraph(DreamSession):
         return [Hypothesis.from_dict(r) for r in results]
 
 
-@strawberry.type
+@type
 class HypothesisGraph(Hypothesis):
-    @strawberry.field
+    @field
     def dream_session(self) -> Optional[DreamSession]:
         result = _resolve_edge_inbound(f"hypotheses/{self.id}", "SESS_TO_HYPO")
         return DreamSession.from_dict(result) if result else None
 
-    @strawberry.field
+    @field
     def translated_to(self) -> Optional[Concept]:
         result = _resolve_edge_outbound(f"hypotheses/{self.id}", "HYPO_TO_CONCEPT")
         return Concept.from_dict(result) if result else None
 
-    @strawberry.field
+    @field
     def inspired_dreams(self) -> Optional[List[DreamSession]]:
         ctx = _ctx()
         results = ctx.execute_aql(
@@ -329,7 +322,7 @@ class HypothesisGraph(Hypothesis):
             return None
         return [DreamSession.from_dict(r) for r in results]
 
-    @strawberry.field
+    @field
     def inspired_by(self) -> Optional[List[Hypothesis]]:
         ctx = _ctx()
         results = ctx.execute_aql(
@@ -346,31 +339,31 @@ class HypothesisGraph(Hypothesis):
         return [Hypothesis.from_dict(r) for r in results]
 
 
-@strawberry.type
+@type
 class ConceptGraph(Concept):
-    @strawberry.field
+    @field
     def source_hypothesis(self) -> Optional[Hypothesis]:
         result = _resolve_edge_inbound(f"concepts/{self.id}", "HYPO_TO_CONCEPT")
         return Hypothesis.from_dict(result) if result else None
 
-    @strawberry.field
+    @field
     def grounded_as(self) -> Optional[ActionablePlan]:
         result = _resolve_edge_outbound(f"concepts/{self.id}", "CONCEPT_TO_PLAN")
         return ActionablePlan.from_dict(result) if result else None
 
 
-@strawberry.type
+@type
 class ActionablePlanGraph(ActionablePlan):
-    @strawberry.field
+    @field
     def source_concept(self) -> Optional[Concept]:
         result = _resolve_edge_inbound(f"actionable_plans/{self.id}", "CONCEPT_TO_PLAN")
         return Concept.from_dict(result) if result else None
 
-    @strawberry.field
+    @field
     def guardrail_checks(self) -> List[GuardrailCheck]:
         return []
 
-    @strawberry.field
+    @field
     def provenance_chain(self) -> Optional[ProvenanceChain]:
         ctx = _ctx()
         plan_doc = ctx.document("actionable_plans", self.id)
@@ -402,7 +395,7 @@ class ActionablePlanGraph(ActionablePlan):
         return _build_provenance_chain(results[0])
 
 
-schema = strawberry.Schema(
+schema = Schema(
     query=Query,
     mutation=Mutation,
     types=[

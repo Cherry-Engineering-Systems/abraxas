@@ -17,6 +17,12 @@ from infra.api.graphql.schema import (
     SovereignQuestInput,
     PivotStatus,
     QuestStatus,
+    Task,
+    TaskInput,
+    TaskStatusInput,
+    TaskStatus,
+    TaskDependency,
+    DependencyInput,
 )
 
 
@@ -254,3 +260,33 @@ def resolve_trigger_sovereign_quest(
     }
     result = coll.insert(quest_doc)
     return SovereignQuest.from_dict({**result, **quest_doc})
+
+def resolve_create_task(input: TaskInput) -> Task:
+    ctx = get_graphql_context()
+    coll = ctx.db.collection("tasks")
+    doc = {
+        "title": input.title,
+        "project": input.project,
+        "scope": input.scope,
+        "priority": input.priority,
+        "status": TaskStatus.OPEN.value,
+        "createdAt": datetime.now(timezone.utc).isoformat(),
+        "updatedAt": datetime.now(timezone.utc).isoformat(),
+    }
+    result = coll.insert(doc)
+    return Task.from_dict({**result, **doc})
+
+def resolve_update_task_status(input: TaskStatusInput) -> Task:
+    ctx = get_graphql_context()
+    coll = ctx.db.collection("tasks")
+    
+    # In Arango, a document key is usually used for get/update. 
+    # If the ID provided is exactly the key, it works.
+    doc = coll.get(input.id)
+    if doc is None:
+        raise ValueError(f"Task {input.id} not found")
+    
+    doc["status"] = input.status.value
+    doc["updatedAt"] = datetime.now(timezone.utc).isoformat()
+    coll.update(input.id, doc)
+    return Task.from_dict(doc)

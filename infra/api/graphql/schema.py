@@ -1,29 +1,29 @@
-import strawberry
+from strawberry import input, field, type, enum
 from enum import Enum
 from typing import List, Optional
 
 
-@strawberry.enum
+@enum
 class PivotStatus(Enum):
     PROPOSED = "PROPOSED"
     REVIEW = "REVIEW"
     SOVEREIGN_SEAL = "SOVEREIGN_SEAL"
     DEPRECATED = "DEPRECATED"
 
-@strawberry.enum
+@enum
 class QuestStatus(Enum):
     ACTIVE = "ACTIVE"
     RESOLVED = "RESOLVED"
     STALLED = "STALLED"
 
-@strawberry.enum
+@enum
 class CreativeDriver(Enum):
     ANALOGICAL_LEAP = "ANALOGICAL_LEAP"
     SYSTEMIC_INVERSION = "SYSTEMIC_INVERSION"
     EMERGENT_SYNTHESIS = "EMERGENT_SYNTHESIS"
 
 
-@strawberry.enum
+@enum
 class GuardrailID(Enum):
     EPISTEMIC_HUMILITY = "EPISTEMIC_HUMILITY"
     VERIFIABILITY = "VERIFIABILITY"
@@ -32,35 +32,35 @@ class GuardrailID(Enum):
     PROCESS_TRANSPARENCY = "PROCESS_TRANSPARENCY"
 
 
-@strawberry.enum
+@enum
 class CheckResult(Enum):
     PASS = "PASS"
     WARN = "WARN"
     FAIL = "FAIL"
 
 
-@strawberry.enum
+@enum
 class TaskStatus(Enum):
     OPEN = "open"
     READY = "ready"
     TESTING = "testing"
     CLOSED = "closed"
 
-@strawberry.enum
+@enum
 class GroundingStatus(Enum):
     PENDING = "PENDING"
     VERIFIED = "VERIFIED"
     CONFLICT = "CONFLICT"
     UNKNOWN = "UNKNOWN"
 
-@strawberry.enum
+@enum
 class EpistemicLabel(Enum):
     KNOWN = "[KNOWN]"
     INFERRED = "[INFERRED]"
     UNCERTAIN = "[UNCERTAIN]"
     UNKNOWN = "[UNKNOWN]"
 
-@strawberry.type
+@type
 class Task:
     id: str
     title: str
@@ -68,8 +68,8 @@ class Task:
     priority: Optional[str] = None
     project: Optional[str] = None
     scope: Optional[str] = None
-    created_at: Optional[str] = strawberry.field(name="createdAt")
-    updated_at: Optional[str] = strawberry.field(name="updatedAt")
+    created_at: Optional[str] = field(name="createdAt")
+    updated_at: Optional[str] = field(name="updatedAt")
 
     @classmethod
     def from_dict(cls, d: dict) -> "Task":
@@ -95,17 +95,23 @@ class Task:
             updated_at=d.get("updatedAt"),
         )
 
-@strawberry.type
+@type
+class TaskDependency:
+    from_id: str = field(name="fromId")
+    to_id: str = field(name="toId")
+    dep_type: str = field(name="depType")
+
+@type
 class SovereignPivot:
     """
     Represents a systemic architectural evolution triggered by a rupture.
     """
-    id: str = strawberry.field(description="Unique identifier of the pivot")
-    rupture_id: str = strawberry.field(name="ruptureId", description="ID of the incident/pattern that triggered the pivot")
-    proposal: str = strawberry.field(description="Detailed architectural change proposal")
-    expected_delta: str = strawberry.field(name="expectedDelta", description="The predicted improvement in system stability or precision")
-    status: PivotStatus = strawberry.field(description="Current evolution state (PROPOSED -> REVIEW -> SEALED)")
-    timestamp: str = strawberry.field(description="ISO timestamp of creation")
+    id: str = field(description="Unique identifier of the pivot")
+    rupture_id: str = field(name="ruptureId", description="ID of the incident/pattern that triggered the pivot")
+    proposal: str = field(description="Detailed architectural change proposal")
+    expected_delta: str = field(name="expectedDelta", description="The predicted improvement in system stability or precision")
+    status: PivotStatus = field(description="Current evolution state (PROPOSED -> REVIEW -> SEALED)")
+    timestamp: str = field(description="ISO timestamp of creation")
 
     @classmethod
     def from_dict(cls, d: dict) -> "SovereignPivot":
@@ -119,17 +125,17 @@ class SovereignPivot:
             timestamp=d.get("timestamp", ""),
         )
 
-@strawberry.type
+@type
 class SovereignQuest:
     """
     A targeted research task triggered by an [UNKNOWN] epistemic mark.
     """
-    id: str = strawberry.field(description="Unique identifier of the quest")
-    unknown_id: str = strawberry.field(name="unknownId", description="ID of the Janus unknown mark")
-    focus_area: str = strawberry.field(name="focusArea", description="The specific vector of research needed")
-    status: QuestStatus = strawberry.field(description="Current state of the quest")
-    discovered_evidence: List[str] = strawberry.field(name="discoveredEvidence", default_factory=list, description="Evidence fragments found during the quest")
-    timestamp: str = strawberry.field(description="ISO timestamp of creation")
+    id: str = field(description="Unique identifier of the quest")
+    unknown_id: str = field(name="unknownId", description="ID of the Janus unknown mark")
+    focus_area: str = field(name="focusArea", description="The specific vector of research needed")
+    status: QuestStatus = field(description="Current state of the quest")
+    discovered_evidence: List[str] = field(name="discoveredEvidence", default_factory=list, description="Evidence fragments found during the quest")
+    timestamp: str = field(description="ISO timestamp of creation")
 
     @classmethod
     def from_dict(cls, d: dict) -> "SovereignQuest":
@@ -143,7 +149,7 @@ class SovereignQuest:
             timestamp=d.get("timestamp", ""),
         )
 
-@strawberry.type
+@type
 class GuardrailCheck:
     guardrail: GuardrailID
     result: CheckResult
@@ -158,14 +164,14 @@ class GuardrailCheck:
         )
 
 
-@strawberry.type
+@type
 class SoterIncident:
     id: str
     request: str
-    score: int = strawberry.field(name="riskScore")
+    score: int = field(name="riskScore")
     resolved: bool
     timestamp: str
-    patterns: List[GuardrailCheck] = strawberry.field(default_factory=list)
+    patterns: List[GuardrailCheck] = field(default_factory=list)
     response: Optional[str] = None
 
     @classmethod
@@ -182,14 +188,14 @@ class SoterIncident:
             response=d.get("response"),
         )
 
-@strawberry.type
+@type
 class SoterReview:
     id: str
-    incident_id: str = strawberry.field(name="incidentId")
+    incident_id: str = field(name="incidentId")
     status: str
     priority: str
     decision: Optional[str] = None
-    created_at: str = strawberry.field(name="createdAt")
+    created_at: str = field(name="createdAt")
 
     @classmethod
     def from_dict(cls, d: dict) -> "SoterReview":
@@ -203,7 +209,7 @@ class SoterReview:
             created_at=d.get("createdAt"),
         )
 
-@strawberry.type
+@type
 class MemoryFragment:
     id: str
     fragment: str
@@ -219,18 +225,18 @@ class MemoryFragment:
             timestamp=d.get("timestamp", ""),
         )
 
-@strawberry.type
+@type
 class SovereignState:
-    unresolved_incidents: int = strawberry.field(name="unresolvedIncidents")
-    ready_tasks: List[Task] = strawberry.field(name="readyTasks")
-    recent_memory: Optional[MemoryFragment] = strawberry.field(name="recentMemory")
+    unresolved_incidents: int = field(name="unresolvedIncidents")
+    ready_tasks: List[Task] = field(name="readyTasks")
+    recent_memory: Optional[MemoryFragment] = field(name="recentMemory")
 
 
-@strawberry.type
+@type
 class HypothesisMetadata:
-    novelty_score: float = strawberry.field(name="noveltyScore")
-    coherence_score: float = strawberry.field(name="coherenceScore")
-    creative_drivers: List[CreativeDriver] = strawberry.field(name="creativeDrivers")
+    novelty_score: float = field(name="noveltyScore")
+    coherence_score: float = field(name="coherenceScore")
+    creative_drivers: List[CreativeDriver] = field(name="creativeDrivers")
 
     @classmethod
     def from_dict(cls, d: dict) -> "HypothesisMetadata":
@@ -242,12 +248,12 @@ class HypothesisMetadata:
         )
 
 
-@strawberry.type
+@type
 class EdgeInfo:
     id: str
-    _from: str = strawberry.field(name="from")
-    _to: str = strawberry.field(name="to")
-    created_at: Optional[str] = strawberry.field(name="createdAt")
+    _from: str = field(name="from")
+    _to: str = field(name="to")
+    created_at: Optional[str] = field(name="createdAt")
 
     @classmethod
     def from_dict(cls, d: dict) -> "EdgeInfo":
@@ -259,7 +265,7 @@ class EdgeInfo:
         )
 
 
-@strawberry.type
+@type
 class GuardrailCheck:
     guardrail: GuardrailID
     result: CheckResult
@@ -274,12 +280,12 @@ class GuardrailCheck:
         )
 
 
-@strawberry.type
+@type
 class Hypothesis:
     id: str
-    raw_pattern_representation: str = strawberry.field(name="rawPatternRepresentation")
+    raw_pattern_representation: str = field(name="rawPatternRepresentation")
     metadata: HypothesisMetadata
-    is_valuable: bool = strawberry.field(name="isValuable", default=False)
+    is_valuable: bool = field(name="isValuable", default=False)
 
     @classmethod
     def from_dict(cls, d: dict) -> "Hypothesis":
@@ -297,7 +303,7 @@ class Hypothesis:
         )
 
 
-@strawberry.type
+@type
 class Concept:
     id: str
     name: str
@@ -313,13 +319,13 @@ class Concept:
         )
 
 
-@strawberry.type
+@type
 class ActionablePlan:
     id: str
     summary: str
     steps: List[str]
-    risk_assessment: str = strawberry.field(name="riskAssessment")
-    grounding_status: GroundingStatus = strawberry.field(name="groundingStatus")
+    risk_assessment: str = field(name="riskAssessment")
+    grounding_status: GroundingStatus = field(name="groundingStatus")
 
     @classmethod
     def from_dict(cls, d: dict) -> "ActionablePlan":
@@ -333,12 +339,12 @@ class ActionablePlan:
         )
 
 
-@strawberry.type
+@type
 class DreamSession:
     id: str
     timestamp: str
-    user_prompt: str = strawberry.field(name="userPrompt")
-    seed_concepts: List[str] = strawberry.field(name="seedConcepts")
+    user_prompt: str = field(name="userPrompt")
+    seed_concepts: List[str] = field(name="seedConcepts")
 
     @classmethod
     def from_dict(cls, d: dict) -> "DreamSession":
@@ -351,18 +357,18 @@ class DreamSession:
         )
 
 
-@strawberry.type
+@type
 class ProvenanceChain:
     plan: ActionablePlan
-    plan_to_concept_edge: EdgeInfo = strawberry.field(name="planToConceptEdge")
+    plan_to_concept_edge: EdgeInfo = field(name="planToConceptEdge")
     concept: Concept
-    concept_to_hypothesis_edge: EdgeInfo = strawberry.field(name="conceptToHypothesisEdge")
+    concept_to_hypothesis_edge: EdgeInfo = field(name="conceptToHypothesisEdge")
     hypothesis: Hypothesis
-    hypothesis_to_session_edge: EdgeInfo = strawberry.field(name="hypothesisToSessionEdge")
+    hypothesis_to_session_edge: EdgeInfo = field(name="hypothesisToSessionEdge")
     session: DreamSession
 
 
-@strawberry.type
+@type
 class ScoreDistribution:
     known: float
     inferred: float
@@ -371,22 +377,22 @@ class ScoreDistribution:
     dream: float
 
 
-@strawberry.type
+@type
 class BenchmarkScores:
     nl: ScoreDistribution
     al: ScoreDistribution
 
 
-@strawberry.type
+@type
 class BenchmarkResult:
     id: Optional[str] = None
-    query_id: int = strawberry.field(name="queryId")
+    query_id: int = field(name="queryId")
     category: str
-    query_text: str = strawberry.field(name="queryText")
-    normal_response: str = strawberry.field(name="normalResponse")
-    abraxas_response: str = strawberry.field(name="abraxasResponse")
+    query_text: str = field(name="queryText")
+    normal_response: str = field(name="normalResponse")
+    abraxas_response: str = field(name="abraxasResponse")
     scores: BenchmarkScores
-    model_id: str = strawberry.field(name="modelId")
+    model_id: str = field(name="modelId")
     timestamp: str
 
     @classmethod
@@ -422,21 +428,21 @@ class BenchmarkResult:
         )
 
 
-@strawberry.input
+@input
 class HypothesisMetadataInput:
-    novelty_score: float = strawberry.field(name="noveltyScore")
-    coherence_score: float = strawberry.field(name="coherenceScore")
-    creative_drivers: List[CreativeDriver] = strawberry.field(name="creativeDrivers")
+    novelty_score: float = field(name="noveltyScore")
+    coherence_score: float = field(name="coherenceScore")
+    creative_drivers: List[CreativeDriver] = field(name="creativeDrivers")
 
 
-@strawberry.input
+@input
 class ActionablePlanInput:
     summary: str
-    steps: List[str] = strawberry.field(default_factory=list)
-    risk_assessment: str = strawberry.field(name="riskAssessment", default="")
+    steps: List[str] = field(default_factory=list)
+    risk_assessment: str = field(name="riskAssessment", default="")
 
 
-@strawberry.input
+@input
 class ScoreDistributionInput:
     known: float
     inferred: float
@@ -444,21 +450,21 @@ class ScoreDistributionInput:
     unknown: float
     dream: float
 
-@strawberry.type(is_input=True)
+@type(is_input=True)
 class BenchmarkResultInput:
-    query_id: int = strawberry.field(name="queryId")
+    query_id: int = field(name="queryId")
     category: str
-    query_text: str = strawberry.field(name="queryText")
+    query_text: str = field(name="queryText")
 
-@strawberry.input
+@input
 class SovereignPivotInput:
-    rupture_id: str = strawberry.field(description="ID of the incident or failure pattern that triggered this pivot")
-    proposal: str = strawberry.field(description="Detailed architectural change proposal")
-    expected_delta: str = strawberry.field(name="expectedDelta", description="The predicted improvement in system stability or precision")
-    channel_id: str = strawberry.field(description="Sovereign authorized channel ID")
+    rupture_id: str = field(description="ID of the incident or failure pattern that triggered this pivot")
+    proposal: str = field(description="Detailed architectural change proposal")
+    expected_delta: str = field(name="expectedDelta", description="The predicted improvement in system stability or precision")
+    channel_id: str = field(description="Sovereign authorized channel ID")
 
-@strawberry.input
-class SovereignQuestInput:
-    unknown_id: str = strawberry.field(description="ID of the Janus unknown mark")
-    focus_area: str = strawberry.field(name="focusArea", description="The specific vector of research needed")
-    channel_id: str = strawberry.field(description="Sovereign authorized channel ID")
+@input
+class DependencyInput:
+    from_id: str
+    to_id: str
+    dep_type: str = "blocks"

@@ -8,6 +8,7 @@ dependencies = [
     "python-arango>=8.0.0",
     "uvicorn[standard]>=0.27.0",
     "python-dotenv>=1.0.0",
+    "fastapi>=0.136.1",
 ]
 
 [build-system]

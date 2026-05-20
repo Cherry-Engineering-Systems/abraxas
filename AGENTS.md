@@ -6,7 +6,9 @@ This file provides coding guidelines for agents operating in the Abraxas reposit
 
 ## Project Overview
 
-Abraxas is a container for three AI systems (Janus, Honest, Abraxas Oneironautics) packaged as Claude Code skills, along with six specialized subagents. The project is primarily **documentation and skill authoring** — not traditional software development.
+Abraxas is the **Sovereign Brain**—an advanced epistemic ecosystem comprising a tiered architecture of constitutional mandates, specialized AI skills, and coordinating agents. It is designed to separate waking (factual/anti-hallucination) from dreaming (symbolic/creative) outputs while maintaining a zero-trust mandate for truth verification. 
+
+The project is primarily **documentation, prompt engineering, and skill authoring**—not traditional software development. It implements a rigorous pipeline from Risk Detection (Soter) $\rightarrow$ Argument Analysis (Logos) $\rightarrow$ Adversarial Testing (Agon) $\rightarrow$ Epistemic Labeling (Janus).
 
 ---
 
@@ -147,21 +149,23 @@ Before delivering:
 |---|---|
 | Project context for Claude | `CLAUDE.md` |
 | Behavioral specification | `CONSTITUTION.md` |
+| Core Constitutions | `constitution/*.md` |
 | Active roadmap | `PLAN.md` |
 | Skills source | `skills/<skill-name>/` |
 | Packaged skills | `skills/*.skill` |
-| Agent definitions | `.claude/agents/*.md` |
-| Agent memories | `.claude/agent-memory/<agent-name>/` |
+| Agent definitions | `.opencode/agent/*.md` |
+| Agent memories | `.opencode/agent-memory/<agent-name>/` |
 | Documentation | `docs/*.md` |
+| Validation/Test Reports | `validation/docs/*.md` |
 
 ---
 
 ## Workflow Summary
 
 1. **Skills**: Edit in `skills/<name>/`, then package with `zip`
-2. **Agents**: Edit in `.claude/agents/<name>.md`
+2. **Agents**: Edit in `.opencode/agent/<name>.md`
 3. **Docs**: Edit in `docs/`, update `docs/index.md` for new docs
-4. **Memory**: Update agent memory files in `.claude/agent-memory/`
+4. **Memory**: Update agent memory files in `.opencode/agent-memory/`
 
 ---
 
