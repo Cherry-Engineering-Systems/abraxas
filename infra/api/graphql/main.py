@@ -46,6 +46,7 @@ from schema import (
     ActionablePlanInput,
     BenchmarkResultInput,
     Task,
+    TaskStatus,
     TaskInput,
     TaskStatusInput,
     DependencyInput,
