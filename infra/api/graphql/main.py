@@ -17,11 +17,9 @@ from schema import (
     Concept,
     ActionablePlan,
     EdgeInfo,
-    TaskDependency,
     GuardrailCheck,
     ProvenanceChain,
     BenchmarkResult,
-    BenchmarkResultInput,
     HypothesisMetadata,
     HypothesisMetadataInput,
     CheckResult,
@@ -32,7 +30,7 @@ from schema import (
     CreativeDriver,
     ActionablePlanInput,
     SovereignState,
-    MemoryFragment
+    MemoryFragment, BenchmarkResultInput
 )
 from resolvers.queries import (
     resolve_dream_session,
@@ -44,8 +42,7 @@ from resolvers.queries import (
     resolve_task_tree,
     resolve_incident_log,
     resolve_pending_reviews,
-    resolve_memory_recall,
-    resolve_sovereign_state,
+    resolve_memory_recall, resolve_project_uncertainty,
 )
 from resolvers.mutations import (
     resolve_start_dream_cycle,
@@ -79,6 +76,7 @@ class EpistemicHeatMap:
     dream: int = strawberry.field(description="Total speculative/creative counts")
     total_samples: int = strawberry.field(description="Total data points analyzed")
     sovereign_gap_index: float = strawberry.field(description="The delta between confidence and grounding")
+
 
 @strawberry.type
 class Query:
@@ -191,6 +189,9 @@ def _build_provenance_chain(p: dict) -> Optional[ProvenanceChain]:
                                                                                             created_at=None),
         session=DreamSession.from_dict(session),
     )
+
+
+
 
 
 @strawberry.type

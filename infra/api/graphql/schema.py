@@ -444,6 +444,11 @@ class ScoreDistributionInput:
     unknown: float
     dream: float
 
+@strawberry.type(is_input=True)
+class BenchmarkResultInput:
+    query_id: int = strawberry.field(name="queryId")
+    category: str
+    query_text: str = strawberry.field(name="queryText")
 
 @strawberry.input
 class SovereignPivotInput:
