@@ -255,16 +255,31 @@ def resolve_pending_reviews(priority: Optional[str] = None) -> List['SoterReview
     from schema import SoterReview
     return [SoterReview.from_dict(r) for r in results]
 
-def resolve_shadow_entries(category: Optional[str] = None) -> List['ShadowEntry']:
+def resolve_retrospectives(query: Optional[str] = None) -> List[Retrospective]:
     ctx = get_graphql_context()
-    query = "FOR s IN shadow_ledger"
+    aql_query = "FOR r IN retrospectives"
     bind_vars = {}
-    if category:
-        query += " FILTER s.category == @category"
-        bind_vars["category"] = category
-    query += " SORT s.timestamp DESC RETURN s"
-    results = ctx.execute_aql(query, bind_vars)
-    from schema import ShadowEntry
-    return [ShadowEntry.from_dict(r) for r in results]
+    if query:
+        aql_query += " FILTER CONTAINS(LOWER(r.title), LOWER(@query)) OR CONTAINS(LOWER(r.wentWell), LOWER(@query))"
+        bind_vars["query"] = query
+    aql_query += " SORT r.timestamp DESC RETURN r"
+    results = ctx.execute_aql(aql_query, bind_vars)
+    from schema import Retrospective
+    return [Retrospective.from_dict(r) for r in results]
+
+def resolve_needs_retrospective() -> List[Task]:
+    ctx = get_graphql_context()
+    # Find tasks that do not have a corresponding retrospective linked via taskId
+    query = """
+    FOR t IN tasks
+        FILTER NOT (
+            FOR r IN retrospectives
+                FILTER r.taskId == CONCAT('tasks/', t._key)
+                RETURN 1
+        )
+        RETURN t
+    """
+    results = ctx.execute_aql(query)
+    return [Task.from_dict(r) for r in results if isinstance(r, dict) and ("_key" in r or "_id" in r)]
 
 

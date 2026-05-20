@@ -35,6 +35,18 @@ from infra.api.graphql.schema import (
     EpistemicMark,
     EpistemicMarkInput,
     EpistemicLabel,
+    Retrospective,
+    RetrospectiveInput,
+    RetrospectiveDoingInput,
+    TaskUpdateInput,
+    HypothesisUpdateInput,
+    ConceptUpdateInput,
+    ActionablePlanUpdateInput,
+    SoterIncidentUpdateInput,
+    SoterReviewUpdateInput,
+    ShadowEntryUpdateInput,
+    SymbolUpdateInput,
+    EpistemicMarkUpdateInput,
 )
 
 
@@ -429,18 +441,140 @@ def resolve_update_symbol_stage(input: SymbolUpdateInput, channel_id: str) -> Sy
     coll.update(input.id, doc)
     return SymbolNode.from_dict(doc)
 
-def resolve_log_epistemic_mark(input: EpistemicMarkInput, channel_id: str) -> EpistemicMark:
+def resolve_close_task(id: str) -> Task:
+    ctx = get_graphql_context()
+    coll = ctx.db.collection("tasks")
+    doc = coll.get(id)
+    if doc is None:
+        raise ValueError(f"Task {id} not found")
+    
+    doc["status"] = TaskStatus.CLOSED.value
+    doc["updatedAt"] = datetime.now(timezone.utc).isoformat()
+    coll.update(id, doc)
+    return Task.from_dict(doc)
+
+def resolve_create_retrospective(input: RetrospectiveInput, channel_id: str) -> Retrospective:
     _validate_channel(channel_id)
     ctx = get_graphql_context()
-    coll = ctx.db.collection("epistemic_ledger")
+    coll = ctx.db.collection("retrospectives")
     
+    # Verify task exists
+    if not ctx.document("tasks", input.task_id.split("/")[-1]):
+        raise ValueError(f"Task {input.task_id} not found")
+        
     doc = {
-        "label": input.label.value,
-        "topic": input.topic,
-        "reasoningChain": input.reasoning_chain,
-        "sessionId": input.session_id,
+        "taskId": input.task_id,
+        "title": input.title,
+        "wentWell": input.went_well,
+        "wentBad": input.went_bad,
+        "doing": {
+            "start": input.doing.start if input.doing else None,
+            "continue": input.doing.continue_work if input.doing else None,
+            "stop": input.doing.stop if input.doing else None,
+        } if input.doing else None,
+        "actions": input.actions or [],
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "channelId": channel_id,
     }
     result = coll.insert(doc)
-    return EpistemicMark.from_dict({**result, **doc})
+    return Retrospective.from_dict({**result, **doc})
+
+def resolve_update_retrospective(id: str, input: RetrospectiveInput) -> Retrospective:
+    ctx = get_graphql_context()
+    coll = ctx.db.collection("retrospectives")
+    doc = coll.get(id)
+    if doc is None:
+        raise ValueError(f"Retrospective {id} not found")
+        
+    if input.task_id: doc["taskId"] = input.task_id
+    if input.title: doc["title"] = input.title
+    if input.went_well is not None: doc["wentWell"] = input.went_well
+    if input.went_bad is not None: doc["wentBad"] = input.went_bad
+    if input.doing:
+        doc["doing"] = {
+            "start": input.doing.start,
+            "continue": input.doing.continue_work,
+            "stop": input.doing.stop,
+        }
+    if input.actions is not None:
+        doc["actions"] = input.actions
+        
+    doc["updatedAt"] = datetime.now(timezone.utc).isoformat()
+    coll.update(id, doc)
+    return Retrospective.from_dict(doc)
+
+def resolve_delete_retrospective(id: str) -> bool:
+    ctx = get_graphql_context()
+    coll = ctx.db.collection("retrospectives")
+    if not coll.get(id):
+        raise ValueError(f"Retrospective {id} not found")
+    coll.delete(id)
+    return True
+
+def _apply_typed_update(collection_name: str, doc_id: str, update_input: Any) -> JSON:
+    ctx = get_graphql_context()
+    coll = ctx.db.collection(collection_name)
+    doc = coll.get(doc_id)
+    if doc is None:
+        raise ValueError(f"Document {doc_id} in {collection_name} not found")
+    
+    # Convert input object to dict, filtering out None values
+    update_data = {}
+    for field in update_input.__dict__:
+        val = getattr(update_input, field)
+        if val is not None:
+            # Convert Enums to values
+            if hasattr(val, 'value'):
+                update_data[field] = val.value
+            else:
+                update_data[field] = val
+                
+    doc.update(update_data)
+    doc["updatedAt"] = datetime.now(timezone.utc).isoformat()
+    coll.update(doc_id, doc)
+    return doc
+
+def resolve_update_task(id: str, input: TaskUpdateInput) -> Task:
+    doc = _apply_typed_update("tasks", id, input)
+    return Task.from_dict(doc)
+
+def resolve_update_hypothesis(id: str, input: HypothesisUpdateInput) -> Hypothesis:
+    doc = _apply_typed_update("hypotheses", id, input)
+    return Hypothesis.from_dict(doc)
+
+def resolve_update_concept(id: str, input: ConceptUpdateInput) -> Concept:
+    doc = _apply_typed_update("concepts", id, input)
+    return Concept.from_dict(doc)
+
+def resolve_update_actionable_plan(id: str, input: ActionablePlanUpdateInput) -> ActionablePlan:
+    doc = _apply_typed_update("actionable_plans", id, input)
+    return ActionablePlan.from_dict(doc)
+
+def resolve_update_soter_incident(id: str, input: SoterIncidentUpdateInput) -> SoterIncident:
+    doc = _apply_typed_update("incidents", id, input)
+    return SoterIncident.from_dict(doc)
+
+def resolve_update_soter_review(id: str, input: SoterReviewUpdateInput) -> SoterReview:
+    doc = _apply_typed_update("reviews", id, input)
+    return SoterReview.from_dict(doc)
+
+def resolve_update_shadow_entry(id: str, input: ShadowEntryUpdateInput) -> ShadowEntry:
+    doc = _apply_typed_update("shadow_ledger", id, input)
+    return ShadowEntry.from_dict(doc)
+
+def resolve_update_symbol(id: str, input: SymbolUpdateInput) -> SymbolNode:
+    doc = _apply_typed_update("symbols", id, input)
+    return SymbolNode.from_dict(doc)
+
+def resolve_update_epistemic_mark(id: str, input: EpistemicMarkUpdateInput) -> EpistemicMark:
+    doc = _apply_typed_update("epistemic_ledger", id, input)
+    return EpistemicMark.from_dict(doc)
+
+def resolve_delete_document(collection: str, id: str) -> bool:
+    ctx = get_graphql_context()
+    coll = ctx.db.collection(collection)
+    if not coll.get(id):
+        raise ValueError(f"Document {id} in {collection} not found")
+    coll.delete(id)
+    return True
+

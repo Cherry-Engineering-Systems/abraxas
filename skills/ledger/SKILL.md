@@ -1,15 +1,15 @@
 ---
-name: ledger
-description: "A project and task management ledger for tracking work across the Abraxas system."
+name: tasks
+description: "A project and task management system for tracking work across the Abraxas system."
 ---
 
-# Ledger Skill
+# Tasks Skill
 
-The Ledger is the central source of truth for project tasks, tracking progress, and managing dependencies within the Abraxas project. It enables structured task management and ensures that work is sequenced correctly.
+The Tasks skill is the central source of truth for project tasks, tracking progress, and managing dependencies within the Abraxas project. It enables structured task management and ensures that work is sequenced correctly.
 
 ## Core Capabilities
 
-The Ledger manages tasks as documents in ArangoDB and dependencies as edges in a graph.
+The Tasks skill manages tasks as documents in ArangoDB and dependencies as edges in a graph.
 
 ### Task Lifecycle
 Tasks typically move through the following statuses:
@@ -21,7 +21,7 @@ Tasks typically move through the following statuses:
 ## Commands
 
 ### `create_task`
-Creates a new entry in the ledger.
+Creates a new entry in the tasks system.
 - **Arguments**: `title` (required), `project`, `scope`, `priority`.
 - **Behavior**: Defaults status to `open` and initializes timestamps.
 
@@ -44,4 +44,4 @@ Creates a directed edge between two tasks.
 
 - **Database**: ArangoDB.
 - **Collections**: `tasks` (document), `task_edges` (edge).
-- **Architecture**: Two-tier Python implementation (FastMCP $\rightarrow$ LedgerLogic).
+- **Architecture**: Two-tier Python implementation (FastMCP $\rightarrow$ TasksLogic).

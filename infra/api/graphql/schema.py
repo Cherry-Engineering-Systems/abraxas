@@ -45,6 +45,123 @@ class TaskStatus(str, Enum):
     TESTING = "testing"
     CLOSED = "closed"
 
+# --- RETROSPECTIVES ---
+
+@type
+class RetrospectiveDoing:
+    start: Optional[str] = None
+    continue_work: Optional[str] = field(name="continue", default=None)
+    stop: Optional[str] = None
+
+@type
+class Retrospective:
+    id: str
+    task_id: str = field(name="taskId")
+    title: str
+    went_well: Optional[str] = field(name="wentWell")
+    went_bad: Optional[str] = field(name="wentBad")
+    doing: Optional[RetrospectiveDoing]
+    actions: List[str] = field(default_factory=list, description="Links to task IDs")
+    timestamp: str
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "Retrospective":
+        doing_data = d.get("doing")
+        doing = None
+        if isinstance(doing_data, dict):
+            doing = RetrospectiveDoing(
+                start=doing_data.get("start"),
+                continue_work=doing_data.get("continue"),
+                stop=doing_data.get("stop")
+            )
+        return cls(
+            id=d.get("_key", d.get("_id", "")),
+            task_id=d.get("taskId", ""),
+            title=d.get("title", ""),
+            went_well=d.get("wentWell"),
+            went_bad=d.get("wentBad"),
+            doing=doing,
+            actions=d.get("actions", []),
+            timestamp=d.get("timestamp", ""),
+        )
+
+@input
+class RetrospectiveDoingInput:
+    start: Optional[str] = None
+    continue_work: Optional[str] = field(name="continue", default=None)
+    stop: Optional[str] = None
+
+@input
+class RetrospectiveInput:
+    task_id: str = field(name="taskId")
+    title: str
+    went_well: Optional[str] = field(name="wentWell", default=None)
+    went_bad: Optional[str] = field(name="wentBad", default=None)
+    doing: Optional[RetrospectiveDoingInput] = None
+    actions: Optional[List[str]] = None
+
+# --- GENERIC TYPED INPUTS FOR CRUD ---
+
+@input
+class TaskUpdateInput:
+    title: Optional[str] = None
+    project: Optional[str] = None
+    scope: Optional[str] = None
+    priority: Optional[str] = None
+    description: Optional[str] = None
+    notes: Optional[str] = None
+    definition_of_done: Optional[str] = field(name="definitionOfDone")
+    prompt: Optional[str] = None
+    results: Optional[JSON] = None
+    status: Optional[TaskStatus] = None
+
+@input
+class HypothesisUpdateInput:
+    raw_pattern_representation: Optional[str] = field(name="rawPatternRepresentation")
+    is_valuable: Optional[bool] = field(name="isValuable")
+    metadata: Optional[HypothesisMetadataInput] = None
+
+@input
+class ConceptUpdateInput:
+    name: Optional[str] = None
+    description: Optional[str] = None
+
+@input
+class ActionablePlanUpdateInput:
+    summary: Optional[str] = None
+    steps: Optional[List[str]] = None
+    risk_assessment: Optional[str] = field(name="riskAssessment")
+    grounding_status: Optional[GroundingStatus] = field(name="groundingStatus")
+
+@input
+class SoterIncidentUpdateInput:
+    resolved: Optional[bool] = None
+    response: Optional[str] = None
+
+@input
+class SoterReviewUpdateInput:
+    status: Optional[str] = None
+    priority: Optional[str] = None
+    decision: Optional[str] = None
+
+@input
+class ShadowEntryUpdateInput:
+    category: Optional[str] = None
+    content: Optional[str] = None
+    session_id: Optional[str] = field(name="sessionId")
+
+@input
+class SymbolUpdateInput:
+    stage: Optional[AlchemicalStage] = None
+    intention: Optional[str] = None
+
+@input
+class EpistemicMarkUpdateInput:
+    label: Optional[EpistemicLabel] = None
+    topic: Optional[str] = None
+    reasoning_chain: Optional[str] = field(name="reasoningChain")
+    session_id: Optional[str] = field(name="sessionId")
+
 @enum
 class GroundingStatus(Enum):
     PENDING = "PENDING"

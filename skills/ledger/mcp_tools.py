@@ -1,14 +1,14 @@
 from mcp.server.fastmcp import FastMCP
 from infra.mcp.context import AbraxasContext
-from skills.ledger.python.logic import LedgerLogic
+from skills.ledger.python.logic import TasksLogic
 
 def register_tools(mcp: FastMCP, context: AbraxasContext):
-    """Registers Ledger tools to the Abraxas MCP server."""
-    logic = LedgerLogic()
+    """Registers Tasks tools to the Abraxas MCP server."""
+    logic = TasksLogic()
 
     @mcp.tool()
     def create_task(title: str, project: str = None, scope: str = None, priority: str = None) -> str:
-        """Create a new task in the ledger."""
+        """Create a new task in the tasks system."""
         result = logic.create_task(title, project, scope, priority)
         return str(result)
 
@@ -39,7 +39,7 @@ def register_tools(mcp: FastMCP, context: AbraxasContext):
 
     @mcp.tool()
     def delete_task(id: str) -> str:
-        """Delete a task from the ledger."""
+        """Delete a task from the tasks system."""
         result = logic.delete_task(id)
         return str(result)
 
