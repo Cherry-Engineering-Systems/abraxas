@@ -1240,6 +1240,22 @@ Together with the theoretical framework (Vol I), the architectural design (Vol I
 
 ---
 
-**End of Volume V.**
+### 5.9 Sovereign Pulse Protocol (Telemetry Mandate)
 
-**Codex Complete.**
+The Sovereign Pulse is a real-time telemetry mandate designed to eliminate "stalling" and "simulation-masking" in agent execution. It shifts the reporting paradigm from qualitative summaries to quantitative atomic state-dumps.
+
+**The Pulse Format:**
+Every high-priority update must follow the strict triple-anchor format:
+1. **File/Line**: The exact coordinate of the current operation.
+2. **Atomic Win**: The specific, verifiable artifact created or state changed in the last block.
+3. **Next Block**: The immediate, non-ambiguous next technical step.
+
+**Sovereign Rupture Trigger:**
+A "Rupture" is declared when the system detects a repetitive failure loop (3+ identical errors) or a divergence between promised and actual artifacts. Upon Rupture:
+- The agent must perform a full state-dump of the current task context.
+- All "probabilistic assumptions" are purged.
+- The agent must propose a **Sovereign Pivot** via the GraphQL Control Surface to architecturally bypass the failure point.
+
+**Dead-Man's Switch:**
+If no Sovereign Pulse is emitted within the configured time-box for a P0 task, the system triggers a "Sovereign-Sigh"—an automated alert to the Human-Sovereign indicating a potential stall in the cognitive loop.
+

@@ -118,25 +118,44 @@ def resolve_memory_recall(query: str) -> Optional[MemoryFragment]:
     results = ctx.execute_aql(aql, bind_vars={"query": query})
     return MemoryFragment.from_dict(results[0]) if results else None
 
-def resolve_sovereign_state() -> SovereignState:
+def resolve_project_uncertainty() -> 'EpistemicHeatMap':
     ctx = get_graphql_context()
-    # Unresolved incidents
-    inc_query = "FOR i IN incidents FILTER i.resolved == false RETURN i"
-    unresolved_count = len(ctx.execute_aql(inc_query))
+    # We analyze the benchmark_results collection's scores
+    query = """
+    FOR r IN benchmark_results
+    COLLECT AGGREGATE 
+        known_sum = SUM(r.scores.nl.known + r.scores.al.known),
+        inf_sum = SUM(r.scores.nl.inferred + r.scores.al.inferred),
+        unc_sum = SUM(r.scores.nl.uncertain + r.scores.al.uncertain),
+        unk_sum = SUM(r.scores.nl.unknown + r.scores.al.unknown),
+        drm_sum = SUM(r.scores.nl.dream + r.scores.al.dream)
+    RETURN {
+        known: known_sum,
+        inferred: inf_sum,
+        uncertain: unc_sum,
+        unknown: unk_sum,
+        dream: drm_sum
+    }
+    """
+    results = ctx.execute_aql(query)
+    if not results:
+        return None # or a zeroed object
+
+    data = results[0]
+    total = data['known'] + data['inferred'] + data['uncertain'] + data['unknown'] + data['dream']
     
-    # Ready tasks
-    task_query = "FOR t IN tasks FILTER t.status == 'ready' LIMIT 5 RETURN t"
-    ready_tasks_raw = ctx.execute_aql(task_query)
-    ready_tasks = [Task.from_dict(t) for t in ready_tasks_raw]
-    
-    # Recent memory
-    mem_query = "FOR f IN fragments SORT f.timestamp DESC LIMIT 1 RETURN f"
-    mem_res = ctx.execute_aql(mem_query)
-    recent_mem = MemoryFragment.from_dict(mem_res[0]) if mem_res else None
-    
-    return SovereignState(
-        unresolved_incidents=unresolved_count,
-        ready_tasks=ready_tasks,
-        recent_memory=recent_mem
+    # Sovereign Gap Index: Ratio of (Uncertain + Unknown) to Total
+    # This represents the percentage of the project that is not yet anchored.
+    gap_index = (data['uncertain'] + data['unknown']) / total if total > 0 else 0.0
+
+    from schema import EpistemicHeatMap
+    return EpistemicHeatMap(
+        known=data['known'],
+        inferred=data['inferred'],
+        uncertain=data['uncertain'],
+        unknown=data['unknown'],
+        dream=data['dream'],
+        total_samples=total,
+        sovereign_gap_index=gap_index
     )
 

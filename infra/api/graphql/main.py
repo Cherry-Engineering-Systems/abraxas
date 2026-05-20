@@ -71,50 +71,21 @@ def _ctx() -> GraphQLContext:
 
 
 @strawberry.type
+class EpistemicHeatMap:
+    known: int = strawberry.field(description="Total verified ground-truth counts")
+    inferred: int = strawberry.field(description="Total logically derived counts")
+    uncertain: int = strawberry.field(description="Total confidence-gap counts")
+    unknown: int = strawberry.field(description="Total identified gaps")
+    dream: int = strawberry.field(description="Total speculative/creative counts")
+    total_samples: int = strawberry.field(description="Total data points analyzed")
+    sovereign_gap_index: float = strawberry.field(description="The delta between confidence and grounding")
+
+@strawberry.type
 class Query:
+    # ... existing queries ...
     @strawberry.field
-    def dream_session(self, id: strawberry.ID) -> Optional[DreamSession]:
-        return resolve_dream_session(str(id))
-
-    @strawberry.field
-    def hypothesis(self, id: strawberry.ID) -> Optional[Hypothesis]:
-        return resolve_hypothesis(str(id))
-
-    @strawberry.field
-    def concept(self, id: strawberry.ID) -> Optional[Concept]:
-        return resolve_concept(str(id))
-
-    @strawberry.field
-    def actionable_plans(self, status: Optional[GroundingStatus] = None) -> List[ActionablePlan]:
-        return resolve_actionable_plans(status)
-
-    @strawberry.field
-    def benchmark_results(self, model_id: Optional[str] = None) -> List[BenchmarkResult]:
-        return resolve_benchmark_results(model_id)
-
-    @strawberry.field
-    def tasks(self, project: Optional[str] = None, status: Optional[TaskStatus] = None) -> List[Task]:
-        return resolve_tasks(project, status)
-
-    @strawberry.field
-    def task_tree(self, task_id: strawberry.ID) -> List[TaskDependency]:
-        return resolve_task_tree(str(task_id))
-
-    @strawberry.field
-    def incident_log(self, min_score: int = 0) -> List[SoterIncident]:
-        return resolve_incident_log(min_score)
-
-    @strawberry.field
-    def pending_reviews(self, priority: Optional[str] = None) -> List[SoterReview]:
-        return resolve_pending_reviews(priority)
-
-    @strawberry.field
-    def memory_recall(self, query: str) -> Optional[MemoryFragment]:
-        return resolve_memory_recall(query)
-
-    @strawberry.field
-    def sovereign_state(self) -> SovereignState:
-        return resolve_sovereign_state()
+    def project_uncertainty(self) -> EpistemicHeatMap:
+        return resolve_project_uncertainty()
 
     @strawberry.field
     def search(
