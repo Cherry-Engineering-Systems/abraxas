@@ -15,6 +15,7 @@ from resolvers.mutations import (
     resolve_upload_benchmark_batch,
     resolve_create_task,
     resolve_update_task_status,
+    resolve_add_subtask,
 )
 
 from resolvers.queries import (
@@ -274,12 +275,15 @@ class Mutation:
         return resolve_create_task(input)
 
     @mutation
-    def update_task_status(self, input: "TaskStatusInput") -> Task:
-        return resolve_update_task_status(input)
+    def add_task_dependency(self, input: "DependencyInput") -> TaskDependency:
+        from resolvers.mutations import resolve_add_dependency
+        return resolve_add_dependency(input)
 
     @mutation
-    def add_task_dependency(self, input: "DependencyInput") -> TaskDependency:
-        return resolve_add_dependency(input)
+    def add_subtask(self, parent_id: ID, input: "TaskInput") -> Task:
+        from resolvers.mutations import resolve_add_subtask
+        return resolve_add_subtask(str(parent_id), input)
+
 
     @mutation
     def report_soter_incident(self, input: "SoterIncidentInput", channel_id: str = "") -> SoterIncident:

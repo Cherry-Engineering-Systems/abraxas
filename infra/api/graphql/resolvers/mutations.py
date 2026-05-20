@@ -276,17 +276,66 @@ def resolve_trigger_sovereign_quest(
 def resolve_create_task(input: TaskInput) -> Task:
     ctx = get_graphql_context()
     coll = ctx.db.collection("tasks")
+    edge_coll = ctx.db.collection("task_edges")
+    
     doc = {
         "title": input.title,
         "project": input.project,
         "scope": input.scope,
         "priority": input.priority,
+        "description": input.description,
+        "notes": input.notes,
+        "definitionOfDone": input.definition_of_done,
+        "prompt": input.prompt,
+        "results": input.results,
         "status": TaskStatus.OPEN.value,
         "createdAt": datetime.now(timezone.utc).isoformat(),
         "updatedAt": datetime.now(timezone.utc).isoformat(),
     }
+    
+    # Create parent task
     result = coll.insert(doc)
+    parent_id = result["_key"]
+    
+    # Recursive Subtask Creation
+    if input.subtasks:
+        for sub_input in input.subtasks:
+            # Create subtask recursively (handles nested subtasks)
+            sub_task = resolve_create_task(sub_input)
+            sub_id = sub_task.id
+            
+            # Link subtask -> parent (Subtask blocks Parent)
+            edge_coll.insert({
+                "_from": f"tasks/{sub_id}",
+                "_to": f"tasks/{parent_id}",
+                "type": "blocks",
+                "createdAt": datetime.now(timezone.utc).isoformat(),
+            })
+            
     return Task.from_dict({**result, **doc})
+
+def resolve_add_subtask(parent_id: str, input: TaskInput) -> Task:
+    ctx = get_graphql_context()
+    coll = ctx.db.collection("tasks")
+    edge_coll = ctx.db.collection("task_edges")
+    
+    # Verify parent exists
+    if not ctx.document("tasks", parent_id):
+        raise ValueError(f"Parent task {parent_id} not found")
+    
+    # Create the subtask (recursivey if it has its own subtasks)
+    sub_task = resolve_create_task(input)
+    sub_id = sub_task.id
+    
+    # Link subtask blocks parent
+    edge_coll.insert({
+        "_from": f"tasks/{sub_id}",
+        "_to": f"tasks/{parent_id}",
+        "type": "blocks",
+        "createdAt": datetime.now(timezone.utc).isoformat(),
+    })
+    
+    return sub_task
 
 def resolve_update_task_status(input: TaskStatusInput) -> Task:
     ctx = get_graphql_context()

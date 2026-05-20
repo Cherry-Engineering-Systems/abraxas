@@ -1,4 +1,5 @@
 from strawberry import input, field, type, enum
+from strawberry.typing import JSON
 from enum import Enum
 from typing import List, Optional
 
@@ -95,21 +96,28 @@ class Task:
     priority: Optional[str] = None
     project: Optional[str] = None
     scope: Optional[str] = None
+    description: Optional[str] = None
+    notes: Optional[str] = None
+    definition_of_done: Optional[str] = field(name="definitionOfDone")
+    prompt: Optional[str] = None
+    results: Optional[JSON] = None
     created_at: Optional[str] = field(name="createdAt")
     updated_at: Optional[str] = field(name="updatedAt")
+
+    @field
+    def subtasks(self) -> List["Task"]:
+        from resolvers.queries import resolve_subtasks
+        return resolve_subtasks(self.id)
 
     @classmethod
     def from_dict(cls, d: dict) -> "Task":
         key = d.get("_key", d.get("_id", "").split("/")[-1])
         status_val = d.get("status", "open")
         
-        # If it's already a TaskStatus member, use it.
-        # If it's a string, try to convert it to a TaskStatus member.
         if isinstance(status_val, TaskStatus):
             status = status_val
         elif isinstance(status_val, str):
             try:
-                # This looks up the enum member by its value (e.g., "open")
                 status = TaskStatus(status_val)
             except ValueError:
                 status = TaskStatus.OPEN
@@ -123,6 +131,11 @@ class Task:
             priority=d.get("priority"),
             project=d.get("project"),
             scope=d.get("scope"),
+            description=d.get("description"),
+            notes=d.get("notes"),
+            definition_of_done=d.get("definitionOfDone"),
+            prompt=d.get("prompt"),
+            results=d.get("results"),
             created_at=d.get("createdAt"),
             updated_at=d.get("updatedAt"),
         )
@@ -529,6 +542,12 @@ class TaskInput:
     project: Optional[str] = None
     scope: Optional[str] = None
     priority: Optional[str] = None
+    description: Optional[str] = None
+    notes: Optional[str] = None
+    definition_of_done: Optional[str] = field(name="definitionOfDone")
+    prompt: Optional[str] = None
+    results: Optional[JSON] = None
+    subtasks: Optional[List["TaskInput"]] = None
 
 @input
 class TaskStatusInput:

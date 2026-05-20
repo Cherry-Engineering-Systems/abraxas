@@ -64,6 +64,26 @@ def resolve_benchmark_results(model_id: Optional[str] = None) -> List[BenchmarkR
     results = ctx.execute_aql(query, bind_vars)
     return [BenchmarkResult.from_dict(r) for r in results]
 
+def resolve_subtasks(task_id: str) -> List[Task]:
+    ctx = get_graphql_context()
+    edge_coll = ctx.db.collection("task_edges")
+    
+    # Find all tasks that 'block' this task (subtasks)
+    query = "FOR edge IN task_edges FILTER edge._to == @id AND edge.type == 'blocks' RETURN edge._from"
+    bind_vars = {"id": f"tasks/{task_id}"}
+    
+    results = ctx.execute_aql(query, bind_vars)
+    
+    tasks = []
+    for from_id in results:
+        # Extract the key from tasks/123 -> 123
+        sub_id = from_id.split("/")[-1]
+        doc = ctx.document("tasks", sub_id)
+        if doc:
+            tasks.append(Task.from_dict(doc))
+            
+    return tasks
+
 def resolve_tasks(
     project: Optional[str] = None, 
     status: Optional[TaskStatus] = None, 
