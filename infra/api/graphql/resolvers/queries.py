@@ -166,14 +166,14 @@ def resolve_project_uncertainty() -> 'EpistemicHeatMap':
     results = ctx.execute_aql(query)
     if not results:
         return None # or a zeroed object
-
+    
     data = results[0]
     total = data['known'] + data['inferred'] + data['uncertain'] + data['unknown'] + data['dream']
     
     # Sovereign Gap Index: Ratio of (Uncertain + Unknown) to Total
     # This represents the percentage of the project that is not yet anchored.
     gap_index = (data['uncertain'] + data['unknown']) / total if total > 0 else 0.0
-
+    
     from schema import EpistemicHeatMap
     return EpistemicHeatMap(
         known=data['known'],
@@ -184,4 +184,37 @@ def resolve_project_uncertainty() -> 'EpistemicHeatMap':
         total_samples=total,
         sovereign_gap_index=gap_index
     )
+
+def resolve_incident_log(min_score: int = 0) -> List['SoterIncident']:
+    ctx = get_graphql_context()
+    query = "FOR i IN incidents FILTER i.assessment.score >= @min_score SORT i.timestamp DESC RETURN i"
+    bind_vars = {"min_score": min_score}
+    results = ctx.execute_aql(query, bind_vars)
+    from schema import SoterIncident
+    return [SoterIncident.from_dict(r) for r in results]
+
+def resolve_pending_reviews(priority: Optional[str] = None) -> List['SoterReview']:
+    ctx = get_graphql_context()
+    query = "FOR r IN reviews FILTER r.status == 'PENDING'"
+    bind_vars = {}
+    if priority:
+        query += " FILTER r.priority == @priority"
+        bind_vars["priority"] = priority
+    query += " SORT r.createdAt DESC RETURN r"
+    results = ctx.execute_aql(query, bind_vars)
+    from schema import SoterReview
+    return [SoterReview.from_dict(r) for r in results]
+
+def resolve_shadow_entries(category: Optional[str] = None) -> List['ShadowEntry']:
+    ctx = get_graphql_context()
+    query = "FOR s IN shadow_ledger"
+    bind_vars = {}
+    if category:
+        query += " FILTER s.category == @category"
+        bind_vars["category"] = category
+    query += " SORT s.timestamp DESC RETURN s"
+    results = ctx.execute_aql(query, bind_vars)
+    from schema import ShadowEntry
+    return [ShadowEntry.from_dict(r) for r in results]
+
 

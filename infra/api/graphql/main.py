@@ -40,7 +40,22 @@ from schema import (
     ProvenanceChain,
     HypothesisMetadataInput,
     ActionablePlanInput,
-    BenchmarkResultInput
+    BenchmarkResultInput,
+    Task,
+    TaskInput,
+    TaskStatusInput,
+    DependencyInput,
+    TaskDependency,
+    SoterIncident,
+    SoterReview,
+    SoterIncidentInput,
+    SoterReviewInput,
+    ShadowEntry,
+    ShadowEntryInput,
+    SymbolNode,
+    SymbolUpdateInput,
+    EpistemicMark,
+    EpistemicMarkInput,
 )
 
 
@@ -69,6 +84,18 @@ class Query:
     @field
     def ready_tasks(self) -> List["Task"]:
         return resolve_ready_tasks()
+
+    @field
+    def soter_incidents(self, min_score: int = 0) -> List["SoterIncident"]:
+        return resolve_incident_log(min_score)
+
+    @field
+    def soter_reviews(self, priority: Optional[str] = None) -> List["SoterReview"]:
+        return resolve_pending_reviews(priority)
+
+    @field
+    def shadow_entries(self, category: Optional[str] = None) -> List["ShadowEntry"]:
+        return resolve_shadow_entries(category)
 
     @field
     def search(
@@ -256,6 +283,10 @@ class Mutation:
     @mutation
     def update_symbol_stage(self, input: "SymbolUpdateInput", channel_id: str = "") -> SymbolNode:
         return resolve_update_symbol_stage(input, channel_id)
+
+    @mutation
+    def log_epistemic_mark(self, input: "EpistemicMarkInput", channel_id: str = "") -> EpistemicMark:
+        return resolve_log_epistemic_mark(input, channel_id)
 
 
 def _resolve_edge_outbound(parent_id: str, edge_collection: str) -> Optional[dict]:

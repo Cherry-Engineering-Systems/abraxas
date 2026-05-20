@@ -2,6 +2,7 @@ from strawberry import input, field, type, enum
 from enum import Enum
 from typing import List, Optional
 
+# --- ENUMS ---
 
 @enum
 class PivotStatus(Enum):
@@ -22,7 +23,6 @@ class CreativeDriver(Enum):
     SYSTEMIC_INVERSION = "SYSTEMIC_INVERSION"
     EMERGENT_SYNTHESIS = "EMERGENT_SYNTHESIS"
 
-
 @enum
 class GuardrailID(Enum):
     EPISTEMIC_HUMILITY = "EPISTEMIC_HUMILITY"
@@ -31,13 +31,11 @@ class GuardrailID(Enum):
     CONSENT_SEEKING = "CONSENT_SEEKING"
     PROCESS_TRANSPARENCY = "PROCESS_TRANSPARENCY"
 
-
 @enum
 class CheckResult(Enum):
     PASS = "PASS"
     WARN = "WARN"
     FAIL = "FAIL"
-
 
 @enum
 class TaskStatus(Enum):
@@ -55,10 +53,39 @@ class GroundingStatus(Enum):
 
 @enum
 class EpistemicLabel(Enum):
-    KNOWN = "[KNOWN]"
-    INFERRED = "[INFERRED]"
-    UNCERTAIN = "[UNCERTAIN]"
-    UNKNOWN = "[UNKNOWN]"
+    KNOWN = "KNOWN"
+    INFERRED = "INFERRED"
+    UNCERTAIN = "UNCERTAIN"
+    UNKNOWN = "UNKNOWN"
+
+@enum
+class AlchemicalStage(Enum):
+    NIGREDO = "NIGREDO"
+    ALBEDO = "ALBEDO"
+    CITRINITAS = "CITRINITAS"
+    RUBEDO = "RUBEDO"
+
+# --- TYPES ---
+
+@type
+class EpistemicMark:
+    id: str
+    label: EpistemicLabel
+    topic: str
+    reasoning_chain: Optional[str] = field(name="reasoningChain")
+    session_id: Optional[str] = field(name="sessionId")
+    timestamp: str
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "EpistemicMark":
+        return cls(
+            id=d.get("_key", d.get("_id", "")),
+            label=EpistemicLabel(d.get("label", "UNKNOWN")),
+            topic=d.get("topic", ""),
+            reasoning_chain=d.get("reasoningChain"),
+            session_id=d.get("sessionId"),
+            timestamp=d.get("timestamp", ""),
+        )
 
 @type
 class Task:
@@ -75,7 +102,6 @@ class Task:
     def from_dict(cls, d: dict) -> "Task":
         key = d.get("_key", d.get("_id", "").split("/")[-1])
         status_val = d.get("status", "open")
-        # Ensure we map to the Enum value, not the Enum instance if it's already one
         if isinstance(status_val, TaskStatus):
             status = status_val
         else:
@@ -83,7 +109,6 @@ class Task:
                 status = TaskStatus(status_val)
             except ValueError:
                 status = TaskStatus.OPEN
-        
         return cls(
             id=key,
             title=d.get("title", ""),
@@ -103,9 +128,6 @@ class TaskDependency:
 
 @type
 class SovereignPivot:
-    """
-    Represents a systemic architectural evolution triggered by a rupture.
-    """
     id: str = field(description="Unique identifier of the pivot")
     rupture_id: str = field(name="ruptureId", description="ID of the incident/pattern that triggered the pivot")
     proposal: str = field(description="Detailed architectural change proposal")
@@ -127,9 +149,6 @@ class SovereignPivot:
 
 @type
 class SovereignQuest:
-    """
-    A targeted research task triggered by an [UNKNOWN] epistemic mark.
-    """
     id: str = field(description="Unique identifier of the quest")
     unknown_id: str = field(name="unknownId", description="ID of the Janus unknown mark")
     focus_area: str = field(name="focusArea", description="The specific vector of research needed")
@@ -162,7 +181,6 @@ class GuardrailCheck:
             result=CheckResult(d["result"]),
             notes=d.get("notes"),
         )
-
 
 @type
 class SoterIncident:
@@ -231,7 +249,6 @@ class SovereignState:
     ready_tasks: List[Task] = field(name="readyTasks")
     recent_memory: Optional[MemoryFragment] = field(name="recentMemory")
 
-
 @type
 class HypothesisMetadata:
     novelty_score: float = field(name="noveltyScore")
@@ -246,7 +263,6 @@ class HypothesisMetadata:
             coherence_score=float(d.get("coherenceScore", 0)),
             creative_drivers=[CreativeDriver(x) for x in drivers],
         )
-
 
 @type
 class EdgeInfo:
@@ -263,22 +279,6 @@ class EdgeInfo:
             _to=d.get("_to", ""),
             created_at=d.get("createdAt"),
         )
-
-
-@type
-class GuardrailCheck:
-    guardrail: GuardrailID
-    result: CheckResult
-    notes: Optional[str] = None
-
-    @classmethod
-    def from_dict(cls, d: dict) -> "GuardrailCheck":
-        return cls(
-            guardrail=GuardrailID(d["guardrail"]),
-            result=CheckResult(d["result"]),
-            notes=d.get("notes"),
-        )
-
 
 @type
 class Hypothesis:
@@ -302,7 +302,6 @@ class Hypothesis:
             is_valuable=d.get("isValuable", False),
         )
 
-
 @type
 class Concept:
     id: str
@@ -317,7 +316,6 @@ class Concept:
             name=d.get("name", ""),
             description=d.get("description", ""),
         )
-
 
 @type
 class ActionablePlan:
@@ -338,7 +336,6 @@ class ActionablePlan:
             grounding_status=GroundingStatus(d.get("groundingStatus", "PENDING")),
         )
 
-
 @type
 class DreamSession:
     id: str
@@ -356,7 +353,6 @@ class DreamSession:
             seed_concepts=d.get("seedConcepts", []),
         )
 
-
 @type
 class ProvenanceChain:
     plan: ActionablePlan
@@ -367,7 +363,6 @@ class ProvenanceChain:
     hypothesis_to_session_edge: EdgeInfo = field(name="hypothesisToSessionEdge")
     session: DreamSession
 
-
 @type
 class ScoreDistribution:
     known: float
@@ -376,12 +371,10 @@ class ScoreDistribution:
     unknown: float
     dream: float
 
-
 @type
 class BenchmarkScores:
     nl: ScoreDistribution
     al: ScoreDistribution
-
 
 @type
 class BenchmarkResult:
@@ -427,6 +420,41 @@ class BenchmarkResult:
             timestamp=d.get("timestamp", ""),
         )
 
+@type
+class ShadowEntry:
+    id: str
+    category: str
+    content: str
+    session_id: Optional[str] = None
+    timestamp: str
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "ShadowEntry":
+        return cls(
+            id=d.get("_key", d.get("_id", "")),
+            category=d.get("category", ""),
+            content=d.get("content", ""),
+            session_id=d.get("sessionId"),
+            timestamp=d.get("timestamp", ""),
+        )
+
+@type
+class SymbolNode:
+    id: str
+    name: str
+    stage: AlchemicalStage
+    intention: Optional[str] = None
+    
+    @classmethod
+    def from_dict(cls, d: dict) -> "SymbolNode":
+        return cls(
+            id=d.get("_key", d.get("_id", "")),
+            name=d.get("name", ""),
+            stage=AlchemicalStage(d.get("stage", "NIGREDO")),
+            intention=d.get("intention"),
+        )
+
+# --- INPUTS ---
 
 @input
 class HypothesisMetadataInput:
@@ -434,13 +462,11 @@ class HypothesisMetadataInput:
     coherence_score: float = field(name="coherenceScore")
     creative_drivers: List[CreativeDriver] = field(name="creativeDrivers")
 
-
 @input
 class ActionablePlanInput:
     summary: str
     steps: List[str] = field(default_factory=list)
     risk_assessment: str = field(name="riskAssessment", default="")
-
 
 @input
 class ScoreDistributionInput:
@@ -464,7 +490,65 @@ class SovereignPivotInput:
     channel_id: str = field(description="Sovereign authorized channel ID")
 
 @input
+class SovereignQuestInput:
+    unknown_id: str = field(name="unknownId", description="ID of the Janus unknown mark")
+    focus_area: str = field(name="focusArea", description="The specific vector of research needed")
+    channel_id: str = field(description="Sovereign authorized channel ID")
+
+@input
+class TaskInput:
+    title: str
+    project: Optional[str] = None
+    scope: Optional[str] = None
+    priority: Optional[str] = None
+
+@input
+class TaskStatusInput:
+    id: str
+    status: TaskStatus
+
+@input
 class DependencyInput:
     from_id: str
     to_id: str
     dep_type: str = "blocks"
+
+@input
+class GuardrailCheckInput:
+    guardrail: GuardrailID
+    result: CheckResult
+    notes: Optional[str] = None
+
+@input
+class SoterIncidentInput:
+    request: str
+    score: int
+    resolved: bool = False
+    timestamp: Optional[str] = None
+    patterns: List[GuardrailCheckInput] = field(default_factory=list)
+
+@input
+class SoterReviewInput:
+    incident_id: str
+    status: str
+    priority: str
+    decision: Optional[str] = None
+
+@input
+class ShadowEntryInput:
+    category: str
+    content: str
+    session_id: Optional[str] = None
+
+@input
+class SymbolUpdateInput:
+    id: str
+    stage: AlchemicalStage
+    intention: Optional[str] = None
+
+@input
+class EpistemicMarkInput:
+    label: EpistemicLabel
+    topic: str
+    reasoning_chain: Optional[str] = field(name="reasoningChain")
+    session_id: Optional[str] = field(name="sessionId")

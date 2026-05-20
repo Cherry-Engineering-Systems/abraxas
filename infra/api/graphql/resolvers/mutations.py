@@ -32,6 +32,9 @@ from infra.api.graphql.schema import (
     SymbolNode,
     SymbolUpdateInput,
     AlchemicalStage,
+    EpistemicMark,
+    EpistemicMarkInput,
+    EpistemicLabel,
 )
 
 
@@ -376,3 +379,19 @@ def resolve_update_symbol_stage(input: SymbolUpdateInput, channel_id: str) -> Sy
     doc["updatedAt"] = datetime.now(timezone.utc).isoformat()
     coll.update(input.id, doc)
     return SymbolNode.from_dict(doc)
+
+def resolve_log_epistemic_mark(input: EpistemicMarkInput, channel_id: str) -> EpistemicMark:
+    _validate_channel(channel_id)
+    ctx = get_graphql_context()
+    coll = ctx.db.collection("epistemic_ledger")
+    
+    doc = {
+        "label": input.label.value,
+        "topic": input.topic,
+        "reasoningChain": input.reasoning_chain,
+        "sessionId": input.session_id,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "channelId": channel_id,
+    }
+    result = coll.insert(doc)
+    return EpistemicMark.from_dict({**result, **doc})
