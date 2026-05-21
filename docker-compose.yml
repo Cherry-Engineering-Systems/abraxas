@@ -50,8 +50,7 @@ services:
     ports:
       - "8529:8529"
     volumes:
-      - arangodb_data:/var/lib/arangodb
+      - ./arangodb-data:/var/lib/arangodb
     restart: always
-
-volumes:
-  arangodb_data:
+  
+# Removed named volume section
