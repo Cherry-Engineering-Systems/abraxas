@@ -1,97 +1,86 @@
-import os
-import json
 import datetime
 from typing import List, Dict, Any, Optional
-from pathlib import Path
+from infra.mcp.context import AbraxasContext
 
 class RetrospectivesLogic:
     _instance = None
 
-    def __new__(cls):
+    def __new__(cls, *args, **kwargs):
         if cls._instance is None:
             cls._instance = super(RetrospectivesLogic, cls).__new__(cls)
-            cls._instance._init_paths()
         return cls._instance
 
-    def _init_paths(self):
-        # Default base directory for retrospectives
-        self.RETRO_BASE_DIR = os.getenv("Sovereign_RETRO_DIR", os.path.expanduser("~/.abraxas/retrospectives"))
-        
-    def _get_storage_path(self, date: str, retro_type: str, retro_id: str) -> tuple:
-        """Calculate folder and file paths based on ISO date and ID."""
-        try:
-            year, month, day = date.split('-')
-            folder = os.path.join(self.RETRO_BASE_DIR, year, month, day)
-            file_path = os.path.join(folder, f"{retro_type}_{retro_id}.json")
-            return folder, file_path
-        except ValueError:
-            raise ValueError("Date must be in YYYY-MM-DD format")
+    def __init__(self, context: Optional[AbraxasContext] = None):
+        # We use the context provided during tool registration or a fallback
+        self.context = context
+
+    def set_context(self, context: AbraxasContext):
+        self.context = context
 
     def save_retro(self, date: str, retro_type: str, retro_id: str, content: Dict[str, Any]) -> str:
-        """Save a retrospective assessment to the filesystem."""
-        folder, file_path = self._get_storage_path(date, retro_type, retro_id)
+        """Save a retrospective assessment to ArangoDB."""
+        if not self.context:
+            raise RuntimeError("Context not initialized for RetrospectivesLogic")
         
+        coll = self.context.db.collection("retrospectives")
+        
+        # Normalize the document for the collection
+        doc = {
+            "date": date,
+            "type": retro_type,
+            "retro_id": retro_id,
+            **content,
+            "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat()
+        }
+        
+        # If retro_id is meant to be the primary key, we can use it as _key.
+        # Otherwise, let ArangoDB handle it and we store retro_id as an attribute.
         try:
-            os.makedirs(folder, exist_ok=True)
-            with open(file_path, "w", encoding="utf-8") as f:
-                json.dump(content, f, indent=2)
-            return f"Retrospective saved to {file_path}"
-        except Exception as e:
-            raise RuntimeError(f"Error saving retrospective: {str(e)}")
+            # Try to use retro_id as the key for idempotency
+            coll.insert(doc, key=retro_id)
+        except Exception:
+            # If key exists or is invalid, fallback to standard insert
+            coll.insert(doc)
+            
+        return f"Retrospective saved successfully for {date} ({retro_type})"
 
     def get_retros_for_period(self, start_date: str, end_date: str) -> List[Dict[str, Any]]:
-        """Retrieve retrospectives within a given date range."""
-        results = []
+        """Retrieve retrospectives within a given date range using AQL."""
+        if not self.context:
+            raise RuntimeError("Context not initialized for RetrospectivesLogic")
         
-        # We walk the directory tree: root -> year -> month -> day
-        if not os.path.exists(self.RETRO_BASE_DIR):
-            return []
-
+        query = """
+        FOR r IN retrospectives
+            FILTER r.date >= @start AND r.date <= @end
+            SORT r.date ASC
+            RETURN r
+        """
+        bind_vars = {"start": start_date, "end": end_date}
+        
         try:
-            for year in sorted(os.listdir(self.RETRO_BASE_DIR)):
-                if not year.isdigit() or len(year) != 4: continue
-                year_path = os.path.join(self.RETRO_BASE_DIR, year)
-                if not os.path.isdir(year_path): continue
-                
-                for month in sorted(os.listdir(year_path)):
-                    month_path = os.path.join(year_path, month)
-                    if not os.path.isdir(month_path): continue
-                    
-                    for day in sorted(os.listdir(month_path)):
-                        retro_date = f"{year}-{month.zfill(2)}-{day.zfill(2)}"
-                        if start_date <= retro_date <= end_date:
-                            day_path = os.path.join(month_path, day)
-                            if not os.path.isdir(day_path): continue
-                            
-                            for file in os.listdir(day_path):
-                                if file.endswith(".json"):
-                                    with open(os.path.join(day_path, file), "r", encoding="utf-8") as f:
-                                        results.append(json.load(f))
+            return self.context.execute_aql(query, bind_vars)
         except Exception as e:
             raise RuntimeError(f"Error retrieving retros: {str(e)}")
-            
-        return results
 
     def create_ledger_task(self, description: str, priority: str, source_retro_id: str) -> str:
-        """Create a task in the retrospective ledger."""
-        ledger_path = os.path.join(self.RETRO_BASE_DIR, "ledger.json")
+        """Create a task in the project tasks collection as a result of a retro finding."""
+        if not self.context:
+            raise RuntimeError("Context not initialized for RetrospectivesLogic")
+        
+        coll = self.context.db.collection("tasks")
+        
+        task_doc = {
+            "title": f"[Retro-Improvement] {description}",
+            "project": "Sovereign Brain",
+            "scope": f"Origin: Retrospective {source_retro_id}",
+            "priority": priority,
+            "status": "open",
+            "createdAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            "updatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        }
         
         try:
-            ledger = []
-            if os.path.exists(ledger_path):
-                with open(ledger_path, "r", encoding="utf-8") as f:
-                    ledger = json.load(f)
-            
-            ledger.append({
-                "description": description,
-                "priority": priority,
-                "source_retro_id": source_retro_id,
-                "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat()
-            })
-            
-            with open(ledger_path, "w", encoding="utf-8") as f:
-                json.dump(ledger, f, indent=2)
-                
-            return f"Ledger task created: {description} (Source: {source_retro_id})"
+            coll.insert(task_doc)
+            return f"Ledger task created successfully: {description}"
         except Exception as e:
-            raise RuntimeError(f"Error updating ledger: {str(e)}")
+            raise RuntimeError(f"Error creating ledger task: {str(e)}")

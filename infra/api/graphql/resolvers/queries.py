@@ -10,10 +10,12 @@ from infra.api.graphql.schema import (
     Task,
     TaskStatus,
     TaskDependency,
+    TaskDependency,
     SoterIncident,
     SoterReview,
     MemoryFragment,
-    SovereignState
+    SovereignState,
+    Retrospective
 )
 
 
@@ -255,14 +257,34 @@ def resolve_pending_reviews(priority: Optional[str] = None) -> List['SoterReview
     from schema import SoterReview
     return [SoterReview.from_dict(r) for r in results]
 
-def resolve_retrospectives(query: Optional[str] = None) -> List[Retrospective]:
+def resolve_retrospectives(
+    query: Optional[str] = None,
+    start_date: Optional[str] = None,
+    end_date: Optional[str] = None
+) -> List[Retrospective]:
     ctx = get_graphql_context()
-    aql_query = "FOR r IN retrospectives"
-    bind_vars = {}
-    if query:
-        aql_query += " FILTER CONTAINS(LOWER(r.title), LOWER(@query)) OR CONTAINS(LOWER(r.wentWell), LOWER(@query))"
-        bind_vars["query"] = query
-    aql_query += " SORT r.timestamp DESC RETURN r"
+    if start_date and end_date:
+        aql_query = "FOR r IN retrospectives FILTER r.date >= @start AND r.date <= @end SORT r.date ASC RETURN r"
+        bind_vars = {"start": start_date, "end": end_date}
+    elif query:
+        aql_query = "FOR r IN retrospectives"
+        bind_vars = {}
+        if query:
+            aql_query += " FILTER CONTAINS(LOWER(r.title), LOWER(@query)) OR CONTAINS(LOWER(r.wentWell), LOWER(@query))"
+            bind_vars["query"] = query
+        aql_query += " SORT r.timestamp DESC RETURN r"
+    else:
+        aql_query = "FOR r IN retrospectives SORT r.timestamp DESC RETURN r"
+        bind_vars = {}
+        
+    results = ctx.execute_aql(aql_query, bind_vars)
+    from schema import Retrospective
+    return [Retrospective.from_dict(r) for r in results]
+
+def resolve_retros_for_period(start_date: str, end_date: str) -> List[Retrospective]:
+    ctx = get_graphql_context()
+    aql_query = "FOR r IN retrospectives FILTER r.date >= @start AND r.date <= @end SORT r.date ASC RETURN r"
+    bind_vars = {"start": start_date, "end": end_date}
     results = ctx.execute_aql(aql_query, bind_vars)
     from schema import Retrospective
     return [Retrospective.from_dict(r) for r in results]
@@ -281,5 +303,17 @@ def resolve_needs_retrospective() -> List[Task]:
     """
     results = ctx.execute_aql(query)
     return [Task.from_dict(r) for r in results if isinstance(r, dict) and ("_key" in r or "_id" in r)]
+
+def resolve_shadow_entries(category: Optional[str] = None) -> List["ShadowEntry"]:
+    ctx = get_graphql_context()
+    query = "FOR s IN shadow_ledger"
+    bind_vars = {}
+    if category:
+        query += " FILTER s.category == @category"
+        bind_vars["category"] = category
+    query += " SORT s.timestamp DESC RETURN s"
+    results = ctx.execute_aql(query, bind_vars)
+    from schema import ShadowEntry
+    return [ShadowEntry.from_dict(r) for r in results]
 
 

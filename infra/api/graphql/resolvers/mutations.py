@@ -1,9 +1,11 @@
 import json
 import os
 from datetime import datetime, timezone
-from typing import List, Optional
+from typing import List, Optional, Any, Dict
+from strawberry.scalars import JSON
 from infra.api.graphql.context import get_graphql_context
 from infra.api.graphql.schema import (
+
     DreamSession,
     Hypothesis,
     HypothesisMetadataInput,
@@ -577,4 +579,27 @@ def resolve_delete_document(collection: str, id: str) -> bool:
         raise ValueError(f"Document {id} in {collection} not found")
     coll.delete(id)
     return True
+
+def resolve_create_ledger_task(
+    description: str,
+    priority: str,
+    source_retro_id: str,
+    channel_id: str
+) -> Task:
+    _validate_channel(channel_id)
+    ctx = get_graphql_context()
+    coll = ctx.db.collection("tasks")
+    
+    doc = {
+        "title": f"[Retro-Improvement] {description}",
+        "project": "Sovereign Brain",
+        "scope": f"Origin: Retrospective {source_retro_id}",
+        "priority": priority,
+        "status": TaskStatus.OPEN.value,
+        "createdAt": datetime.now(timezone.utc).isoformat(),
+        "updatedAt": datetime.now(timezone.utc).isoformat(),
+    }
+    
+    result = coll.insert(doc)
+    return Task.from_dict({**result, **doc})
 
