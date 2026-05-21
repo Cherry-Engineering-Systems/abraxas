@@ -22,8 +22,17 @@ class GraphQLContext:
         return self._db
 
     def execute_aql(self, query: str, bind_vars: Optional[dict] = None) -> list:
-        cursor = self.db.aql.execute(query, bind_vars=bind_vars or {})
-        return [doc for doc in cursor]
+        try:
+            cursor = self.db.aql.execute(query, bind_vars=bind_vars or {})
+            return [doc for doc in cursor]
+        except Exception as e:
+            # Log the error for the server admins
+            print(f"AQL Execution Error: {e}")
+            # We re-raise as a custom exception or a generic one that 
+            # we can catch in a global handler. 
+            # For now, we let it bubble but ensure we are aware of the specific 
+            # python-arango exception type.
+            raise e
 
     def document(self, collection: str, key: str) -> Optional[dict]:
         try:

@@ -4,9 +4,11 @@ from strawberry import mutation, fastapi, field, Schema, ID, type
 import uvicorn
 from fastapi import FastAPI, Response
 from strawberry.fastapi import GraphQLRouter
+from strawberry.types import Info
+from graphql import GraphQLError
 
-from context import get_graphql_context, GraphQLContext
-from resolvers.mutations import (
+from .context import get_graphql_context, GraphQLContext
+from .resolvers.mutations import (
     resolve_start_dream_cycle,
     resolve_create_hypothesis,
     resolve_translate_hypothesis_to_concept,
@@ -18,14 +20,14 @@ from resolvers.mutations import (
     resolve_add_subtask,
 )
 
-from resolvers.queries import (
+from .resolvers.queries import (
     resolve_project_uncertainty,
     resolve_ready_tasks,
     resolve_incident_log,
     resolve_pending_reviews,
     resolve_shadow_entries,
 )
-from resolvers.search import (
+from .resolvers.search import (
     resolve_search,
     resolve_related_to,
     resolve_recent,
@@ -34,7 +36,7 @@ from resolvers.search import (
     SearchResult,
     StatsResult,
 )
-from schema import (
+from .schema import (
     GroundingStatus,
     DreamSession,
     Hypothesis,
@@ -96,7 +98,7 @@ class Query:
         limit: Optional[int] = None, 
         offset: Optional[int] = None
     ) -> List["Task"]:
-        from resolvers.queries import resolve_tasks
+        from .resolvers.queries import resolve_tasks
         return resolve_tasks(project, status, query, limit, offset)
 
     @field
@@ -475,6 +477,21 @@ schema = Schema(
 )
 
 graphql_app = GraphQLRouter(schema)
+
+# Custom error handling middleware to prevent the 'str' object has no attribute 'get_location' crash
+# This wraps the internal execution to ensure raw exceptions don't reach graphql-core in a way that triggers the bug.
+@graphql_app.route("/graphql", methods=["POST"])
+async def custom_graphql_endpoint(request):
+    try:
+        return await graphql_app.handle_http_request(request)
+    except Exception as e:
+        # This is a fallback for cases where the Strawberry/FastAPI integration 
+        # fails to catch a resolver exception before it hits the core engine.
+        return Response(
+            content='{"errors": [{"message": str(e)}]}',
+            status_code=200,
+            media_type="application/json",
+        )
 
 app = FastAPI(title="Abraxas GraphQL API")
 app.include_router(graphql_app, prefix="/graphql")

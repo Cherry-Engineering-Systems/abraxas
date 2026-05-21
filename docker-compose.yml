@@ -43,15 +43,18 @@ services:
         condition: service_started
 
   arangodb:
-    image: arangodb/arangodb:latest
+    image: arangodb/arangodb:3.12
     container_name: arangodb
     environment:
       - ARANGO_ROOT_PASSWORD=${ARANGO_ROOT_PASSWORD}
+      - ARANGO_SAMPLED_DATA=false
     ports:
       - "8529:8529"
     volumes:
-      - arangodb_data:/var/lib/arangodb
+      - ./arangodb-data:/var/lib/arangodb
+    command: arangod --server.endpoint tcp://0.0.0.0:8529 --server.authentication true --database.directory /var/lib/arangodb
     restart: always
 
 volumes:
   arangodb_data:
+  arangodb_config:

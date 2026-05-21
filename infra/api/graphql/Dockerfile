@@ -18,4 +18,4 @@ ENV PYTHONUNBUFFERED=1
 
 EXPOSE 4000
 
-CMD ["python", "infra/api/graphql/main.py"]
+CMD ["python", "-m", "infra.api.graphql.main"]

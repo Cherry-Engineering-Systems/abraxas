@@ -22,4 +22,4 @@ select = ["E", "F", "W", "I"]
 ignore = ["E501"]
 
 [tool.ruff.per-file-ignores]
-"**/schema.py": ["I001"]
+"**/schema.py" = ["I001"]
