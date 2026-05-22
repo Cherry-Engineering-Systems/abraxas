@@ -1,4 +1,5 @@
 from typing import List, Optional
+import json
 
 from strawberry import mutation, fastapi, field, Schema, ID, type
 import uvicorn
@@ -485,10 +486,13 @@ async def custom_graphql_endpoint(request):
     try:
         return await graphql_app.handle_http_request(request)
     except Exception as e:
-        # This is a fallback for cases where the Strawberry/FastAPI integration 
-        # fails to catch a resolver exception before it hits the core engine.
+        # This handles exceptions that escape the Strawberry resolver chain.
+        # We return a standard GraphQL error response to avoid triggering the 
+        # 'str' object has no attribute 'get_location' bug in graphql-core.
+        import logging
+        logging.error(f"GraphQL Endpoint Crash: {e}", exc_info=True)
         return Response(
-            content='{"errors": [{"message": str(e)}]}',
+            content=json.dumps({"errors": [{"message": str(e), "extensions": {"code": "INTERNAL_SERVER_ERROR"}}]}),
             status_code=200,
             media_type="application/json",
         )
