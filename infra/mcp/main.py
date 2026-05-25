@@ -6,7 +6,7 @@ from infra.mcp.context import get_context
 from infra.mcp.registry import MCPRegistry
 from infra.mcp.db_manager import DBManager
 
-mcp = FastMCP("abraxas-os")
+mcp = FastMCP("abraxas-os", host="0.0.0.0")
 context = get_context()
 registry = MCPRegistry(mcp, context)
 db_manager = DBManager(context)

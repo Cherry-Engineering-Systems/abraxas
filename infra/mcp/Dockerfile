@@ -1,22 +1,10 @@
 FROM python:3.11-slim
-
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    git \
-    && rm -rf /var/lib/apt/lists/*
-
 WORKDIR /workspace
-
-RUN pip install --upgrade pip
-
 COPY infra/mcp/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-
+COPY infra /workspace/infra
+COPY constitution /workspace/constitution
+COPY skills /workspace/skills
+COPY CLAUDE.md /workspace/CLAUDE.md
 ENV PYTHONPATH=/workspace
-ENV ABRAXAS_ROOT=/workspace
-ENV PYTHONUNBUFFERED=1
-
-EXPOSE 9900 9901
-
-CMD ["python", "infra/mcp/main.py"]
+CMD ["python", "-m", "infra.mcp.main"]
